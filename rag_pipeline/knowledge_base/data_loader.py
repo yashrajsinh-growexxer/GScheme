@@ -8,24 +8,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional
 
-try:
-    from .config import (
-        CATEGORY_MAP,
-        CENTRAL_GOVT_LABEL,
-        DATA_DIR,
-        DEFAULT_LANGUAGE,
-        LOCATION_TYPE_CENTRAL,
-        RAW_DATA_DIR,
-    )
-except ImportError:
-    from config import (
-        CATEGORY_MAP,
-        CENTRAL_GOVT_LABEL,
-        DATA_DIR,
-        DEFAULT_LANGUAGE,
-        LOCATION_TYPE_CENTRAL,
-        RAW_DATA_DIR,
-    )
+from rag_pipeline.config import (
+    CATEGORY_MAP,
+    CENTRAL_GOVT_LABEL,
+    DATA_DIR,
+    DEFAULT_LANGUAGE,
+    LOCATION_TYPE_CENTRAL,
+    RAW_DATA_DIR,
+)
 
 
 @dataclass

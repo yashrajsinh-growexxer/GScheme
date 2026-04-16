@@ -5,10 +5,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Sequence, Tuple
 
-try:
-    from .config import EMBEDDING_DIMENSION, EMBEDDING_MODEL
-except ImportError:
-    from config import EMBEDDING_DIMENSION, EMBEDDING_MODEL
+from rag_pipeline.config import EMBEDDING_DIMENSION, EMBEDDING_MODEL
 
 
 SparseVector = Dict[str, List[float]]

@@ -46,20 +46,12 @@ except ImportError:
                 # Fallback: hard split
                 return [text[i:i+self.chunk_size] for i in range(0, len(text), self.chunk_size - self.chunk_overlap)]
 
-try:
-    from .config import (
-        CHARS_PER_TOKEN,
-        CHUNK_CONFIG,
-        CHUNKS_OUTPUT_DIR,
-    )
-    from .data_loader import SchemeData, load_all_schemes
-except ImportError:
-    from config import (
-        CHARS_PER_TOKEN,
-        CHUNK_CONFIG,
-        CHUNKS_OUTPUT_DIR,
-    )
-    from data_loader import SchemeData, load_all_schemes
+from rag_pipeline.config import (
+    CHARS_PER_TOKEN,
+    CHUNK_CONFIG,
+    CHUNKS_OUTPUT_DIR,
+)
+from rag_pipeline.knowledge_base.data_loader import SchemeData, load_all_schemes
 
 
 @dataclass

@@ -12,42 +12,23 @@ from typing import Any, Dict, Generator, List, Optional
 
 from dotenv import load_dotenv
 
-try:
-    from .config import (
-        DISCOVERY_TOP_K,
-        GROQ_MAX_TOKENS,
-        GROQ_MODEL,
-        GROQ_TEMPERATURE,
-        MAX_CHAT_HISTORY_TURNS,
-        USE_RERANKER,
-    )
-    from .prompts import build_few_shot_messages, build_system_prompt
-    from .reranker import get_reranker
-    from .retriever import (
-        SchemeResult,
-        build_scheme_context,
-        build_search_query,
-        discover_schemes,
-        fetch_scheme_chunks,
-    )
-except ImportError:
-    from config import (
-        DISCOVERY_TOP_K,
-        GROQ_MAX_TOKENS,
-        GROQ_MODEL,
-        GROQ_TEMPERATURE,
-        MAX_CHAT_HISTORY_TURNS,
-        USE_RERANKER,
-    )
-    from prompts import build_few_shot_messages, build_system_prompt
-    from reranker import get_reranker
-    from retriever import (
-        SchemeResult,
-        build_scheme_context,
-        build_search_query,
-        discover_schemes,
-        fetch_scheme_chunks,
-    )
+from rag_pipeline.config import (
+    DISCOVERY_TOP_K,
+    GROQ_MAX_TOKENS,
+    GROQ_MODEL,
+    GROQ_TEMPERATURE,
+    MAX_CHAT_HISTORY_TURNS,
+    USE_RERANKER,
+)
+from rag_pipeline.inference.prompts import build_few_shot_messages, build_system_prompt
+from rag_pipeline.inference.reranker import get_reranker
+from rag_pipeline.inference.retriever import (
+    SchemeResult,
+    build_scheme_context,
+    build_search_query,
+    discover_schemes,
+    fetch_scheme_chunks,
+)
 
 load_dotenv()
 
@@ -123,85 +104,44 @@ def _build_messages(
 # ── Discovery pipeline ──────────────────────────────────────────────
 
 
-def run_discovery(
+def prepare_discovery_candidates(
     profile: Dict[str, Any],
-) -> tuple[List[SchemeResult], str, bool]:
-    """
-    End-to-end discovery: retrieve → rerank → generate summary.
-
-    Returns:
-        (top_schemes, llm_response_text, is_relaxed)
-    """
-    # 1. Retrieve candidate schemes
+) -> tuple[List[SchemeResult], bool]:
+    """Retrieve and rank all candidates for discovery, without generating a response."""
     candidates, is_relaxed = discover_schemes(profile)
     if not candidates:
-        return [], "", True
+        return [], True
 
     if USE_RERANKER:
-        # 2. Rerank
+        # Retrieve many, rank them all based on the reranker length
         query_text = build_search_query(profile)
         reranker = get_reranker()
         passages = [s.combined_text[:2000] for s in candidates]
-        ranked = reranker.rerank(query_text, passages, top_k=DISCOVERY_TOP_K)
+        ranked = reranker.rerank(query_text, passages, top_k=len(candidates))
         top_schemes = [candidates[idx] for idx, _score in ranked]
 
         # Update scores from reranker
         for scheme, (_, rerank_score) in zip(top_schemes, ranked):
             scheme.score = rerank_score
     else:
-        top_schemes = candidates[:DISCOVERY_TOP_K]
+        top_schemes = candidates
 
-    # 3. Build context for LLM
-    context_parts = []
-    for i, s in enumerate(top_schemes, 1):
-        full_chunks = fetch_scheme_chunks(s.scheme_id)
-        full_context = build_scheme_context(full_chunks, is_discovery=True)
-        context_parts.append(f"--- Scheme {i} ---\n{full_context}\n")
-    context = "\n".join(context_parts)
-
-    # 4. Generate LLM response
-    system_prompt = build_system_prompt(profile)
-    few_shot = build_few_shot_messages(profile)
-
-    if is_relaxed:
-        user_msg = (
-            "No schemes matched my exact profile. Show me the closest "
-            "matching schemes from the context and explain how they partially match."
-        )
-    else:
-        user_msg = (
-            "Based on my profile, show me the best government schemes "
-            "I may be eligible for from the context provided."
-        )
-
-    llm = _get_llm(streaming=False)
-    msgs = _build_messages(system_prompt, few_shot, [], user_msg, context)
-    response = llm.invoke(msgs)
-    return top_schemes, response.content, is_relaxed
+    return top_schemes, is_relaxed
 
 
-def run_discovery_stream(
+def run_discovery_page_stream(
     profile: Dict[str, Any],
-) -> tuple[List[SchemeResult], Generator, bool]:
-    """Same as run_discovery but returns a streaming generator for the LLM output."""
-    candidates, is_relaxed = discover_schemes(profile)
-    if not candidates:
-        return [], iter([]), True
-
-    if USE_RERANKER:
-        query_text = build_search_query(profile)
-        reranker = get_reranker()
-        passages = [s.combined_text[:2000] for s in candidates]
-        ranked = reranker.rerank(query_text, passages, top_k=DISCOVERY_TOP_K)
-        top_schemes = [candidates[idx] for idx, _score in ranked]
-
-        for scheme, (_, rerank_score) in zip(top_schemes, ranked):
-            scheme.score = rerank_score
-    else:
-        top_schemes = candidates[:DISCOVERY_TOP_K]
+    top_schemes: List[SchemeResult],
+    is_relaxed: bool,
+    start_idx: int = 0
+) -> Generator:
+    """Takes a specific page slice of schemes and streams the discovery LLM output."""
+    if not top_schemes:
+        return iter([])
 
     context_parts = []
-    for i, s in enumerate(top_schemes, 1):
+    # Start idx is used just for display numbering (1-indexed)
+    for i, s in enumerate(top_schemes, start_idx + 1):
         full_chunks = fetch_scheme_chunks(s.scheme_id)
         full_context = build_scheme_context(full_chunks, is_discovery=True)
         context_parts.append(f"--- Scheme {i} ---\n{full_context}\n")
@@ -212,19 +152,18 @@ def run_discovery_stream(
 
     if is_relaxed:
         user_msg = (
-            "No schemes matched my exact profile. Show me the closest "
-            "matching schemes from the context and explain how they partially match."
+            f"No schemes matched my exact profile. Show me ALL {len(top_schemes)} of the closest "
+            f"matching schemes from the context and explain how they partially match. Do not skip any scheme, you must output exactly {len(top_schemes)} schemes."
         )
     else:
         user_msg = (
-            "Based on my profile, show me the best government schemes "
-            "I may be eligible for from the context provided."
+            f"Based on my profile, show me ALL {len(top_schemes)} government schemes "
+            f"I may be eligible for from the context provided. Do not skip any scheme, you must output exactly {len(top_schemes)} schemes."
         )
 
     llm = _get_llm(streaming=True)
     msgs = _build_messages(system_prompt, few_shot, [], user_msg, context)
-    stream = llm.stream(msgs)
-    return top_schemes, stream, is_relaxed
+    return llm.stream(msgs)
 
 
 # ── Chat / deep-dive ────────────────────────────────────────────────

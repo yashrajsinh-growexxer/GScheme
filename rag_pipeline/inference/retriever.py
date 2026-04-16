@@ -14,32 +14,18 @@ from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 
-try:
-    from .config import (
-        CENTRAL_GOVT_LABEL,
-        DENSE_VECTOR_NAME,
-        DISCOVERY_INITIAL_FETCH,
-        DISCOVERY_RERANK_CANDIDATES,
-        DISCOVERY_TOP_K,
-        PROFESSION_BOOST,
-        PROFESSION_CATEGORY_MAP,
-        QDRANT_COLLECTION_NAME,
-        SPARSE_VECTOR_NAME,
-    )
-    from .embeddings import get_embedding_model
-except ImportError:
-    from config import (
-        CENTRAL_GOVT_LABEL,
-        DENSE_VECTOR_NAME,
-        DISCOVERY_INITIAL_FETCH,
-        DISCOVERY_RERANK_CANDIDATES,
-        DISCOVERY_TOP_K,
-        PROFESSION_BOOST,
-        PROFESSION_CATEGORY_MAP,
-        QDRANT_COLLECTION_NAME,
-        SPARSE_VECTOR_NAME,
-    )
-    from embeddings import get_embedding_model
+from rag_pipeline.config import (
+    CENTRAL_GOVT_LABEL,
+    DENSE_VECTOR_NAME,
+    DISCOVERY_INITIAL_FETCH,
+    DISCOVERY_RERANK_CANDIDATES,
+    DISCOVERY_TOP_K,
+    PROFESSION_BOOST,
+    PROFESSION_CATEGORY_MAP,
+    QDRANT_COLLECTION_NAME,
+    SPARSE_VECTOR_NAME,
+)
+from rag_pipeline.knowledge_base.embeddings import get_embedding_model
 
 load_dotenv()
 
@@ -414,20 +400,19 @@ def build_scheme_context(chunks: List[Dict[str, Any]], is_discovery: bool = Fals
     for c in chunks:
         sections[c["chunk_type"]].append(c["text"])
 
-    labels = {
-        "details": "DETAILS",
-        "benefits": "BENEFITS",
-        "eligibility": "ELIGIBILITY",
-        "application_process": "APPLICATION PROCESS",
-        "documents_required": "DOCUMENTS REQUIRED",
-        "sources_and_references": "SOURCES AND REFERENCES",
-        "faq": "FREQUENTLY ASKED QUESTIONS",
-    }
-    
     if is_discovery:
-        labels.pop("faq", None)
-        labels.pop("documents_required", None)
-        labels.pop("sources_and_references", None)
+        labels = {
+            "details": "DETAILS",
+            "benefits": "BENEFITS",
+        }
+    else:
+        labels = {
+            "details": "DETAILS",
+            "benefits": "BENEFITS",
+            "eligibility": "ELIGIBILITY",
+            "application_process": "APPLICATION PROCESS",
+            "documents_required": "DOCUMENTS REQUIRED",
+        }
 
     parts = [f"SCHEME: {name}", f"URL: {url}", f"Location: {loc}", ""]
     for ctype, label in labels.items():

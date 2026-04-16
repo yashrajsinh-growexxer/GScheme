@@ -16,26 +16,15 @@ from typing import Any, Dict, Generator, List
 
 from dotenv import load_dotenv
 
-try:
-    from .config import (
-        CHUNKS_OUTPUT_DIR,
-        DENSE_VECTOR_NAME,
-        EMBEDDING_DIMENSION,
-        EMBEDDINGS_OUTPUT_DIR,
-        QDRANT_COLLECTION_NAME,
-        SPARSE_VECTOR_NAME,
-    )
-    from .embeddings import get_embedding_model
-except ImportError:
-    from config import (
-        CHUNKS_OUTPUT_DIR,
-        DENSE_VECTOR_NAME,
-        EMBEDDING_DIMENSION,
-        EMBEDDINGS_OUTPUT_DIR,
-        QDRANT_COLLECTION_NAME,
-        SPARSE_VECTOR_NAME,
-    )
-    from embeddings import get_embedding_model
+from rag_pipeline.config import (
+    CHUNKS_OUTPUT_DIR,
+    DENSE_VECTOR_NAME,
+    EMBEDDING_DIMENSION,
+    EMBEDDINGS_OUTPUT_DIR,
+    QDRANT_COLLECTION_NAME,
+    SPARSE_VECTOR_NAME,
+)
+from rag_pipeline.knowledge_base.embeddings import get_embedding_model
 
 load_dotenv()
 

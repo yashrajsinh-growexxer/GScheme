@@ -8,10 +8,7 @@ from __future__ import annotations
 
 from typing import List, Tuple
 
-try:
-    from .config import RERANKER_MODEL
-except ImportError:
-    from config import RERANKER_MODEL
+from rag_pipeline.config import RERANKER_MODEL
 
 
 class Reranker:

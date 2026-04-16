@@ -267,7 +267,7 @@ def _run_intake():
 
 def _run_discovery():
     """Run the retrieval + reranking pipeline and show results."""
-    from rag_pipeline.generator import run_discovery_stream
+    from rag_pipeline.inference.generator import prepare_discovery_candidates, run_discovery_page_stream
 
     profile = st.session_state.profile
 
@@ -282,22 +282,36 @@ def _run_discovery():
         st.markdown("🔍 **Searching for schemes matching your profile…**")
         with st.spinner("Retrieving and ranking schemes…"):
             try:
-                top_schemes, stream, is_relaxed = run_discovery_stream(profile)
+                if "all_discovered_schemes" not in st.session_state:
+                    top_schemes, is_relaxed = prepare_discovery_candidates(profile)
+                    st.session_state.all_discovered_schemes = top_schemes
+                    st.session_state.discovery_page = 0
+                    st.session_state.is_relaxed = is_relaxed
+                else:
+                    top_schemes = st.session_state.all_discovered_schemes
+                    is_relaxed = st.session_state.is_relaxed
+
+                if not top_schemes:
+                    st.warning(
+                        "No schemes found matching your profile. "
+                        "Try adjusting your details or check back later."
+                    )
+                    st.session_state.discovery_done = True
+                    return
+
+                page = st.session_state.discovery_page
+                start = page * 5
+                top_schemes_page = top_schemes[start : start + 5]
+
+                stream = run_discovery_page_stream(
+                    profile, top_schemes_page, is_relaxed, start_idx=start
+                )
             except Exception as exc:
                 st.error(f"Error during discovery: {exc}")
                 return
 
-        st.session_state.schemes = top_schemes
-        st.session_state.is_relaxed = is_relaxed
-
-        if not top_schemes:
-            st.warning(
-                "No schemes found matching your profile. "
-                "Try adjusting your details or check back later."
-            )
-            st.session_state.discovery_done = True
-            return
-
+        st.session_state.schemes = top_schemes_page
+        
         if is_relaxed:
             st.info(
                 "ℹ️ No exact matches found. Showing closest matching schemes "
@@ -320,7 +334,7 @@ def _run_discovery():
 
 def _run_chat():
     """Render the chatbot for follow-up questions."""
-    from rag_pipeline.generator import chat_response_stream, general_chat_stream
+    from rag_pipeline.inference.generator import chat_response_stream, general_chat_stream
 
     profile = st.session_state.profile
     schemes = st.session_state.schemes
@@ -355,6 +369,13 @@ def _run_chat():
                 if st.button("↩ Back to all schemes", use_container_width=True):
                     st.session_state.active_scheme = None
                     st.rerun()
+            else:
+                total_loaded = len(st.session_state.schemes)
+                total_available = len(st.session_state.get("all_discovered_schemes", []))
+                if total_loaded < total_available:
+                    if st.button("🔄 Load More Schemes", use_container_width=True):
+                        st.session_state.trigger_load_more = True
+                        st.rerun()
 
     # Render chat history
     for msg in st.session_state.messages:
@@ -364,6 +385,32 @@ def _run_chat():
     # Chat input
     user_input = st.chat_input("Ask about a scheme…")
     
+    # Handle auto-triggered load more
+    trigger_load_more = st.session_state.pop("trigger_load_more", None)
+    if trigger_load_more:
+        from rag_pipeline.inference.generator import run_discovery_page_stream
+        page = st.session_state.discovery_page + 1
+        start = page * 5
+        next_schemes = st.session_state.all_discovered_schemes[start : start + 5]
+        
+        if next_schemes:
+            st.session_state.discovery_page = page
+            st.session_state.schemes.extend(next_schemes)
+            
+            with st.chat_message("assistant"):
+                st.markdown("🔄 **Loading more schemes…**")
+                stream = run_discovery_page_stream(
+                    profile, next_schemes, st.session_state.is_relaxed, start_idx=start
+                )
+                response_text = st.write_stream(stream)
+            
+            st.session_state.messages.append(
+                {"role": "assistant", "content": response_text}
+            )
+            st.rerun()
+        else:
+            st.warning("No more schemes available.")
+
     # Handle auto-triggered query from buttons
     trigger_query = st.session_state.pop("trigger_query", None)
     if trigger_query:

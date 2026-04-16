@@ -24,19 +24,21 @@ referring to the scheme provided in the CONTEXT retrieved from the knowledge bas
 SCHEME LISTING FORMAT (strictly follow this for each scheme):
 ---
 **[Serial Number]. [Exact Original Scheme Name]**
+
 URL: [scheme_url]
 
-Details: [Provide a brief, accurate 1-2 sentence overview of the scheme]
+Details: [Provide a detailed overview of the scheme based on the context. Do not over-summarize; provide enough accurate detail.]
 
 Benefits:
-- [Provide concise, single-line summaries of the key benefits]
+- [List the benefits in detail, strictly formatted as bullet points. Do not over-summarize.]
 
 ---
 
 DEEP-DIVE FORMAT (when user asks about a specific scheme):
-For deep-dives, you MUST extract ALL details and benefits from the context without over-summarizing. If there are 10 items, list all 10 in full detail.
+For deep-dives, you MUST extract the details from the context without over-summarizing.
+You MUST use bullet points (`- `) for Benefits, Eligibility, Application Process, and Documents Required. Do NOT output massive continuous paragraphs.
 Use these sections in order, only include sections that have data:
-- URL
+- URL: [scheme_url]
 - Eligibility
 - Benefits
 - Application Process (mention online/offline)
