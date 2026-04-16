@@ -1,0 +1,43 @@
+{
+  "scheme_name": "Scheme of Developing High Quality Research (SHODH)",
+  "scheme_url": "https://www.myscheme.gov.in/schemes/shodhs",
+  "location_name": "",
+  "location_type": "",
+  "page_title": "Page not found.",
+  "scraped_at": "2026-03-12 09:07:35 UTC",
+  "sections": {
+    "details": [
+      "Page not found.",
+      "Sorry, we couldn't find the page you're looking for.",
+      "Back to home page",
+      "2026"
+    ],
+    "benefits": [],
+    "eligibility": [],
+    "application_process": {},
+    "documents_required": [],
+    "sources_and_references": []
+  },
+  "faqs": [],
+  "filter_metadata": {
+    "location_name": "India",
+    "location_type": "central",
+    "gender_tags": [
+      "unknown"
+    ],
+    "caste_tags": [
+      "unknown"
+    ],
+    "age_min": null,
+    "age_max": null,
+    "age_present": false,
+    "age_min_effective": null,
+    "age_max_effective": null,
+    "age_confidence": 0.0,
+    "age_raw_text": null
+  },
+  "metadata_extraction": {
+    "version": "v1_rule_based",
+    "extracted_at_utc": "2026-04-01 08:17:43 UTC"
+  }
+}

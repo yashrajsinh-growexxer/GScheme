@@ -1,0 +1,9 @@
+{
+  "profile_key": "test-user",
+  "name": "Test User",
+  "age": 28,
+  "state": "Karnataka",
+  "gender": "female",
+  "caste": "obc",
+  "category_id": 4
+}
