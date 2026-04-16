@@ -352,7 +352,7 @@ def _run_chat():
                     use_container_width=True,
                 ):
                     st.session_state.active_scheme = schemes[i].scheme_id
-                    st.session_state.trigger_query = f"Please provide full detailed information about {name}, excluding FAQs."
+                    st.session_state.trigger_query = f"Please provide full detailed information about {name}."
                     # Clear history so we don't carry the massive text of Scheme A into Scheme B
                     st.session_state.chat_history = []
                     st.rerun()
