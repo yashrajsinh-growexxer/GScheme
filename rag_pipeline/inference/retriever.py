@@ -267,6 +267,41 @@ def discover_schemes(
     return schemes[: DISCOVERY_RERANK_CANDIDATES], False
 
 
+def search_schemes_by_name(
+    query_text: str,
+    top_k: int = DISCOVERY_TOP_K,
+) -> List[SchemeResult]:
+    """
+    Search schemes directly by name or description without strict user profiling.
+    """
+    client = get_qdrant_client()
+    emb = get_embedding_model()
+
+    # Broad filter: only details and eligibility chunks
+    from qdrant_client.http import models
+
+    qdrant_filter = models.Filter(
+        must=[
+            models.FieldCondition(
+                key="chunk_type",
+                match=models.MatchAny(any=["eligibility", "details"]),
+            )
+        ]
+    )
+
+    dense_vecs, sparse_vecs = emb.embed_documents_hybrid([query_text])
+    dense = dense_vecs[0]
+    sparse = sparse_vecs[0]
+
+    points = _hybrid_search(client, dense, sparse, qdrant_filter)
+    if not points:
+        return []
+
+    schemes = _group_points_by_scheme(points)
+    # Return more than top_k so reranker can pick the best
+    return schemes[: DISCOVERY_RERANK_CANDIDATES]
+
+
 def _hybrid_search(client, dense, sparse, qdrant_filter, limit=DISCOVERY_INITIAL_FETCH):
     """Try hybrid RRF search, fall back to dense-only."""
     from qdrant_client.http import models

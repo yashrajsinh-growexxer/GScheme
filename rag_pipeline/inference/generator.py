@@ -28,6 +28,7 @@ from rag_pipeline.inference.retriever import (
     build_search_query,
     discover_schemes,
     fetch_scheme_chunks,
+    search_schemes_by_name,
 )
 
 load_dotenv()
@@ -127,6 +128,29 @@ def prepare_discovery_candidates(
         top_schemes = candidates
 
     return top_schemes, is_relaxed
+
+
+def prepare_search_candidates(
+    query_text: str,
+) -> List[SchemeResult]:
+    """Retrieve and rank all candidates based on a direct search query."""
+    candidates = search_schemes_by_name(query_text)
+    if not candidates:
+        return []
+
+    if USE_RERANKER:
+        reranker = get_reranker()
+        passages = [s.combined_text[:2000] for s in candidates]
+        ranked = reranker.rerank(query_text, passages, top_k=len(candidates))
+        top_schemes = [candidates[idx] for idx, _score in ranked]
+
+        # Update scores from reranker
+        for scheme, (_, rerank_score) in zip(top_schemes, ranked):
+            scheme.score = rerank_score
+    else:
+        top_schemes = candidates
+
+    return top_schemes
 
 
 def run_discovery_page_stream(

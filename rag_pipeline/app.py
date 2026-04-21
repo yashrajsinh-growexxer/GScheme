@@ -176,6 +176,8 @@ if "step" not in st.session_state:
     st.session_state.active_scheme = None # scheme_id for deep-dive
     st.session_state.discovery_done = False
     st.session_state.is_relaxed = False
+    st.session_state.app_mode = None      # 'eligible' or 'search'
+    st.session_state.search_query = ""
 
 # ── Header ───────────────────────────────────────────────────────────
 
@@ -209,6 +211,53 @@ def _render_sidebar():
 
 
 _render_sidebar()
+
+# ── Landing Page ─────────────────────────────────────────────────────
+
+def _render_landing_page():
+    """Show choice between Eligibility Check and Search by Name."""
+    st.markdown("### 👋 Welcome! How can I help you today?")
+    st.markdown("Choose an option below to get started:")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            """
+            <div style="background: rgba(168,85,247,0.1); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid rgba(168,85,247,0.2); height: 100%;">
+                <h3 style="margin-top:0; color:#c084fc;">📋 Check Eligibility</h3>
+                <p style="font-size:0.9rem; color:rgba(255,255,255,0.7);">Provide your details and find schemes you are eligible for.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        if st.button("Start Eligibility Check", use_container_width=True, type="primary"):
+            st.session_state.app_mode = "eligible"
+            st.rerun()
+
+    with col2:
+        st.markdown(
+            """
+            <div style="background: rgba(79,70,229,0.1); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid rgba(79,70,229,0.2); height: 100%;">
+                <h3 style="margin-top:0; color:#818cf8;">🔍 Search by Name</h3>
+                <p style="font-size:0.9rem; color:rgba(255,255,255,0.7);">Search for a specific government scheme by its name or keywords.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        if st.button("Search for a Scheme", use_container_width=True):
+            st.session_state.app_mode = "search"
+            # Set a default empty profile for search mode
+            st.session_state.profile = {
+                "gender": "Not provided",
+                "age": "Not provided",
+                "state": "Not provided",
+                "area": "Not provided",
+                "caste": "Not provided",
+                "disability": "Not provided",
+                "profession": "Not provided",
+            }
+            st.rerun()
 
 # ── Intake phase ─────────────────────────────────────────────────────
 
@@ -262,6 +311,19 @@ def _run_intake():
             _run_discovery()
 
 
+def _run_search_input():
+    """Render search input for search mode."""
+    with st.chat_message("assistant"):
+        st.markdown("I can help you find specific schemes. **What scheme are you looking for?**")
+    
+    with st.form(key="search_form"):
+        query = st.text_input("Enter scheme name or keywords…", placeholder="e.g. PM Kisan, Atmanirbhar Bharat", label_visibility="collapsed")
+        submitted = st.form_submit_button("Search 🔍", use_container_width=True)
+        if submitted and query:
+            st.session_state.search_query = query
+            _run_discovery()
+
+
 # ── Discovery phase ──────────────────────────────────────────────────
 
 
@@ -271,19 +333,32 @@ def _run_discovery():
 
     profile = st.session_state.profile
 
-    # Show completed profile summary
-    for i, s in enumerate(INTAKE_STEPS):
-        with st.chat_message("assistant"):
-            st.markdown(s["question"])
+    profile = st.session_state.profile
+
+    # Show completed profile/search summary
+    if st.session_state.app_mode == "eligible":
+        for i, s in enumerate(INTAKE_STEPS):
+            with st.chat_message("assistant"):
+                st.markdown(s["question"])
+            with st.chat_message("user"):
+                st.markdown(f"**{profile[s['key']]}**")
+    else:
         with st.chat_message("user"):
-            st.markdown(f"**{profile[s['key']]}**")
+            st.markdown(f"🔍 Searching for: **{st.session_state.search_query}**")
 
     with st.chat_message("assistant"):
-        st.markdown("🔍 **Searching for schemes matching your profile…**")
+        st.markdown("🔍 **Searching for schemes matching your query…**")
         with st.spinner("Retrieving and ranking schemes…"):
             try:
+                from rag_pipeline.inference.generator import prepare_search_candidates
+
                 if "all_discovered_schemes" not in st.session_state:
-                    top_schemes, is_relaxed = prepare_discovery_candidates(profile)
+                    if st.session_state.app_mode == "search":
+                        top_schemes = prepare_search_candidates(st.session_state.search_query)
+                        is_relaxed = False
+                    else:
+                        top_schemes, is_relaxed = prepare_discovery_candidates(profile)
+                    
                     st.session_state.all_discovered_schemes = top_schemes
                     st.session_state.discovery_page = 0
                     st.session_state.is_relaxed = is_relaxed
@@ -485,5 +560,12 @@ def _detect_scheme_reference(user_input: str, schemes):
 
 if st.session_state.discovery_done:
     _run_chat()
-else:
+elif st.session_state.app_mode == "eligible":
     _run_intake()
+elif st.session_state.app_mode == "search":
+    if not st.session_state.search_query:
+        _run_search_input()
+    else:
+        _run_discovery()
+else:
+    _render_landing_page()
