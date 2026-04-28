@@ -34,7 +34,7 @@ export function Navbar() {
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          {/* <nav className="flex items-center space-x-2">
+          <nav className="flex items-center space-x-2">
             <Link
               href="/search"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary px-4 py-2"
@@ -42,12 +42,18 @@ export function Navbar() {
               Search
             </Link>
             <Link
+              href="/compare"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary px-4 py-2"
+            >
+              Compare
+            </Link>
+            <Link
               href="/eligibility"
               className="text-sm font-medium bg-primary text-primary-foreground transition-colors hover:bg-primary/90 px-4 py-2 rounded-md"
             >
               Check Eligibility
             </Link>
-          </nav> */}
+          </nav>
         </div>
       </div>
     </header>

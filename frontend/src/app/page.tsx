@@ -3,9 +3,10 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Search, Mic, ArrowRight, ShieldCheck, Zap, Library } from "lucide-react"
+import { Search, ArrowRight, ShieldCheck, Zap, Library, GitCompareArrows } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { VoiceRecorder } from "@/components/ui/VoiceRecorder"
 
 export default function Home() {
   const router = useRouter()
@@ -46,7 +47,7 @@ export default function Home() {
         >
           <form onSubmit={handleSearch} className="relative flex items-center w-full">
             <div className="absolute left-4 text-muted-foreground">
-              <Mic className="h-5 w-5 hover:text-primary cursor-pointer transition-colors" />
+              <VoiceRecorder onTranscript={(text) => setQuery(prev => prev + text)} />
             </div>
             <Input
               type="text"
@@ -79,14 +80,15 @@ export default function Home() {
             Find Schemes for You
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-          {/* <Button 
+          <Button 
             size="lg" 
             variant="outline"
             className="rounded-full text-base px-8 h-12 border-2 hover:bg-secondary"
-            onClick={() => router.push("/search")}
+            onClick={() => router.push("/compare")}
           >
-            Browse All Schemes
-          </Button> */}
+            <GitCompareArrows className="mr-2 h-5 w-5" />
+            Compare Schemes
+          </Button>
         </motion.div>
 
         {/* Stats & Features */}

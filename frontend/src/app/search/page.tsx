@@ -2,13 +2,14 @@
 
 import { useState, useEffect, Suspense, useCallback } from "react"
 import { useSearchParams } from "next/navigation"
-import { Search as SearchIcon, Loader2, Mic, ChevronLeft, ChevronRight } from "lucide-react"
+import { Search as SearchIcon, Loader2, ChevronLeft, ChevronRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { SchemeCard } from "@/components/ui/scheme-card"
 import { Modal } from "@/components/ui/modal"
 import { ChatPanel } from "@/components/chat/ChatPanel"
 import { searchSchemes, type Scheme } from "@/lib/api"
+import { VoiceRecorder } from "@/components/ui/VoiceRecorder"
 import { motion } from "framer-motion"
 
 const SCHEMES_PER_PAGE = 10
@@ -65,7 +66,7 @@ function SearchContent() {
         <h1 className="text-3xl font-bold mb-4">Search Schemes</h1>
         <form onSubmit={handleSearch} className="relative flex items-center w-full">
             <div className="absolute left-4 text-muted-foreground">
-              <Mic className="h-5 w-5 hover:text-primary cursor-pointer transition-colors" />
+              <VoiceRecorder onTranscript={(text) => setQuery(prev => prev + text)} />
             </div>
           <Input
             value={query}

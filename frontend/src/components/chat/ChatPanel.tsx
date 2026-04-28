@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Send, User, Bot, Loader2, Mic } from "lucide-react"
+import { Send, User, Bot, Loader2 } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { chatAboutScheme, type ChatMessage, type Scheme } from "@/lib/api"
+import { VoiceRecorder } from "@/components/ui/VoiceRecorder"
 import { cn } from "@/lib/utils"
 
 export function ChatPanel({ scheme }: { scheme: Scheme }) {
@@ -150,7 +151,7 @@ export function ChatPanel({ scheme }: { scheme: Scheme }) {
       <div className="p-4 border-t bg-card">
         <form onSubmit={handleSend} className="relative flex items-center">
            <div className="absolute left-3 text-muted-foreground">
-              <Mic className="h-5 w-5 hover:text-primary cursor-pointer transition-colors" />
+              <VoiceRecorder onTranscript={(text) => setInput(prev => prev + text)} disabled={isLoading} />
             </div>
           <Input
             value={input}

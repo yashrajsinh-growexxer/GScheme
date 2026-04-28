@@ -1,5 +1,6 @@
 import os
 import sys
+import logging
 from typing import Any, Dict, List, Optional
 from pathlib import Path
 
@@ -8,10 +9,14 @@ _project_root = Path(__file__).resolve().parent.parent
 if str(_project_root) not in sys.path:
     sys.path.insert(0, str(_project_root))
 
-from fastapi import FastAPI
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=_project_root / ".env")
+
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
+import httpx
 
 from rag_pipeline.inference.generator import (
     prepare_search_candidates,
@@ -21,8 +26,13 @@ from rag_pipeline.inference.generator import (
     general_chat_stream,
 )
 from rag_pipeline.inference.retriever import SchemeResult
+from rag_pipeline.inference.compare import (
+    get_scheme_comparison_data,
+    get_multiple_scheme_comparison,
+)
 
 app = FastAPI(title="GScheme API", version="1.0")
+logger = logging.getLogger(__name__)
 
 # Allow the Vite/Next.js frontend to talk to this API
 app.add_middleware(
@@ -53,6 +63,9 @@ class GeneralChatRequest(BaseModel):
     profile: Dict[str, Any]
     schemes: List[Dict[str, Any]]
 
+class CompareRequest(BaseModel):
+    scheme_ids: List[str]
+
 class SchemeResponse(BaseModel):
     id: str
     name: str
@@ -81,11 +94,18 @@ def map_scheme(s: SchemeResult) -> SchemeResponse:
 
 def stream_generator(generator):
     """Converts Langchain Stream into standard SSE/text chunks."""
-    for chunk in generator:
-        if hasattr(chunk, "content"):
-            yield chunk.content
-        else:
-            yield str(chunk)
+    try:
+        for chunk in generator:
+            if hasattr(chunk, "content"):
+                yield chunk.content
+            else:
+                yield str(chunk)
+    except Exception as exc:
+        logger.exception("Streaming response failed")
+        yield (
+            "\n\nSorry, I hit a backend issue while processing that request. "
+            "If this was a non-English prompt, the translation model may not be available yet."
+        )
 
 # --- ENDPOINTS ---
 
@@ -147,6 +167,68 @@ def general_chat_api(req: GeneralChatRequest):
     )
     
     return StreamingResponse(stream_generator(generator), media_type="text/plain")
+
+# --- COMPARISON ENDPOINTS ---
+
+@app.post("/api/compare")
+def compare_api(req: CompareRequest):
+    """Return structured comparison data for 2-3 schemes."""
+    if len(req.scheme_ids) < 2 or len(req.scheme_ids) > 3:
+        raise HTTPException(status_code=400, detail="Provide 2 or 3 scheme IDs")
+    return get_multiple_scheme_comparison(req.scheme_ids)
+
+@app.get("/api/scheme/{scheme_id}/compare-data")
+def scheme_compare_data(scheme_id: str):
+    """Return structured comparison data for a single scheme."""
+    return get_scheme_comparison_data(scheme_id)
+
+# --- STT ENDPOINT ---
+
+@app.post("/api/stt")
+async def speech_to_text(file: UploadFile = File(...)):
+    """
+    Proxy audio to Sarvam AI Saaras STT API.
+    Returns transcript and detected language.
+    """
+    sarvam_key = os.environ.get("SARVAM_API_KEY")
+    if not sarvam_key:
+        raise HTTPException(status_code=500, detail="SARVAM_API_KEY not configured")
+
+    audio_bytes = await file.read()
+    if not audio_bytes:
+        raise HTTPException(status_code=400, detail="Uploaded audio file is empty")
+    content_type = (file.content_type or "audio/webm").split(";")[0].strip().lower()
+    if content_type in {"audio/x-wav", "audio/wave"}:
+        content_type = "audio/wav"
+
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.post(
+                "https://api.sarvam.ai/speech-to-text",
+                headers={"api-subscription-key": sarvam_key},
+                files={"file": (file.filename or "audio.webm", audio_bytes, content_type)},
+                data={
+                    "model": "saaras:v3",
+                    "mode": "transcribe",
+                    "language_code": "unknown",
+                },
+            )
+            response.raise_for_status()
+    except httpx.HTTPStatusError as exc:
+        detail = exc.response.text or "Sarvam API request failed"
+        logger.warning("Sarvam STT request failed: %s", detail)
+        raise HTTPException(status_code=exc.response.status_code, detail=detail) from exc
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail="Unable to reach Sarvam STT service") from exc
+
+    try:
+        result = response.json()
+    except ValueError as exc:
+        raise HTTPException(status_code=502, detail="Invalid response from Sarvam STT service") from exc
+    return {
+        "transcript": result.get("transcript", ""),
+        "language_code": result.get("language_code", "unknown"),
+    }
 
 if __name__ == "__main__":
     import uvicorn

@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 
 from rag_pipeline.config import (
     DISCOVERY_TOP_K,
+    ENABLE_MULTILINGUAL,
     GROQ_MAX_TOKENS,
     GROQ_MODEL,
     GROQ_TEMPERATURE,
@@ -30,6 +31,7 @@ from rag_pipeline.inference.retriever import (
     fetch_scheme_chunks,
     search_schemes_by_name,
 )
+from rag_pipeline.inference.translator import detect_and_translate_query, translate_response
 
 load_dotenv()
 
@@ -100,6 +102,70 @@ def _build_messages(
     msgs.append(HumanMessage(content=content))
 
     return msgs
+
+
+def _translate_history_to_english(
+    history: List[Dict[str, str]],
+    detected_lang: str,
+) -> List[Dict[str, str]]:
+    """Translate prior chat turns into English for multilingual conversations."""
+    if detected_lang == "eng_Latn":
+        return history
+
+    translated_history: List[Dict[str, str]] = []
+    for msg in history:
+        content = msg.get("content", "")
+        if not content.strip():
+            translated_history.append(msg)
+            continue
+
+        english_content, _ = detect_and_translate_query(content)
+        translated_history.append(
+            {
+                "role": msg.get("role", "user"),
+                "content": english_content,
+            }
+        )
+
+    return translated_history
+
+
+def _prepare_multilingual_turn(
+    user_message: str,
+    history: List[Dict[str, str]],
+) -> tuple[str, List[Dict[str, str]], str]:
+    """Translate the current turn to English when multilingual support is enabled."""
+    if not ENABLE_MULTILINGUAL:
+        return user_message, history, "eng_Latn"
+
+    english_message, detected_lang = detect_and_translate_query(user_message)
+    english_history = _translate_history_to_english(history, detected_lang)
+    return english_message, english_history, detected_lang
+
+
+def _yield_text_chunks(text: str, chunk_size: int = 220) -> Generator[str, None, None]:
+    """Yield plain text in frontend-friendly chunks."""
+    for idx in range(0, len(text), chunk_size):
+        yield text[idx : idx + chunk_size]
+
+
+def _stream_response_with_translation(llm, msgs, target_lang: str):
+    """
+    Stream English directly, or buffer then translate back to the user's language.
+    """
+    if target_lang == "eng_Latn":
+        yield from llm.stream(msgs)
+        return
+
+    english_parts: List[str] = []
+    for chunk in llm.stream(msgs):
+        if hasattr(chunk, "content"):
+            english_parts.append(chunk.content)
+        else:
+            english_parts.append(str(chunk))
+
+    translated_text = translate_response("".join(english_parts), target_lang)
+    yield from _yield_text_chunks(translated_text)
 
 
 # ── Discovery pipeline ──────────────────────────────────────────────
@@ -202,14 +268,26 @@ def chat_response(
     """Answer a follow-up question about a specific scheme (non-streaming)."""
     chunks = fetch_scheme_chunks(scheme_id)
     context = build_scheme_context(chunks)
+    english_message, english_history, detected_lang = _prepare_multilingual_turn(
+        user_message, history
+    )
 
     system_prompt = build_system_prompt(profile)
     few_shot = build_few_shot_messages(profile)
 
     llm = _get_llm(streaming=False)
-    msgs = _build_messages(system_prompt, few_shot, history, user_message, context)
+    msgs = _build_messages(
+        system_prompt,
+        few_shot,
+        english_history,
+        english_message,
+        context,
+    )
     response = llm.invoke(msgs)
-    return response.content
+    response_text = response.content
+    if detected_lang != "eng_Latn":
+        return translate_response(response_text, detected_lang)
+    return response_text
 
 
 def chat_response_stream(
@@ -221,13 +299,22 @@ def chat_response_stream(
     """Streaming version of chat_response."""
     chunks = fetch_scheme_chunks(scheme_id)
     context = build_scheme_context(chunks)
+    english_message, english_history, detected_lang = _prepare_multilingual_turn(
+        user_message, history
+    )
 
     system_prompt = build_system_prompt(profile)
     few_shot = build_few_shot_messages(profile)
 
     llm = _get_llm(streaming=True)
-    msgs = _build_messages(system_prompt, few_shot, history, user_message, context)
-    return llm.stream(msgs)
+    msgs = _build_messages(
+        system_prompt,
+        few_shot,
+        english_history,
+        english_message,
+        context,
+    )
+    return _stream_response_with_translation(llm, msgs, detected_lang)
 
 
 # ── General chat (no specific scheme) ────────────────────────────────
@@ -246,10 +333,19 @@ def general_chat_stream(
         full_context = build_scheme_context(full_chunks, is_discovery=True)
         context_parts.append(f"--- Scheme {i} ---\n{full_context}\n")
     context = "\n".join(context_parts)
+    english_message, english_history, detected_lang = _prepare_multilingual_turn(
+        user_message, history
+    )
 
     system_prompt = build_system_prompt(profile)
     few_shot = build_few_shot_messages(profile)
 
     llm = _get_llm(streaming=True)
-    msgs = _build_messages(system_prompt, few_shot, history, user_message, context)
-    return llm.stream(msgs)
+    msgs = _build_messages(
+        system_prompt,
+        few_shot,
+        english_history,
+        english_message,
+        context,
+    )
+    return _stream_response_with_translation(llm, msgs, detected_lang)

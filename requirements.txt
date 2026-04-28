@@ -11,5 +11,10 @@ torch
 transformers>=4.46,<5
 tokenizers<0.22
 tqdm
-fastapi 
+fastapi
 uvicorn
+httpx
+python-multipart
+langdetect
+indictranstoolkit==1.1.1
+sentencepiece
