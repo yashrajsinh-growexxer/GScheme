@@ -6,10 +6,10 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { generalChatAboutSchemes, type ChatMessage, type Scheme } from "@/lib/api"
+import { generalChatAboutSchemes, type ChatMessage, type Profile, type Scheme } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-export function GeneralChatPanel({ schemes, profile }: { schemes: Scheme[], profile: any }) {
+export function GeneralChatPanel({ schemes, profile }: { schemes: Scheme[], profile: Profile }) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     { role: "assistant", content: "Hello! I can answer any questions you have about the schemes recommended for you. What would you like to know?" }
   ])

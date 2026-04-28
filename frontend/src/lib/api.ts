@@ -12,6 +12,8 @@ export interface ChatMessage {
   content: string;
 }
 
+export type Profile = Record<string, string | number | boolean | undefined>;
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8501/api";
 
 // Connect to FastAPI Search
@@ -26,8 +28,7 @@ export async function searchSchemes(query: string): Promise<Scheme[]> {
 }
 
 // Connect to FastAPI Discover
-export async function discoverSchemes(profile: any): Promise<{ summary: string; schemes: Scheme[] }> {
-  // 1. Fetch schemes
+export async function discoverSchemes(profile: Profile): Promise<{ summary: string; schemes: Scheme[] }> {
   const res = await fetch(API_BASE + "/discover", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -35,21 +36,10 @@ export async function discoverSchemes(profile: any): Promise<{ summary: string; 
   });
   if (!res.ok) throw new Error("Discover failed");
   const data = await res.json();
-  const schemes = data.schemes;
-
-  // 2. Fetch the summary stream (read the entire stream into a single string for simplicity here, 
-  // or we could implement streaming directly into the UI state if required)
-  const summaryRes = await fetch(API_BASE + "/discover-summary", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ profile }),
-  });
-  
-  const summaryText = await summaryRes.text();
 
   return {
-    summary: summaryText,
-    schemes: schemes,
+    summary: "",
+    schemes: data.schemes,
   };
 }
 
@@ -92,7 +82,7 @@ export async function chatAboutScheme(
 export async function generalChatAboutSchemes(
   message: string, 
   history: ChatMessage[], 
-  profile: any,
+  profile: Profile,
   schemes: Scheme[],
   onChunk: (text: string) => void
 ): Promise<string> {

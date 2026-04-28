@@ -14,7 +14,6 @@ if str(_project_root) not in sys.path:
     sys.path.insert(0, str(_project_root))
 
 import streamlit as st
-
 from rag_pipeline.config import (
     UI_AREA_OPTIONS,
     UI_CASTE_OPTIONS,

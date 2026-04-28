@@ -68,7 +68,7 @@ def map_scheme(s: SchemeResult) -> SchemeResponse:
     # We'll extract a short snippet from combined_text if available.
     desc = s.combined_text[:150] + "..." if s.combined_text else ""
     
-    score = int(s.score * 100) if getattr(s, "score", None) else None
+    score = min(100, int(s.score * 100)) if getattr(s, "score", None) else None
     
     return SchemeResponse(
         id=s.scheme_id,
@@ -92,12 +92,12 @@ def stream_generator(generator):
 @app.post("/api/search", response_model=List[SchemeResponse])
 def search_api(req: SearchRequest):
     candidates = prepare_search_candidates(req.query)
-    return [map_scheme(c) for c in candidates[:10]]
+    return [map_scheme(c) for c in candidates]
 
 @app.post("/api/discover", response_model=Dict[str, Any])
 def discover_api(req: ProfileRequest):
     candidates, is_relaxed = prepare_discovery_candidates(req.profile)
-    schemes = [map_scheme(c) for c in candidates[:5]]
+    schemes = [map_scheme(c) for c in candidates]
     
     # We return the list of schemes and a flag.
     # The frontend will make a separate call to stream the summary if needed.

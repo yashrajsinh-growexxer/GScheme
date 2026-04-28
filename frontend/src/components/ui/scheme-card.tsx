@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import type { Scheme } from "@/lib/api"
 import { ChevronRight } from "lucide-react"
@@ -22,9 +22,6 @@ export function SchemeCard({ scheme, onClick }: { scheme: Scheme; onClick: () =>
             </Badge>
           )}
         </div>
-        <CardDescription className="line-clamp-2 mt-2 text-base">
-          {scheme.description}
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between mt-2">

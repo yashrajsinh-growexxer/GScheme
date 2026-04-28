@@ -231,6 +231,21 @@ def _apply_profession_boost(
     return schemes
 
 
+def _dedupe_scheme_results(schemes: List[SchemeResult]) -> List[SchemeResult]:
+    """Keep one result per canonical scheme while preserving relevance order."""
+    deduped: List[SchemeResult] = []
+    seen: set[str] = set()
+
+    for scheme in schemes:
+        key = scheme.scheme_id or f"{scheme.scheme_name}|{scheme.scheme_url}"
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(scheme)
+
+    return deduped
+
+
 # ── Main discovery pipeline ──────────────────────────────────────────
 
 
@@ -263,12 +278,11 @@ def discover_schemes(
             return [], True
         schemes = _group_points_by_scheme(points)
         schemes = _apply_profession_boost(schemes, profile)
-        return schemes[: top_k], True
+        return _dedupe_scheme_results(schemes), True
 
     schemes = _group_points_by_scheme(points)
     schemes = _apply_profession_boost(schemes, profile)
-    # Return more than top_k so reranker can pick the best
-    return schemes[: DISCOVERY_RERANK_CANDIDATES], False
+    return _dedupe_scheme_results(schemes), False
 
 
 def search_schemes_by_name(
@@ -318,7 +332,7 @@ def search_schemes_by_name(
         )
 
     ranked_matches.sort(key=lambda s: (-s.score, len(s.scheme_name), s.scheme_name))
-    return ranked_matches[: max(top_k, DISCOVERY_RERANK_CANDIDATES)]
+    return _dedupe_scheme_results(ranked_matches)
 
 
 def _normalize_scheme_name(text: str) -> str:

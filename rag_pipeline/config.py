@@ -136,7 +136,7 @@ RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 USE_RERANKER = False  # Set False to skip reranker and save ~20s on first load
 
 # === DISCOVERY CONFIG ===
-DISCOVERY_INITIAL_FETCH = 50    # chunks to pull from Qdrant
+DISCOVERY_INITIAL_FETCH = 500   # chunks to pull from Qdrant
 DISCOVERY_RERANK_CANDIDATES = 10  # unique schemes to rerank
 DISCOVERY_TOP_K = 5             # final schemes to show
 PROFESSION_BOOST = 1.25         # score multiplier for matching category

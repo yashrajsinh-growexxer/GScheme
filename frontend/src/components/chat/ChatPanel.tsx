@@ -34,7 +34,7 @@ export function ChatPanel({ scheme }: { scheme: Scheme }) {
       try {
         await chatAboutScheme(
           scheme.id, 
-          "Please provide a clear, bulleted summary of this scheme, including its main benefits, key eligibility criteria, and how to apply. Use bolding and markdown formatting to make it easy to read.", 
+          "Format the response in Markdown. Start with the authentic scheme name in bold. Then write **Summary:** followed by only a detailed 3-4 line summary of this scheme. Bold important main points and scheme-specific terms. Do not list full eligibility, benefits, documents, or application steps yet. End exactly with: **Do you want to know more about its eligibility, benefits, or application process?**", 
           [], 
           (chunk) => {
             setMessages(prev => {
@@ -95,8 +95,8 @@ export function ChatPanel({ scheme }: { scheme: Scheme }) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-background/50 rounded-lg">
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg bg-background/50">
+      <div className="flex-1 space-y-6 overflow-y-auto p-4">
         {messages.map((msg, i) => (
           <div
             key={i}

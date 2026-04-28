@@ -2,13 +2,12 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, ChevronLeft, Loader2, Bot } from "lucide-react"
+import { ChevronRight, ChevronLeft, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { SchemeCard } from "@/components/ui/scheme-card"
 import { Modal } from "@/components/ui/modal"
 import { ChatPanel } from "@/components/chat/ChatPanel"
-import { GeneralChatPanel } from "@/components/chat/GeneralChatPanel"
 import { discoverSchemes, type Scheme } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
@@ -29,12 +28,15 @@ const STEPS = [
   { id: "profession", title: "Profession", type: "select", options: ["Student", "Farmer", "Entrepreneur / Self-Employed", "Corporate Employee", "Government Employee", "Unemployed", "Other"] },
 ]
 
+const SCHEMES_PER_PAGE = 10
+
 export default function EligibilityPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [profile, setProfile] = useState<Record<string, string>>({})
   
   const [isDiscovering, setIsDiscovering] = useState(false)
   const [discoveryResult, setDiscoveryResult] = useState<{summary: string, schemes: Scheme[]} | null>(null)
+  const [resultsPage, setResultsPage] = useState(1)
   const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(null)
 
   const step = STEPS[currentStep]
@@ -49,6 +51,7 @@ export default function EligibilityPage() {
       try {
         const result = await discoverSchemes(profile)
         setDiscoveryResult(result)
+        setResultsPage(1)
       } catch (err) {
         console.error(err)
       } finally {
@@ -56,6 +59,13 @@ export default function EligibilityPage() {
       }
     }
   }
+
+  const schemes = discoveryResult?.schemes || []
+  const totalPages = Math.max(1, Math.ceil(schemes.length / SCHEMES_PER_PAGE))
+  const safeResultsPage = Math.min(resultsPage, totalPages)
+  const pageStart = (safeResultsPage - 1) * SCHEMES_PER_PAGE
+  const pageEnd = Math.min(pageStart + SCHEMES_PER_PAGE, schemes.length)
+  const visibleSchemes = schemes.slice(pageStart, pageEnd)
 
   const handleBack = () => {
     if (currentStep > 0) setCurrentStep(prev => prev - 1)
@@ -189,15 +199,14 @@ export default function EligibilityPage() {
           setDiscoveryResult(null)
           setCurrentStep(0)
           setProfile({})
+          setResultsPage(1)
         }}>
           Start Over
         </Button>
       </div>
 
-
-
       <div className="grid gap-4">
-        {discoveryResult?.schemes.map((scheme, i) => (
+        {visibleSchemes.map((scheme, i) => (
           <motion.div
             key={`${scheme.id}-${i}`}
             initial={{ opacity: 0, y: 10 }}
@@ -209,11 +218,42 @@ export default function EligibilityPage() {
         ))}
       </div>
 
-      <GeneralChatPanel schemes={discoveryResult?.schemes || []} profile={profile} />
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted-foreground">
+          Showing {schemes.length ? pageStart + 1 : 0}-{pageEnd} of {schemes.length} schemes
+        </p>
+        {totalPages > 1 && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setResultsPage(prev => Math.max(1, prev - 1))}
+              disabled={safeResultsPage === 1}
+            >
+              <ChevronLeft className="mr-1 h-4 w-4" />
+              Previous
+            </Button>
+            <span className="text-sm font-medium text-muted-foreground">
+              Page {safeResultsPage} of {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setResultsPage(prev => Math.min(totalPages, prev + 1))}
+              disabled={safeResultsPage === totalPages}
+            >
+              Next
+              <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
+          </div>
+        )}
+      </div>
 
       <Modal 
         isOpen={!!selectedScheme} 
         onClose={() => setSelectedScheme(null)}
+        onBack={() => setSelectedScheme(null)}
+        title={selectedScheme?.name || "Scheme Details"}
         className="h-[85vh] max-h-[800px]"
       >
         {selectedScheme && <ChatPanel scheme={selectedScheme} />}
