@@ -2,20 +2,20 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { ExternalLink } from "lucide-react"
 
 interface ModalProps {
   isOpen: boolean
   onClose: () => void
-  onBack?: () => void
   title?: string
+  url?: string
   children: React.ReactNode
   className?: string
 }
 
-export function Modal({ isOpen, onClose, onBack, title = "Scheme Details", children, className }: ModalProps) {
+export function Modal({ isOpen, onClose, title = "Scheme Details", url, children, className }: ModalProps) {
   // Prevent scrolling when modal is open
   React.useEffect(() => {
     if (isOpen) {
@@ -49,20 +49,20 @@ export function Modal({ isOpen, onClose, onBack, title = "Scheme Details", child
             )}
           >
             <div className="flex items-center justify-between gap-3 border-b p-4">
-              <div className="flex min-w-0 items-center gap-3">
-                {onBack && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={onBack}
-                    className="shrink-0"
-                  >
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back
-                  </Button>
-                )}
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <h2 className="truncate text-lg font-semibold">{title}</h2>
+                {url && (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-w-0 items-center gap-1 text-sm text-primary hover:underline"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                    <span className="truncate">{url}</span>
+                  </a>
+                )}
               </div>
               <div className="flex shrink-0 items-center gap-2">
                 <Button
@@ -73,14 +73,6 @@ export function Modal({ isOpen, onClose, onBack, title = "Scheme Details", child
                 >
                   Close
                 </Button>
-                <button
-                  type="button"
-                  aria-label="Close dialog"
-                  onClick={onClose}
-                  className="rounded-full p-2 hover:bg-accent hover:text-accent-foreground"
-                >
-                  <X className="h-5 w-5" />
-                </button>
               </div>
             </div>
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden p-4">

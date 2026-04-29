@@ -16,5 +16,4 @@ uvicorn
 httpx
 python-multipart
 langdetect
-indictranstoolkit==1.1.1
 sentencepiece

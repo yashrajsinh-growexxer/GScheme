@@ -14,6 +14,17 @@ from rag_pipeline.inference.retriever import fetch_scheme_chunks, get_qdrant_cli
 from rag_pipeline.config import QDRANT_COLLECTION_NAME
 
 
+SECTION_LABELS = {
+    "details",
+    "benefits",
+    "eligibility",
+    "application_process",
+    "documents_required",
+    "sources_and_references",
+    "faq",
+}
+
+
 def get_scheme_comparison_data(scheme_id: str) -> Dict[str, Any]:
     """
     Fetch all chunks for a scheme and return structured comparison fields.
@@ -56,11 +67,12 @@ def get_scheme_comparison_data(scheme_id: str) -> Dict[str, Any]:
     payload_meta = _fetch_payload_metadata(scheme_id)
 
     # Assemble section texts
-    details_text = "\n".join(sections.get("details", []))
-    eligibility_text = "\n".join(sections.get("eligibility", []))
-    benefits_text = "\n".join(sections.get("benefits", []))
-    app_process_text = "\n".join(sections.get("application_process", []))
-    docs_text = "\n".join(sections.get("documents_required", []))
+    scheme_name = meta["name"] or payload_meta.get("scheme_name", "") or ""
+    details_text = _clean_section_text("\n".join(sections.get("details", [])), scheme_name)
+    eligibility_text = _clean_section_text("\n".join(sections.get("eligibility", [])), scheme_name)
+    benefits_text = _clean_section_text("\n".join(sections.get("benefits", [])), scheme_name)
+    app_process_text = _clean_section_text("\n".join(sections.get("application_process", [])), scheme_name)
+    docs_text = _clean_section_text("\n".join(sections.get("documents_required", [])), scheme_name)
 
     # Extract structured fields
     income_cap = _extract_income_cap(eligibility_text + "\n" + details_text)
@@ -250,3 +262,35 @@ def _extract_documents_list(docs_text: str) -> List[str]:
             documents.append(cleaned)
 
     return documents if documents else []
+
+
+def _clean_section_text(text: str, scheme_name: str) -> str:
+    """Remove repeated chunk headers like [Scheme Name] and [Details]."""
+    if not text:
+        return ""
+
+    normalized_scheme_name = scheme_name.strip().lower()
+    cleaned_lines: List[str] = []
+
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            cleaned_lines.append("")
+            continue
+
+        bracket_match = re.fullmatch(r"\[(.+?)\]", line)
+        if bracket_match:
+            inner = bracket_match.group(1).strip().lower().replace(" ", "_")
+            if inner in SECTION_LABELS:
+                continue
+            if normalized_scheme_name and bracket_match.group(1).strip().lower() == normalized_scheme_name:
+                continue
+
+        if normalized_scheme_name and line.lower() == normalized_scheme_name:
+            continue
+
+        cleaned_lines.append(raw_line)
+
+    cleaned_text = "\n".join(cleaned_lines)
+    cleaned_text = re.sub(r"\n{3,}", "\n\n", cleaned_text)
+    return cleaned_text.strip()

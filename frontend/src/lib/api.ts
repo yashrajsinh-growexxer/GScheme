@@ -1,6 +1,7 @@
 export interface Scheme {
   id: string;
   name: string;
+  url?: string;
   description: string;
   state: string;
   category: string;
@@ -170,9 +171,13 @@ export async function compareSchemes(schemeIds: string[]): Promise<SchemeCompare
 
 // --- STT API ---
 
-export async function transcribeAudio(audioBlob: Blob): Promise<{ transcript: string; language_code: string }> {
+export async function transcribeAudio(
+  audioBlob: Blob,
+  mode: "transcribe" | "translate" | "translit" | "verbatim" | "codemix" = "transcribe"
+): Promise<{ transcript: string; language_code: string }> {
   const formData = new FormData();
   formData.append("file", audioBlob, "recording.webm");
+  formData.append("mode", mode);
   
   const res = await fetch(API_BASE + "/stt", {
     method: "POST",

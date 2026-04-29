@@ -9,9 +9,14 @@ import { cn } from "@/lib/utils"
 interface VoiceRecorderProps {
   onTranscript: (text: string) => void
   disabled?: boolean
+  mode?: "transcribe" | "translate" | "translit" | "verbatim" | "codemix"
 }
 
-export function VoiceRecorder({ onTranscript, disabled = false }: VoiceRecorderProps) {
+export function VoiceRecorder({
+  onTranscript,
+  disabled = false,
+  mode = "transcribe",
+}: VoiceRecorderProps) {
   const [state, setState] = useState<"idle" | "recording" | "processing">("idle")
   const [duration, setDuration] = useState(0)
   const [error, setError] = useState<string | null>(null)
@@ -95,7 +100,7 @@ export function VoiceRecorder({ onTranscript, disabled = false }: VoiceRecorderP
         })
 
         try {
-          const result = await transcribeAudio(audioBlob)
+          const result = await transcribeAudio(audioBlob, mode)
           if (result.transcript) {
             onTranscript(result.transcript)
           } else {
@@ -123,7 +128,7 @@ export function VoiceRecorder({ onTranscript, disabled = false }: VoiceRecorderP
       setError(message)
       setState("idle")
     }
-  }, [onTranscript])
+  }, [mode, onTranscript])
 
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
@@ -201,7 +206,9 @@ export function VoiceRecorder({ onTranscript, disabled = false }: VoiceRecorderP
               {/* Label */}
               <div className="text-center">
                 <p className="text-lg font-semibold text-foreground">🎙️ Listening...</p>
-                <p className="text-sm text-muted-foreground mt-1">Speak now in any language</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {mode === "translit" ? "Speak the scheme name clearly" : "Speak now in any language"}
+                </p>
               </div>
 
               {/* Timer */}

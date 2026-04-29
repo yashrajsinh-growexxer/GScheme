@@ -73,6 +73,17 @@ class SchemeResult:
 _qdrant_client = None
 
 
+class KnowledgeBaseUnavailableError(RuntimeError):
+    """Raised when the remote Qdrant knowledge base cannot be reached."""
+
+
+def _raise_kb_unavailable(exc: Exception) -> None:
+    raise KnowledgeBaseUnavailableError(
+        "The scheme knowledge base is temporarily unreachable. "
+        "Please check your internet/DNS connection and Qdrant availability."
+    ) from exc
+
+
 def get_qdrant_client():
     global _qdrant_client
     if _qdrant_client is None:
@@ -82,7 +93,12 @@ def get_qdrant_client():
         if not url:
             raise ValueError("QDRANT_URL not set in environment / .env")
         api_key = os.environ.get("QDRANT_API_KEY")
-        _qdrant_client = QdrantClient(url=url, api_key=api_key, timeout=120)
+        _qdrant_client = QdrantClient(
+            url=url,
+            api_key=api_key,
+            timeout=120,
+            check_compatibility=False,
+        )
     return _qdrant_client
 
 
@@ -269,11 +285,17 @@ def discover_schemes(
     dense = dense_vecs[0]
     sparse = sparse_vecs[0]
 
-    points = _hybrid_search(client, dense, sparse, qdrant_filter)
+    try:
+        points = _hybrid_search(client, dense, sparse, qdrant_filter)
+    except Exception as exc:
+        _raise_kb_unavailable(exc)
 
     if not points:
         # Relax: drop caste + age filters
-        points = _relaxed_search(client, dense, sparse, profile)
+        try:
+            points = _relaxed_search(client, dense, sparse, profile)
+        except Exception as exc:
+            _raise_kb_unavailable(exc)
         if not points:
             return [], True
         schemes = _group_points_by_scheme(points)
@@ -495,22 +517,25 @@ def _relaxed_search(client, dense, sparse, profile, limit=50):
 
 def fetch_scheme_chunks(scheme_id: str) -> List[Dict[str, Any]]:
     """Retrieve every chunk for a given scheme (all section types)."""
-    client = get_qdrant_client()
     from qdrant_client.http import models
 
-    points, _ = client.scroll(
-        collection_name=QDRANT_COLLECTION_NAME,
-        scroll_filter=models.Filter(
-            must=[
-                models.FieldCondition(
-                    key="scheme_id",
-                    match=models.MatchValue(value=scheme_id),
-                )
-            ]
-        ),
-        limit=200,
-        with_payload=True,
-    )
+    try:
+        client = get_qdrant_client()
+        points, _ = client.scroll(
+            collection_name=QDRANT_COLLECTION_NAME,
+            scroll_filter=models.Filter(
+                must=[
+                    models.FieldCondition(
+                        key="scheme_id",
+                        match=models.MatchValue(value=scheme_id),
+                    )
+                ]
+            ),
+            limit=200,
+            with_payload=True,
+        )
+    except Exception as exc:
+        _raise_kb_unavailable(exc)
 
     TYPE_ORDER = [
         "details", "benefits", "eligibility", "application_process",

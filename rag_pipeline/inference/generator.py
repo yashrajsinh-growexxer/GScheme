@@ -106,12 +106,8 @@ def _build_messages(
 
 def _translate_history_to_english(
     history: List[Dict[str, str]],
-    detected_lang: str,
 ) -> List[Dict[str, str]]:
     """Translate prior chat turns into English for multilingual conversations."""
-    if detected_lang == "eng_Latn":
-        return history
-
     translated_history: List[Dict[str, str]] = []
     for msg in history:
         content = msg.get("content", "")
@@ -136,10 +132,10 @@ def _prepare_multilingual_turn(
 ) -> tuple[str, List[Dict[str, str]], str]:
     """Translate the current turn to English when multilingual support is enabled."""
     if not ENABLE_MULTILINGUAL:
-        return user_message, history, "eng_Latn"
+        return user_message, history, "en-IN"
 
     english_message, detected_lang = detect_and_translate_query(user_message)
-    english_history = _translate_history_to_english(history, detected_lang)
+    english_history = _translate_history_to_english(history)
     return english_message, english_history, detected_lang
 
 
@@ -153,7 +149,7 @@ def _stream_response_with_translation(llm, msgs, target_lang: str):
     """
     Stream English directly, or buffer then translate back to the user's language.
     """
-    if target_lang == "eng_Latn":
+    if target_lang == "en-IN":
         yield from llm.stream(msgs)
         return
 
@@ -285,7 +281,7 @@ def chat_response(
     )
     response = llm.invoke(msgs)
     response_text = response.content
-    if detected_lang != "eng_Latn":
+    if detected_lang != "en-IN":
         return translate_response(response_text, detected_lang)
     return response_text
 

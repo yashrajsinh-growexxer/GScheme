@@ -249,11 +249,11 @@ export default function EligibilityPage() {
         )}
       </div>
 
-      <Modal 
-        isOpen={!!selectedScheme} 
+      <Modal
+        isOpen={!!selectedScheme}
         onClose={() => setSelectedScheme(null)}
-        onBack={() => setSelectedScheme(null)}
         title={selectedScheme?.name || "Scheme Details"}
+        url={selectedScheme?.url}
         className="h-[85vh] max-h-[800px]"
       >
         {selectedScheme && <ChatPanel scheme={selectedScheme} />}

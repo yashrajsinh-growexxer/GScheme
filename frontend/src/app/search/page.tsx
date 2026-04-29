@@ -66,7 +66,7 @@ function SearchContent() {
         <h1 className="text-3xl font-bold mb-4">Search Schemes</h1>
         <form onSubmit={handleSearch} className="relative flex items-center w-full">
             <div className="absolute left-4 text-muted-foreground">
-              <VoiceRecorder onTranscript={(text) => setQuery(prev => prev + text)} />
+              <VoiceRecorder mode="translit" onTranscript={(text) => setQuery(prev => prev + text)} />
             </div>
           <Input
             value={query}
@@ -166,8 +166,8 @@ function SearchContent() {
       <Modal 
         isOpen={!!selectedScheme} 
         onClose={() => setSelectedScheme(null)}
-        onBack={() => setSelectedScheme(null)}
         title={selectedScheme?.name || "Scheme Details"}
+        url={selectedScheme?.url}
         className="h-[85vh] max-h-[800px]"
       >
         {selectedScheme && <ChatPanel scheme={selectedScheme} />}

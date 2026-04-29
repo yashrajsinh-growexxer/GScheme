@@ -12,7 +12,7 @@ if str(_project_root) not in sys.path:
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=_project_root / ".env")
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -26,6 +26,7 @@ from rag_pipeline.inference.generator import (
     general_chat_stream,
 )
 from rag_pipeline.inference.retriever import SchemeResult
+from rag_pipeline.inference.retriever import KnowledgeBaseUnavailableError
 from rag_pipeline.inference.compare import (
     get_scheme_comparison_data,
     get_multiple_scheme_comparison,
@@ -69,6 +70,7 @@ class CompareRequest(BaseModel):
 class SchemeResponse(BaseModel):
     id: str
     name: str
+    url: str = ""
     description: str
     state: str
     category: str
@@ -86,6 +88,7 @@ def map_scheme(s: SchemeResult) -> SchemeResponse:
     return SchemeResponse(
         id=s.scheme_id,
         name=s.scheme_name,
+        url=s.scheme_url or "",
         description=desc,
         state=s.location_name or "All India",
         category=s.category_name or "General",
@@ -102,21 +105,27 @@ def stream_generator(generator):
                 yield str(chunk)
     except Exception as exc:
         logger.exception("Streaming response failed")
-        yield (
-            "\n\nSorry, I hit a backend issue while processing that request. "
-            "If this was a non-English prompt, the translation model may not be available yet."
-        )
+        if isinstance(exc, KnowledgeBaseUnavailableError):
+            yield str(exc)
+            return
+        yield "\n\nSorry, I hit a backend issue while processing that request."
 
 # --- ENDPOINTS ---
 
 @app.post("/api/search", response_model=List[SchemeResponse])
 def search_api(req: SearchRequest):
-    candidates = prepare_search_candidates(req.query)
+    try:
+        candidates = prepare_search_candidates(req.query)
+    except KnowledgeBaseUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     return [map_scheme(c) for c in candidates]
 
 @app.post("/api/discover", response_model=Dict[str, Any])
 def discover_api(req: ProfileRequest):
-    candidates, is_relaxed = prepare_discovery_candidates(req.profile)
+    try:
+        candidates, is_relaxed = prepare_discovery_candidates(req.profile)
+    except KnowledgeBaseUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     schemes = [map_scheme(c) for c in candidates]
     
     # We return the list of schemes and a flag.
@@ -128,7 +137,10 @@ def discover_api(req: ProfileRequest):
 
 @app.post("/api/discover-summary")
 def discover_summary_api(req: ProfileRequest):
-    candidates, is_relaxed = prepare_discovery_candidates(req.profile)
+    try:
+        candidates, is_relaxed = prepare_discovery_candidates(req.profile)
+    except KnowledgeBaseUnavailableError as exc:
+        return StreamingResponse(iter([str(exc)]), media_type="text/plain")
     top_schemes = candidates[:5]
     
     generator = run_discovery_page_stream(
@@ -141,12 +153,15 @@ def discover_summary_api(req: ProfileRequest):
 
 @app.post("/api/chat")
 def chat_api(req: ChatRequest):
-    generator = chat_response_stream(
-        user_message=req.message,
-        profile=req.profile or {},
-        scheme_id=req.scheme_id,
-        history=req.history
-    )
+    try:
+        generator = chat_response_stream(
+            user_message=req.message,
+            profile=req.profile or {},
+            scheme_id=req.scheme_id,
+            history=req.history
+        )
+    except KnowledgeBaseUnavailableError as exc:
+        return StreamingResponse(iter([str(exc)]), media_type="text/plain")
     
     return StreamingResponse(stream_generator(generator), media_type="text/plain")
 
@@ -159,12 +174,15 @@ def general_chat_api(req: GeneralChatRequest):
             
     mock_schemes = [MockSchemeResult(s) for s in req.schemes]
     
-    generator = general_chat_stream(
-        user_message=req.message,
-        profile=req.profile,
-        schemes=mock_schemes,
-        history=req.history
-    )
+    try:
+        generator = general_chat_stream(
+            user_message=req.message,
+            profile=req.profile,
+            schemes=mock_schemes,
+            history=req.history
+        )
+    except KnowledgeBaseUnavailableError as exc:
+        return StreamingResponse(iter([str(exc)]), media_type="text/plain")
     
     return StreamingResponse(stream_generator(generator), media_type="text/plain")
 
@@ -175,17 +193,26 @@ def compare_api(req: CompareRequest):
     """Return structured comparison data for 2-3 schemes."""
     if len(req.scheme_ids) < 2 or len(req.scheme_ids) > 3:
         raise HTTPException(status_code=400, detail="Provide 2 or 3 scheme IDs")
-    return get_multiple_scheme_comparison(req.scheme_ids)
+    try:
+        return get_multiple_scheme_comparison(req.scheme_ids)
+    except KnowledgeBaseUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 @app.get("/api/scheme/{scheme_id}/compare-data")
 def scheme_compare_data(scheme_id: str):
     """Return structured comparison data for a single scheme."""
-    return get_scheme_comparison_data(scheme_id)
+    try:
+        return get_scheme_comparison_data(scheme_id)
+    except KnowledgeBaseUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 # --- STT ENDPOINT ---
 
 @app.post("/api/stt")
-async def speech_to_text(file: UploadFile = File(...)):
+async def speech_to_text(
+    file: UploadFile = File(...),
+    mode: str = Form("transcribe"),
+):
     """
     Proxy audio to Sarvam AI Saaras STT API.
     Returns transcript and detected language.
@@ -209,7 +236,7 @@ async def speech_to_text(file: UploadFile = File(...)):
                 files={"file": (file.filename or "audio.webm", audio_bytes, content_type)},
                 data={
                     "model": "saaras:v3",
-                    "mode": "transcribe",
+                    "mode": mode,
                     "language_code": "unknown",
                 },
             )

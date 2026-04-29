@@ -47,7 +47,7 @@ export default function Home() {
         >
           <form onSubmit={handleSearch} className="relative flex items-center w-full">
             <div className="absolute left-4 text-muted-foreground">
-              <VoiceRecorder onTranscript={(text) => setQuery(prev => prev + text)} />
+              <VoiceRecorder mode="translit" onTranscript={(text) => setQuery(prev => prev + text)} />
             </div>
             <Input
               type="text"
