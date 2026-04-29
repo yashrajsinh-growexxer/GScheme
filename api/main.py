@@ -38,10 +38,7 @@ logger = logging.getLogger(__name__)
 # Allow the Vite/Next.js frontend to talk to this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://g-scheme.vercel.app",
-        "http://localhost:3000",
-    ],
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
