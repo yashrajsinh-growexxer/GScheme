@@ -69,7 +69,7 @@ export async function discoverSchemes(profile: Profile): Promise<{ summary: stri
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ profile }),
   });
-  if (!res.ok) throw new Error("Discover failed");
+  if (!res.ok) throw new Error(await readErrorMessage(res, "Discover failed"));
   const data = await res.json();
 
   return {

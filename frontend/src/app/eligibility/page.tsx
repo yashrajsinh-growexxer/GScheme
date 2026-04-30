@@ -36,6 +36,7 @@ export default function EligibilityPage() {
   
   const [isDiscovering, setIsDiscovering] = useState(false)
   const [discoveryResult, setDiscoveryResult] = useState<{summary: string, schemes: Scheme[]} | null>(null)
+  const [discoverError, setDiscoverError] = useState("")
   const [resultsPage, setResultsPage] = useState(1)
   const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(null)
 
@@ -48,12 +49,14 @@ export default function EligibilityPage() {
       setCurrentStep(prev => prev + 1)
     } else {
       setIsDiscovering(true)
+      setDiscoverError("")
       try {
         const result = await discoverSchemes(profile)
         setDiscoveryResult(result)
         setResultsPage(1)
       } catch (err) {
         console.error(err)
+        setDiscoverError(err instanceof Error ? err.message : "Unable to discover schemes right now.")
       } finally {
         setIsDiscovering(false)
       }
@@ -150,6 +153,12 @@ export default function EligibilityPage() {
               </motion.div>
             </AnimatePresence>
 
+            {discoverError && (
+              <div className="mt-6 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                {discoverError}
+              </div>
+            )}
+
             <div className="flex justify-between mt-8 pt-6 border-t">
               <Button 
                 variant="ghost" 
@@ -197,6 +206,7 @@ export default function EligibilityPage() {
         </div>
         <Button variant="outline" onClick={() => {
           setDiscoveryResult(null)
+          setDiscoverError("")
           setCurrentStep(0)
           setProfile({})
           setResultsPage(1)

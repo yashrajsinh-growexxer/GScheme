@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: gscheme
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: CORS_ORIGINS
+        value: https://g-scheme.vercel.app
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: HUGGINGFACE_HUB_TOKEN
+        sync: false

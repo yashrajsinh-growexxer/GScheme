@@ -35,10 +35,26 @@ from rag_pipeline.inference.compare import (
 app = FastAPI(title="GScheme API", version="1.0")
 logger = logging.getLogger(__name__)
 
-# Allow the Vite/Next.js frontend to talk to this API
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://g-scheme.vercel.app",
+]
+
+
+def _get_cors_origins() -> List[str]:
+    raw_origins = os.environ.get("CORS_ORIGINS") or os.environ.get("FRONTEND_ORIGINS")
+    if not raw_origins:
+        return DEFAULT_CORS_ORIGINS
+    origins = [origin.strip().rstrip("/") for origin in raw_origins.split(",")]
+    return [origin for origin in origins if origin]
+
+
+# Allow the Next.js frontend to talk to this API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_get_cors_origins(),
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -111,6 +127,16 @@ def stream_generator(generator):
         yield "\n\nSorry, I hit a backend issue while processing that request."
 
 # --- ENDPOINTS ---
+
+@app.get("/")
+def root():
+    return {"ok": True, "service": "GScheme API"}
+
+
+@app.get("/healthz")
+def healthz():
+    return {"ok": True}
+
 
 @app.post("/api/search", response_model=List[SchemeResponse])
 def search_api(req: SearchRequest):
@@ -259,4 +285,5 @@ async def speech_to_text(
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8501, reload=True)
+    port = int(os.environ.get("PORT", "8501"))
+    uvicorn.run("api.main:app", host="0.0.0.0", port=port, reload=False)
