@@ -51,6 +51,22 @@ def _get_cors_origins() -> List[str]:
 
 
 # Allow the Next.js frontend to talk to this API.
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://g-scheme.vercel.app",
+]
+
+
+def _get_cors_origins() -> List[str]:
+    raw_origins = os.environ.get("CORS_ORIGINS") or os.environ.get("FRONTEND_ORIGINS")
+    if not raw_origins:
+        return DEFAULT_CORS_ORIGINS
+    origins = [origin.strip().rstrip("/") for origin in raw_origins.split(",")]
+    return [origin for origin in origins if origin]
+
+
+# Allow the Next.js frontend to talk to this API.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_get_cors_origins(),
@@ -285,5 +301,4 @@ async def speech_to_text(
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", "8501"))
-    uvicorn.run("api.main:app", host="0.0.0.0", port=port, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=8501, reload=True)
