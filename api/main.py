@@ -69,13 +69,15 @@ def _get_cors_origins() -> List[str]:
 # Allow the Next.js frontend to talk to this API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_get_cors_origins(),
-    allow_origin_regex=r"https://.*\.vercel\.app",
-    allow_credentials=False,
+    allow_origins=[
+        "https://g-scheme.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # --- MODELS ---
 
 class SearchRequest(BaseModel):
