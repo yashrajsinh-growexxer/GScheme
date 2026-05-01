@@ -23,6 +23,7 @@ from rag_pipeline.config import (
     DISCOVERY_INITIAL_FETCH,
     DISCOVERY_RERANK_CANDIDATES,
     DISCOVERY_TOP_K,
+    DISCOVERY_USE_SEMANTIC,
     PROFESSION_BOOST,
     PROFESSION_CATEGORY_MAP,
     QDRANT_COLLECTION_NAME,
@@ -206,7 +207,8 @@ def _group_points_by_scheme(scored_points) -> List[SchemeResult]:
             }
 
         info = scheme_map[sid]
-        info["scores"].append(point.score if point.score else 0.0)
+        score = getattr(point, "score", None)
+        info["scores"].append(float(score) if score is not None else 0.65)
         info["chunks"].append(
             {
                 "text": payload.get("text", ""),
@@ -276,11 +278,32 @@ def discover_schemes(
         (schemes, is_relaxed) — is_relaxed=True means strict filters had
         no results so filters were loosened.
     """
-    client = get_qdrant_client()
-    emb = get_embedding_model()
     qdrant_filter = build_metadata_filter(profile)
-    query_text = build_search_query(profile)
+    client = get_qdrant_client()
 
+    if not DISCOVERY_USE_SEMANTIC:
+        try:
+            points = _filtered_scroll(client, qdrant_filter, limit=DISCOVERY_INITIAL_FETCH)
+        except Exception as exc:
+            _raise_kb_unavailable(exc)
+
+        if not points:
+            try:
+                points = _relaxed_filtered_scroll(client, profile, limit=DISCOVERY_INITIAL_FETCH)
+            except Exception as exc:
+                _raise_kb_unavailable(exc)
+            if not points:
+                return [], True
+            schemes = _group_points_by_scheme(points)
+            schemes = _apply_profession_boost(schemes, profile)
+            return _dedupe_scheme_results(schemes), True
+
+        schemes = _group_points_by_scheme(points)
+        schemes = _apply_profession_boost(schemes, profile)
+        return _dedupe_scheme_results(schemes), False
+
+    emb = get_embedding_model()
+    query_text = build_search_query(profile)
     dense_vecs, sparse_vecs = emb.embed_documents_hybrid([query_text])
     dense = dense_vecs[0]
     sparse = sparse_vecs[0]
@@ -510,6 +533,38 @@ def _relaxed_search(client, dense, sparse, profile, limit=50):
         ]
     )
     return _hybrid_search(client, dense, sparse, relaxed, limit=limit)
+
+
+def _filtered_scroll(client, qdrant_filter, limit=DISCOVERY_INITIAL_FETCH):
+    """Fetch profile-matching chunks without local embedding inference."""
+    points, _ = client.scroll(
+        collection_name=QDRANT_COLLECTION_NAME,
+        scroll_filter=qdrant_filter,
+        limit=limit,
+        with_payload=True,
+    )
+    return points
+
+
+def _relaxed_filtered_scroll(client, profile, limit=DISCOVERY_INITIAL_FETCH):
+    """Relax profile matching without requiring a semantic query vector."""
+    from qdrant_client.http import models
+
+    relaxed = models.Filter(
+        must=[
+            models.FieldCondition(
+                key="chunk_type",
+                match=models.MatchAny(any=["eligibility", "details"]),
+            ),
+            models.FieldCondition(
+                key="location_name",
+                match=models.MatchAny(
+                    any=[profile["state"], CENTRAL_GOVT_LABEL]
+                ),
+            ),
+        ]
+    )
+    return _filtered_scroll(client, relaxed, limit=limit)
 
 
 # ── Deep-dive: fetch all chunks for one scheme ──────────────────────

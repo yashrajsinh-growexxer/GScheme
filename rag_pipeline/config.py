@@ -1,6 +1,7 @@
 """
 Configuration constants for the knowledge-base pipeline.
 """
+import os
 from pathlib import Path
 
 # === PATHS ===
@@ -136,6 +137,7 @@ RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 USE_RERANKER = False  # Set False to skip reranker and save ~20s on first load
 
 # === DISCOVERY CONFIG ===
+DISCOVERY_USE_SEMANTIC = os.environ.get("DISCOVERY_USE_SEMANTIC", "false").lower() == "true"
 DISCOVERY_INITIAL_FETCH = 500   # chunks to pull from Qdrant
 DISCOVERY_RERANK_CANDIDATES = 10  # unique schemes to rerank
 DISCOVERY_TOP_K = 5             # final schemes to show

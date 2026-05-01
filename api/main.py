@@ -39,22 +39,7 @@ DEFAULT_CORS_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://g-scheme.vercel.app",
-]
-
-
-def _get_cors_origins() -> List[str]:
-    raw_origins = os.environ.get("CORS_ORIGINS") or os.environ.get("FRONTEND_ORIGINS")
-    if not raw_origins:
-        return DEFAULT_CORS_ORIGINS
-    origins = [origin.strip().rstrip("/") for origin in raw_origins.split(",")]
-    return [origin for origin in origins if origin]
-
-
-# Allow the Next.js frontend to talk to this API.
-DEFAULT_CORS_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://g-scheme.vercel.app",
+    "http://localhost:5173",
 ]
 
 
@@ -69,11 +54,7 @@ def _get_cors_origins() -> List[str]:
 # Allow the Next.js frontend to talk to this API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://g-scheme.vercel.app",
-        "http://localhost:5173",
-        "http://localhost:3000",
-    ],
+    allow_origins=_get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
