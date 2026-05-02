@@ -1,10 +1,11 @@
 **GScheme**
-GScheme is a full-stack AI system for discovering, comparing, and understanding Indian government schemes. It has four major layers:
+GScheme is a full-stack AI system for discovering, comparing, and understanding Indian government schemes. It has five major layers:
 
 1. data scraping and dataset preparation
 2. knowledge base construction for retrieval
 3. backend APIs and RAG inference
-4. frontend UI, including compare, voice, and multilingual workflows
+4. frontend UI, including filters, compare, voice, and multilingual workflows
+5. channel integration for WhatsApp via Twilio
 
 ---
 
@@ -18,6 +19,7 @@ The project is designed to help users:
 - compare up to 3 schemes side by side
 - speak their query using voice input
 - interact in Indian languages, with translation handled around the RAG pipeline
+- use search and eligibility discovery from WhatsApp, without needing the web UI
 
 So the system is not just a search UI. It is a scheme knowledge platform built around structured scraping + vector retrieval + LLM answering.
 
@@ -45,10 +47,13 @@ Main folders:
   - compare engine
 
 - `api/`  
-  FastAPI backend that exposes REST endpoints to the frontend.
+  FastAPI backend that exposes REST endpoints to the frontend and Twilio webhook handlers.
 
 - `frontend/`  
-  Next.js application with search, eligibility, compare, chat, and voice UI.
+  Next.js application with search, eligibility, compare, chat, voice UI, and filter panels.
+
+- `markdowns/`  
+  Product and implementation notes, including the WhatsApp deployment walkthrough.
 
 ---
 
@@ -246,6 +251,16 @@ Examples of normalization:
 
 This is why scheme name search is fast and can work even when title formatting varies.
 
+Current title-search filter behavior:
+- filtering happens on the local in-memory scheme index before ranking
+- supports:
+  - State / UT, including `Central`
+  - scheme category
+  - age bucket
+  - gender
+  - caste
+- some earlier experimental filters such as area, disability, and profession were removed from the web title-search UI to keep that flow simpler
+
 **7.2 Eligibility/discovery retrieval**
 Functionality:
 - `discover_schemes()`
@@ -255,6 +270,7 @@ Behavior:
 - encodes it with hybrid embeddings
 - queries Qdrant
 - applies metadata filters for age, state, caste, gender, etc.
+- can apply a scheme-category constraint when discovery is driven by filtered UIs or external channels
 - if results are too strict, it can relax filters to avoid empty output
 - boosts profession-linked categories when relevant
 
@@ -418,6 +434,11 @@ If a field is missing:
 
 That gives the frontend clean, side-by-side comparison data.
 
+Current frontend rendering behavior for comparison:
+- long text fields are no longer trimmed with `...`
+- document lists are no longer collapsed behind `+N more`
+- multiline fields are rendered with preserved formatting, bullets, and full wrapping for readability
+
 ---
 
 **11. Backend API Layer**
@@ -453,11 +474,16 @@ Main endpoints:
 - `POST /api/stt`  
   Accept audio upload and send it to Sarvam Saaras STT.
 
+- `POST /api/whatsapp/webhook`  
+  Twilio-compatible WhatsApp webhook that runs the bot conversation flow.
+
 The backend also:
 - maps internal scheme results into frontend DTOs
 - streams chat responses
 - catches retrieval/KB failures
 - normalizes STT MIME types from browser audio blobs
+- generates TwiML replies for WhatsApp
+- optionally validates Twilio webhook signatures when `TWILIO_AUTH_TOKEN` is configured
 
 ---
 
@@ -518,8 +544,17 @@ File: `frontend/src/app/search/page.tsx`
 
 Purpose:
 - search schemes by name
+- refine title-search results with a left filter rail
 - open “Learn more” modal
 - ask scheme-specific questions
+
+Current filter UI:
+- State / UT
+- scheme category
+- age
+- gender
+- caste
+- explicit `Apply Filters` button at the bottom of the panel
 
 **13.3 Eligibility page**
 File: `frontend/src/app/eligibility/page.tsx`
@@ -528,6 +563,7 @@ Purpose:
 - profile-based discovery
 - user enters demographic / eligibility details
 - results feed into summary and chat
+- results can be narrowed with a left sidebar category filter without re-querying Qdrant
 
 **13.4 Compare page**
 File: `frontend/src/app/compare/page.tsx`
@@ -582,6 +618,7 @@ Purpose:
 - render structured rows for side-by-side comparison
 - supports 2–3 scheme columns
 - shows `N/A` where fields are unavailable
+- preserves full content and formatting for details, eligibility, benefits, application process, and documents required
 
 **Modal**
 File: `frontend/src/components/ui/modal.tsx`
@@ -613,6 +650,7 @@ It also supports:
 - streaming fetch for chat responses
 - error extraction from backend responses
 - typed interfaces for scheme and compare data
+- passing title-search filters to `/api/search`
 
 ---
 
@@ -634,10 +672,11 @@ Backend support for this is already present because `SchemeResponse` includes `u
 
 **A. Search by scheme name**
 1. user types or speaks a scheme name
-2. frontend calls `/api/search`
-3. backend uses local title index search
-4. results return with name, state, category, description, score, and URL
-5. user opens a scheme or compares it
+2. user can optionally set State / UT, category, age, gender, and caste filters
+3. frontend calls `/api/search`
+4. backend uses local title index search plus filter matching
+5. results return with name, state, category, description, score, and URL
+6. user opens a scheme or compares it
 
 **B. Eligibility discovery**
 1. user enters profile information
@@ -645,6 +684,7 @@ Backend support for this is already present because `SchemeResponse` includes `u
 3. Qdrant returns candidate schemes
 4. backend maps them into API responses
 5. summary and chat are generated over those results
+6. the web UI can optionally narrow the shown results by scheme category client-side
 
 **C. Scheme-specific chat**
 1. user clicks Learn more
@@ -670,6 +710,29 @@ Backend support for this is already present because `SchemeResponse` includes `u
 3. third slot appears optionally
 4. frontend fetches structured compare data
 5. grid renders normalized rows with `N/A` for missing fields
+6. full field content is shown without trimming, including full document lists
+
+**F. WhatsApp bot**
+1. user sends a WhatsApp message to the Twilio sender
+2. Twilio sends a form-encoded webhook request to `/api/whatsapp/webhook`
+3. backend restores or creates a lightweight session keyed by the WhatsApp sender number
+4. inbound text is translated to English if needed
+5. user chooses:
+   - Search Schemes by Name
+   - Find Schemes for You
+6. for search-by-name:
+   - backend runs `prepare_search_candidates()`
+   - top 5 schemes are returned
+7. for profile-based discovery:
+   - bot collects gender, age, state, area, caste, disability, and profession
+   - backend runs `prepare_discovery_candidates()`
+   - top 5 schemes are returned
+8. WhatsApp replies include only:
+   - scheme name
+   - scheme URL
+   - state or `Central`
+   - scheme category
+9. outbound reply is translated back into the user’s detected language when multilingual support is enabled
 
 ---
 
@@ -685,6 +748,8 @@ What is already strong in this project:
 - side-by-side compare architecture
 - voice input integrated into multiple screens
 - multilingual wrapper around the RAG flow
+- filter-aware title search and discovery UX
+- a second delivery channel through WhatsApp using Twilio webhooks
 - separation of concerns between scraping, KB building, retrieval, generation, backend, and UI
 
 ---
@@ -698,12 +763,15 @@ A few important operational realities:
 - voice transcription depends on Sarvam Saaras
 - generation depends on Groq API availability
 - search-by-name is English-title-oriented, so transliterated input works better than native-script title search unless you add alias handling
+- WhatsApp session state is currently in-memory, so bot sessions reset on server restart
+- Twilio webhook signature validation is strongest when the `twilio` Python package is installed in the deployment environment
 
 So the system is robust in design, but still cloud-dependent for:
 - translation
 - STT
 - generation
 - vector retrieval
+- Twilio channel integration in production deployments
 
 ---
 
@@ -719,5 +787,7 @@ At this point, GScheme is not just a scraped dataset plus chatbot. It is a multi
 - multilingual translation around RAG
 - voice-to-text interaction
 - scheme comparison UI and API
+- filter-driven discovery and title-search refinement
+- Twilio-powered WhatsApp access to the same retrieval stack
 
 It’s a fairly complete applied RAG product aimed at a real public-information domain.
