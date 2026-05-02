@@ -34,9 +34,7 @@ const ROWS: RowConfig[] = [
     render: (value) => {
       const text = value as string
       if (!text || text === "N/A") return <NaCell />
-      // Show first 300 chars
-      const truncated = text.length > 300 ? text.slice(0, 300) + "…" : text
-      return <p className="text-sm leading-relaxed whitespace-pre-line">{truncated}</p>
+      return <FormattedText text={text} />
     },
   },
   {
@@ -46,8 +44,7 @@ const ROWS: RowConfig[] = [
     render: (value) => {
       const text = value as string
       if (!text || text === "N/A") return <NaCell />
-      const truncated = text.length > 400 ? text.slice(0, 400) + "…" : text
-      return <p className="text-sm leading-relaxed whitespace-pre-line">{truncated}</p>
+      return <FormattedText text={text} />
     },
   },
   {
@@ -57,8 +54,7 @@ const ROWS: RowConfig[] = [
     render: (value) => {
       const text = value as string
       if (!text || text === "N/A") return <NaCell />
-      const truncated = text.length > 400 ? text.slice(0, 400) + "…" : text
-      return <p className="text-sm leading-relaxed whitespace-pre-line">{truncated}</p>
+      return <FormattedText text={text} />
     },
   },
   {
@@ -121,13 +117,12 @@ const ROWS: RowConfig[] = [
       const docs = value as string[]
       if (!docs || docs.length === 0) return <NaCell />
       return (
-        <ul className="list-disc list-inside text-sm space-y-1">
-          {docs.slice(0, 8).map((doc, i) => (
-            <li key={i} className="leading-relaxed">{doc}</li>
+        <ul className="list-disc space-y-2 pl-5 text-sm">
+          {docs.map((doc, i) => (
+            <li key={i} className="leading-relaxed whitespace-pre-wrap break-words">
+              {doc}
+            </li>
           ))}
-          {docs.length > 8 && (
-            <li className="text-muted-foreground italic">+{docs.length - 8} more</li>
-          )}
         </ul>
       )
     },
@@ -158,8 +153,7 @@ const ROWS: RowConfig[] = [
     render: (value) => {
       const text = value as string
       if (!text || text === "N/A") return <NaCell />
-      const truncated = text.length > 350 ? text.slice(0, 350) + "…" : text
-      return <p className="text-sm leading-relaxed whitespace-pre-line">{truncated}</p>
+      return <FormattedText text={text} />
     },
   },
   {
@@ -190,6 +184,43 @@ function NaCell() {
   )
 }
 
+function FormattedText({ text }: { text: string }) {
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+
+  if (lines.length === 0) {
+    return <NaCell />
+  }
+
+  const bulletLike = lines.every((line) =>
+    /^([•*-]|[0-9]+[.)]|[A-Za-z][.)]|note\s*\d*:|step\s*\d*:)/i.test(line),
+  )
+
+  if (bulletLike) {
+    return (
+      <ul className="list-disc space-y-2 pl-5 text-sm">
+        {lines.map((line, index) => (
+          <li key={index} className="leading-relaxed whitespace-pre-wrap break-words">
+            {line.replace(/^([•*-]|[0-9]+[.)]|[A-Za-z][.)])\s*/i, "")}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  return (
+    <div className="space-y-2 text-sm">
+      {lines.map((line, index) => (
+        <p key={index} className="leading-relaxed whitespace-pre-wrap break-words">
+          {line}
+        </p>
+      ))}
+    </div>
+  )
+}
+
 function CellValue({ row, scheme }: { row: RowConfig; scheme: SchemeCompareData }) {
   const value = scheme[row.key as keyof SchemeCompareData] as unknown
 
@@ -202,7 +233,7 @@ function CellValue({ row, scheme }: { row: RowConfig; scheme: SchemeCompareData 
     return <NaCell />
   }
 
-  return <p className="text-sm">{strValue}</p>
+  return <p className="text-sm whitespace-pre-wrap break-words">{strValue}</p>
 }
 
 export function ComparisonGrid({ schemes }: ComparisonGridProps) {

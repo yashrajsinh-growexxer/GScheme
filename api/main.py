@@ -3,6 +3,7 @@ import sys
 import logging
 from typing import Any, Dict, List, Optional
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 # Ensure we can import from rag_pipeline
 _project_root = Path(__file__).resolve().parent.parent
@@ -12,12 +13,13 @@ if str(_project_root) not in sys.path:
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=_project_root / ".env")
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import httpx
 
+from api.whatsapp_state import WhatsAppStateManager
 from rag_pipeline.inference.generator import (
     prepare_search_candidates,
     prepare_discovery_candidates,
@@ -25,8 +27,10 @@ from rag_pipeline.inference.generator import (
     chat_response_stream,
     general_chat_stream,
 )
+from rag_pipeline.config import CATEGORY_DISPLAY_MAP, CENTRAL_GOVT_LABEL
 from rag_pipeline.inference.retriever import SchemeResult
 from rag_pipeline.inference.retriever import KnowledgeBaseUnavailableError
+from rag_pipeline.whatsapp_controller import WhatsAppBotController
 from rag_pipeline.inference.compare import (
     get_scheme_comparison_data,
     get_multiple_scheme_comparison,
@@ -34,6 +38,7 @@ from rag_pipeline.inference.compare import (
 
 app = FastAPI(title="GScheme API", version="1.0")
 logger = logging.getLogger(__name__)
+whatsapp_bot = WhatsAppBotController(WhatsAppStateManager())
 
 DEFAULT_CORS_ORIGINS = [
     "http://localhost:3000",
@@ -63,6 +68,7 @@ app.add_middleware(
 
 class SearchRequest(BaseModel):
     query: str
+    filters: Optional[Dict[str, Any]] = None
 
 class ProfileRequest(BaseModel):
     profile: Dict[str, Any]
@@ -105,8 +111,8 @@ def map_scheme(s: SchemeResult) -> SchemeResponse:
         name=s.scheme_name,
         url=s.scheme_url or "",
         description=desc,
-        state=s.location_name or "All India",
-        category=s.category_name or "General",
+        state="Central" if s.location_name == CENTRAL_GOVT_LABEL else (s.location_name or "All India"),
+        category=CATEGORY_DISPLAY_MAP.get(s.category_name, s.category_name or "General"),
         matchScore=score
     )
 
@@ -125,6 +131,41 @@ def stream_generator(generator):
             return
         yield "\n\nSorry, I hit a backend issue while processing that request."
 
+
+def _build_twiml_message(body_text: str) -> Response:
+    safe_body = escape(body_text or "")
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        f"<Response><Message>{safe_body}</Message></Response>"
+    )
+    return Response(content=xml, media_type="application/xml")
+
+
+def _validate_twilio_request(request: Request, form_data: Dict[str, Any]) -> bool:
+    auth_token = os.environ.get("TWILIO_AUTH_TOKEN", "").strip()
+    if not auth_token:
+        return True
+
+    try:
+        from twilio.request_validator import RequestValidator
+    except ImportError:
+        logger.warning(
+            "TWILIO_AUTH_TOKEN is set but the twilio package is not installed; "
+            "skipping webhook signature validation."
+        )
+        return True
+
+    signature = request.headers.get("X-Twilio-Signature", "")
+    if not signature:
+        return False
+
+    validator = RequestValidator(auth_token)
+    return validator.validate(
+        str(request.url),
+        form_data,
+        signature,
+    )
+
 # --- ENDPOINTS ---
 
 @app.get("/")
@@ -140,7 +181,7 @@ def healthz():
 @app.post("/api/search", response_model=List[SchemeResponse])
 def search_api(req: SearchRequest):
     try:
-        candidates = prepare_search_candidates(req.query)
+        candidates = prepare_search_candidates(req.query, filters=req.filters)
     except KnowledgeBaseUnavailableError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     return [map_scheme(c) for c in candidates]
@@ -210,6 +251,23 @@ def general_chat_api(req: GeneralChatRequest):
         return StreamingResponse(iter([str(exc)]), media_type="text/plain")
     
     return StreamingResponse(stream_generator(generator), media_type="text/plain")
+
+
+@app.post("/api/whatsapp/webhook")
+async def whatsapp_webhook(request: Request):
+    form = await request.form()
+    form_data = {key: value for key, value in form.multi_items()}
+
+    if not _validate_twilio_request(request, form_data):
+        raise HTTPException(status_code=403, detail="Invalid Twilio signature")
+
+    from_number = str(form_data.get("From", "")).strip()
+    body = str(form_data.get("Body", "")).strip()
+    if not from_number:
+        raise HTTPException(status_code=400, detail="Missing sender number")
+
+    reply_text = whatsapp_bot.handle_message(from_number, body)
+    return _build_twiml_message(reply_text)
 
 # --- COMPARISON ENDPOINTS ---
 

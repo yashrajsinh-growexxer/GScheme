@@ -4,5 +4,4 @@ __pycache__
 .codex
 data/chunks/
 data/prepared_embeddings/
-task.md
-implementation_plan.md
+markdowns/

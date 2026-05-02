@@ -18,6 +18,7 @@ from typing import Any, Dict, List, Optional
 from dotenv import load_dotenv
 
 from rag_pipeline.config import (
+    CATEGORY_DISPLAY_MAP,
     CENTRAL_GOVT_LABEL,
     DENSE_VECTOR_NAME,
     DISCOVERY_INITIAL_FETCH,
@@ -33,6 +34,24 @@ from rag_pipeline.knowledge_base.data_loader import load_all_schemes
 from rag_pipeline.knowledge_base.embeddings import get_embedding_model
 
 load_dotenv()
+
+
+_CATEGORY_FILTER_LOOKUP = {
+    key.lower(): key for key in CATEGORY_DISPLAY_MAP
+}
+_CATEGORY_FILTER_LOOKUP.update(
+    {
+        value.lower(): key
+        for key, value in CATEGORY_DISPLAY_MAP.items()
+    }
+)
+
+_PROFESSION_CATEGORY_INVERSE: Dict[int, List[str]] = defaultdict(list)
+for profession_name, category_ids in PROFESSION_CATEGORY_MAP.items():
+    if profession_name == "Other":
+        continue
+    for category_id in category_ids:
+        _PROFESSION_CATEGORY_INVERSE[category_id].append(profession_name)
 
 
 # ── Data structures ──────────────────────────────────────────────────
@@ -160,6 +179,15 @@ def build_metadata_filter(profile: Dict[str, Any]):
         ]
     )
     must.append(age_filter)
+
+    category_filters = _extract_category_filters(profile)
+    if category_filters:
+        must.append(
+            models.FieldCondition(
+                key="category_name",
+                match=models.MatchAny(any=category_filters),
+            )
+        )
 
     return models.Filter(must=must)
 
@@ -332,6 +360,7 @@ def discover_schemes(
 
 def search_schemes_by_name(
     query_text: str,
+    filters: Optional[Dict[str, Any]] = None,
     top_k: int = DISCOVERY_TOP_K,
 ) -> List[SchemeResult]:
     """
@@ -351,6 +380,9 @@ def search_schemes_by_name(
 
     ranked_matches = []
     for scheme in _load_scheme_name_index():
+        if not _scheme_matches_search_filters(scheme, filters):
+            continue
+
         name = scheme["scheme_name"]
         normalized_name = scheme["normalized_name"]
         name_tokens = scheme["tokens"]
@@ -453,6 +485,9 @@ def _load_scheme_name_index() -> tuple[Dict[str, Any], ...]:
     index = []
     for scheme in schemes:
         normalized_name = _normalize_scheme_name(scheme.scheme_name)
+        text_blob = _flatten_scheme_text(scheme)
+        area_tags = _extract_area_tags(text_blob)
+        profession_tags = _extract_profession_tags(text_blob, scheme.category_id)
         index.append(
             {
                 "scheme_id": scheme.scheme_id,
@@ -461,11 +496,247 @@ def _load_scheme_name_index() -> tuple[Dict[str, Any], ...]:
                 "location_name": scheme.location_name,
                 "category_id": scheme.category_id,
                 "category_name": scheme.category_name,
+                "gender_tags": tuple(scheme.gender_tags),
+                "caste_tags": tuple(scheme.caste_tags),
+                "age_present": scheme.age_present,
+                "age_min_effective": scheme.age_min_effective,
+                "age_max_effective": scheme.age_max_effective,
+                "area_tags": area_tags,
+                "disability_specific": _is_disability_specific(text_blob),
+                "profession_tags": profession_tags,
                 "normalized_name": normalized_name,
                 "tokens": tuple(tok for tok in normalized_name.split() if tok),
             }
         )
     return tuple(index)
+
+
+def _extract_category_filters(profile_or_filters: Dict[str, Any]) -> List[str]:
+    raw_values = (
+        profile_or_filters.get("categories")
+        or profile_or_filters.get("schemeCategories")
+        or profile_or_filters.get("scheme_categories")
+        or []
+    )
+    normalized: List[str] = []
+    for value in raw_values:
+        lookup_key = str(value or "").strip().lower()
+        category_name = _CATEGORY_FILTER_LOOKUP.get(lookup_key)
+        if category_name and category_name not in normalized:
+            normalized.append(category_name)
+    return normalized
+
+
+def _normalize_state_filters(raw_values: Any) -> List[str]:
+    if not raw_values:
+        return []
+
+    normalized: List[str] = []
+    for value in raw_values:
+        label = str(value or "").strip()
+        if not label:
+            continue
+        state_name = CENTRAL_GOVT_LABEL if label.lower() in {"central", "india"} else label
+        if state_name not in normalized:
+            normalized.append(state_name)
+    return normalized
+
+
+def _normalize_tag_values(raw_values: Any) -> set[str]:
+    if not raw_values:
+        return set()
+    return {
+        str(value or "").strip().lower()
+        for value in raw_values
+        if str(value or "").strip()
+    }
+
+
+def _tags_match(
+    scheme_tags: tuple[str, ...] | List[str],
+    selected_tags: set[str],
+    generic_tags: set[str],
+) -> bool:
+    if not selected_tags:
+        return True
+    tag_set = {str(tag).lower() for tag in scheme_tags}
+    return bool(tag_set & selected_tags) or bool(tag_set & generic_tags)
+
+
+def _parse_age_bucket(age_range: str) -> tuple[Optional[int], Optional[int]]:
+    label = (age_range or "").strip()
+    if not label:
+        return None, None
+    if label.endswith("+"):
+        floor = label[:-1].strip()
+        return (int(floor), None) if floor.isdigit() else (None, None)
+    if "-" not in label:
+        return None, None
+    low, high = [part.strip() for part in label.split("-", 1)]
+    if not low.isdigit() or not high.isdigit():
+        return None, None
+    return int(low), int(high)
+
+
+def _age_bucket_matches_scheme(
+    age_range: str,
+    age_present: bool,
+    age_min_effective: Optional[int],
+    age_max_effective: Optional[int],
+) -> bool:
+    floor, ceiling = _parse_age_bucket(age_range)
+    if floor is None:
+        return True
+    if not age_present:
+        return True
+
+    scheme_min = 0 if age_min_effective is None else age_min_effective
+    scheme_max = 120 if age_max_effective is None else age_max_effective
+    bucket_max = 120 if ceiling is None else ceiling
+    return scheme_min <= bucket_max and scheme_max >= floor
+
+
+def _flatten_scheme_text(scheme) -> str:
+    parts: List[str] = []
+    for value in (scheme.sections or {}).values():
+        if isinstance(value, list):
+            parts.extend(str(item) for item in value if item)
+        elif isinstance(value, str):
+            parts.append(value)
+    return "\n".join(parts).lower()
+
+
+def _extract_area_tags(text_blob: str) -> tuple[str, ...]:
+    tags = set()
+    area_patterns = {
+        "urban": [r"\burban\b", r"\bcity\b", r"\bmunicipal\b", r"\bmetro\b"],
+        "rural": [r"\brural\b", r"\bvillage\b", r"\bgram(?:in)?\b", r"\bpanchayat\b"],
+    }
+    for tag, patterns in area_patterns.items():
+        if any(re.search(pattern, text_blob) for pattern in patterns):
+            tags.add(tag)
+    return tuple(sorted(tags)) or ("unknown",)
+
+
+def _is_disability_specific(text_blob: str) -> bool:
+    disability_patterns = [
+        r"\bdisab",
+        r"\bdivyang",
+        r"\bhandicap",
+        r"\borthopedic",
+        r"\bhearing impair",
+        r"\bvisual impair",
+        r"\bbenchmark disability",
+        r"\bpersons? with disabilities",
+    ]
+    return any(re.search(pattern, text_blob) for pattern in disability_patterns)
+
+
+def _extract_profession_tags(text_blob: str, category_id: int) -> tuple[str, ...]:
+    tags = set()
+    profession_patterns = {
+        "Student": [
+            r"\bstudents?\b",
+            r"\bscholar(ship)?\b",
+            r"\bschool\b",
+            r"\bcollege\b",
+            r"\buniversity\b",
+        ],
+        "Farmer": [
+            r"\bfarmers?\b",
+            r"\bkisan\b",
+            r"\bagricultur(?:e|al)\b",
+            r"\bhorticulture\b",
+        ],
+        "Entrepreneur / Self-Employed": [
+            r"\bentrepreneur",
+            r"\bself[- ]?employ",
+            r"\bstartup\b",
+            r"\bmsme\b",
+            r"\bbusiness\b",
+        ],
+        "Corporate Employee": [
+            r"\bcorporate\b",
+            r"\bprivate sector\b",
+            r"\bsalaried\b",
+        ],
+        "Government Employee": [
+            r"\bgovernment employees?\b",
+            r"\bgovt\.?\s+employees?\b",
+            r"\bstate employees?\b",
+            r"\bcentral employees?\b",
+        ],
+        "Unemployed": [
+            r"\bunemployed\b",
+            r"\bjob seekers?\b",
+            r"\bberozga(?:r|ri)\b",
+        ],
+    }
+
+    for profession_name, patterns in profession_patterns.items():
+        if any(re.search(pattern, text_blob) for pattern in patterns):
+            tags.add(profession_name)
+
+    tags.update(_PROFESSION_CATEGORY_INVERSE.get(category_id, []))
+    return tuple(sorted(tags))
+
+
+def _matches_profession_filter(
+    scheme: Dict[str, Any],
+    selected_profession: str,
+) -> bool:
+    profession = (selected_profession or "").strip()
+    if not profession or profession == "Other":
+        return True
+    return profession in scheme.get("profession_tags", ())
+
+
+def _scheme_matches_search_filters(
+    scheme: Dict[str, Any],
+    filters: Optional[Dict[str, Any]],
+) -> bool:
+    if not filters:
+        return True
+
+    states = _normalize_state_filters(filters.get("states"))
+    if states and scheme["location_name"] not in states:
+        return False
+
+    categories = _extract_category_filters(filters)
+    if categories and scheme["category_name"] not in categories:
+        return False
+
+    genders = _normalize_tag_values(filters.get("genders"))
+    if genders and not _tags_match(scheme.get("gender_tags", ()), genders, {"any", "unknown"}):
+        return False
+
+    castes = _normalize_tag_values(filters.get("castes"))
+    if castes and not _tags_match(scheme.get("caste_tags", ()), castes, {"any", "unknown"}):
+        return False
+
+    areas = _normalize_tag_values(filters.get("areas"))
+    if areas and not (set(scheme.get("area_tags", ())) & areas):
+        return False
+
+    age_range = filters.get("ageRange") or filters.get("age_range") or ""
+    if age_range and not _age_bucket_matches_scheme(
+        age_range,
+        bool(scheme.get("age_present")),
+        scheme.get("age_min_effective"),
+        scheme.get("age_max_effective"),
+    ):
+        return False
+
+    disability = str(filters.get("disability") or "").strip().lower()
+    if disability == "yes" and not scheme.get("disability_specific", False):
+        return False
+    if disability == "no" and scheme.get("disability_specific", False):
+        return False
+
+    if not _matches_profession_filter(scheme, str(filters.get("profession") or "")):
+        return False
+
+    return True
 
 
 def _hybrid_search(client, dense, sparse, qdrant_filter, limit=DISCOVERY_INITIAL_FETCH):
@@ -518,20 +789,28 @@ def _relaxed_search(client, dense, sparse, profile, limit=50):
     """Drop caste & age filters; keep gender + state + chunk_type."""
     from qdrant_client.http import models
 
-    relaxed = models.Filter(
-        must=[
-            models.FieldCondition(
-                key="chunk_type",
-                match=models.MatchAny(any=["eligibility", "details"]),
+    must_conditions = [
+        models.FieldCondition(
+            key="chunk_type",
+            match=models.MatchAny(any=["eligibility", "details"]),
+        ),
+        models.FieldCondition(
+            key="location_name",
+            match=models.MatchAny(
+                any=[profile["state"], CENTRAL_GOVT_LABEL]
             ),
+        ),
+    ]
+
+    category_filters = _extract_category_filters(profile)
+    if category_filters:
+        must_conditions.append(
             models.FieldCondition(
-                key="location_name",
-                match=models.MatchAny(
-                    any=[profile["state"], CENTRAL_GOVT_LABEL]
-                ),
-            ),
-        ]
-    )
+                key="category_name",
+                match=models.MatchAny(any=category_filters),
+            )
+        )
+    relaxed = models.Filter(must=must_conditions)
     return _hybrid_search(client, dense, sparse, relaxed, limit=limit)
 
 

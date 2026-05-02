@@ -32,6 +32,24 @@ CATEGORY_MAP = {
     15: "women_child",
 }
 
+CATEGORY_DISPLAY_MAP = {
+    "social_welfare_empowerment": "Social Welfare & Empowerment",
+    "education_learning": "Education & Learning",
+    "agriculture_rural_environment": "Agriculture, Rural & Environment",
+    "business_entrepreneurship": "Business & Entrepreneurship",
+    "women_child": "Women and Child",
+    "skills_employment": "Skills & Employment",
+    "banking_financial_services_insurance": "Banking, Financial Services and Insurance",
+    "health_wellness": "Health & Wellness",
+    "sports_culture": "Sports & Culture",
+    "housing_shelter": "Housing & Shelter",
+    "science_it_communications": "Science, IT & Communications",
+    "transport_infrastructure": "Transport & Infrastructure",
+    "travel_tourism": "Travel & Tourism",
+    "utility_sanitation": "Utility & Sanitation",
+    "public_safety_law_justice": "Public Safety, Law & Justice",
+}
+
 # Reverse mapping for lookup
 CATEGORY_NAME_TO_ID = {v: k for k, v in CATEGORY_MAP.items()}
 

@@ -194,9 +194,10 @@ def prepare_discovery_candidates(
 
 def prepare_search_candidates(
     query_text: str,
+    filters: Optional[Dict[str, Any]] = None,
 ) -> List[SchemeResult]:
     """Retrieve and rank direct search candidates using scheme titles only."""
-    candidates = search_schemes_by_name(query_text)
+    candidates = search_schemes_by_name(query_text, filters=filters)
     if not candidates:
         return []
 

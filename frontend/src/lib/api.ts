@@ -1,3 +1,5 @@
+import type { SearchFilters } from "@/lib/scheme-filters";
+
 export interface Scheme {
   id: string;
   name: string;
@@ -55,13 +57,13 @@ async function readErrorMessage(res: Response, fallback: string): Promise<string
 }
 
 // Connect to FastAPI Search
-export async function searchSchemes(query: string): Promise<Scheme[]> {
+export async function searchSchemes(query: string, filters?: SearchFilters): Promise<Scheme[]> {
   const res = await fetch(API_BASE + "/search", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, filters }),
   });
-  if (!res.ok) throw new Error("Search failed");
+  if (!res.ok) throw new Error(await readErrorMessage(res, "Search failed"));
   return await res.json();
 }
 
