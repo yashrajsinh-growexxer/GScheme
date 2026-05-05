@@ -1,5 +1,5 @@
-**GScheme**
-GScheme is a full-stack AI system for discovering, comparing, and understanding Indian government schemes. It has five major layers:
+**QSkim**
+QSkim is a full-stack AI system for discovering, comparing, and understanding Indian government schemes. It has five major layers:
 
 1. data scraping and dataset preparation
 2. knowledge base construction for retrieval
@@ -777,7 +777,7 @@ So the system is robust in design, but still cloud-dependent for:
 
 **20. What This Project Has Become**
 
-At this point, GScheme is not just a scraped dataset plus chatbot. It is a multi-module AI product with:
+At this point, QSkim is not just a scraped dataset plus chatbot. It is a multi-module AI product with:
 
 - web scraping and structured extraction
 - normalized scheme knowledge modeling
