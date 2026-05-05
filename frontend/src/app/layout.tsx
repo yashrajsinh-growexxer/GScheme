@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "QSkim | AI-Powered Government Scheme Finder",
+  title: "QSkim",
   description: "Find and compare government schemes you may be eligible for using AI.",
   icons: {
     icon: "/icon.svg",
