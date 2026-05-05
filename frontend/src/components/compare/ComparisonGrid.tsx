@@ -135,8 +135,8 @@ const ROWS: RowConfig[] = [
       const mode = value as string
       if (!mode || mode === "N/A") return <NaCell />
       const colorMap: Record<string, string> = {
-        "Online": "bg-emerald-500/10 text-emerald-700",
-        "Offline": "bg-orange-500/10 text-orange-700",
+        "Online": "bg-primary/10 text-primary",
+        "Offline": "bg-accent text-accent-foreground",
         "Online & Offline": "bg-blue-500/10 text-blue-700",
       }
       return (

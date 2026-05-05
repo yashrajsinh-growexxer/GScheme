@@ -112,7 +112,7 @@ export function ChatPanel({ scheme }: { scheme: Scheme }) {
             )}>
               <div className={cn(
                 "flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center mt-1",
-                msg.role === "user" ? "bg-primary text-primary-foreground" : "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400"
+                msg.role === "user" ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
               )}>
                 {msg.role === "user" ? <User size={16} /> : <Bot size={16} />}
               </div>
@@ -136,7 +136,7 @@ export function ChatPanel({ scheme }: { scheme: Scheme }) {
         {isLoading && messages.length > 0 && messages[messages.length - 1].content === "" && (
           <div className="flex justify-start">
             <div className="flex gap-3 max-w-[80%]">
-              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mt-1">
+              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center mt-1">
                 <Bot size={16} />
               </div>
               <div className="px-5 py-4 rounded-2xl bg-card border rounded-tl-none flex items-center">

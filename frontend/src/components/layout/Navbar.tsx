@@ -2,8 +2,10 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { ArrowLeft, Building2 } from "lucide-react"
+import { ArrowLeft, Menu } from "lucide-react"
+import { QSkimLogo } from "@/components/brand/QSkimLogo"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export function Navbar() {
   const router = useRouter()
@@ -11,51 +13,69 @@ export function Navbar() {
   const showBack = pathname !== "/"
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center px-4">
-        <div className="flex items-center gap-3">
+    <div className="sticky top-4 z-50 mx-auto w-full max-w-6xl px-4">
+      <header className="flex h-16 items-center justify-between rounded-full border border-border/50 bg-background/80 px-4 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/60 transition-all">
+        <div className="flex items-center gap-4">
           {showBack && (
             <Button
               type="button"
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={() => router.back()}
-              className="shrink-0"
+              className="shrink-0 rounded-full text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
           )}
-          <Link href="/" className="flex items-center space-x-2">
-          <div className="bg-primary/10 p-2 rounded-lg">
-            <Building2 className="h-6 w-6 text-primary" />
-          </div>
-          <span className="font-bold text-xl tracking-tight text-primary">GScheme Assistant</span>
+          <Link href="/" className="flex items-center ml-2">
+            <QSkimLogo />
           </Link>
         </div>
-        <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-2">
+        
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-3">
+          <nav className="flex items-center gap-1 rounded-full bg-muted/40 p-1 border border-border/30">
             <Link
               href="/search"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary px-4 py-2"
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition-all hover:bg-background hover:text-foreground hover:shadow-sm",
+                pathname.startsWith("/search")
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground"
+              )}
             >
               Search
             </Link>
             <Link
               href="/compare"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary px-4 py-2"
+              className={cn(
+                "rounded-full px-4 py-1.5 text-sm font-medium transition-all hover:bg-background hover:text-foreground hover:shadow-sm",
+                pathname.startsWith("/compare")
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground"
+              )}
             >
               Compare
             </Link>
-            <Link
-              href="/eligibility"
-              className="text-sm font-medium bg-primary text-primary-foreground transition-colors hover:bg-primary/90 px-4 py-2 rounded-md"
-            >
-              Check Eligibility
-            </Link>
           </nav>
+          <div className="pl-1">
+            <Link href="/eligibility">
+              <Button className="rounded-full h-9 px-5">
+                Check Eligibility
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
-    </header>
+
+        {/* Mobile Navigation Toggle */}
+        <div className="md:hidden flex items-center pr-2">
+          <Button variant="ghost" size="icon" className="rounded-full text-muted-foreground">
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle Menu</span>
+          </Button>
+        </div>
+      </header>
+    </div>
   )
 }

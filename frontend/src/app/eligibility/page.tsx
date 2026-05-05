@@ -229,7 +229,7 @@ export default function EligibilityPage() {
   // Render Results State
   return (
     <div className="container mx-auto max-w-7xl flex-1 px-4 py-8">
-      <div className="mb-8 rounded-[28px] border border-border/70 bg-gradient-to-br from-card via-card to-emerald-50/40 p-6 shadow-sm">
+      <div className="mb-8 rounded-[28px] border border-border/70 bg-card p-6 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary/80">
@@ -265,7 +265,7 @@ export default function EligibilityPage() {
               <button
                 type="button"
                 onClick={handleResetCategoryFilters}
-                className="text-sm font-semibold text-emerald-600 transition hover:text-emerald-700"
+                className="text-sm font-semibold text-primary transition hover:text-primary/80"
               >
                 Reset Filters
               </button>
@@ -274,7 +274,7 @@ export default function EligibilityPage() {
             <div className="border-b border-border/60 pb-4">
               <div className="flex items-center justify-between py-2 text-left">
                 <span className="font-semibold text-foreground">Scheme Category</span>
-                <Minus className="h-4 w-4 text-emerald-600" />
+                <Minus className="h-4 w-4 text-primary" />
               </div>
               <div className="grid max-h-80 gap-2 overflow-y-auto pr-1 pt-2">
                 {SCHEME_CATEGORY_OPTIONS.map((option) => {

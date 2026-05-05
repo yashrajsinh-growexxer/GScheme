@@ -119,7 +119,7 @@ function SearchContent() {
 
   return (
     <div className="container mx-auto max-w-7xl flex-1 px-4 py-8">
-      <div className="mb-8 rounded-[28px] border border-border/70 bg-gradient-to-br from-card via-card to-emerald-50/40 p-6 shadow-sm">
+      <div className="mb-8 rounded-[28px] border border-border/70 bg-card p-6 shadow-sm">
         <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary/80">
@@ -131,7 +131,7 @@ function SearchContent() {
               and caste.
             </p>
           </div>
-          <div className="rounded-2xl border border-emerald-200 bg-white/80 px-4 py-3 text-sm text-muted-foreground shadow-sm">
+          <div className="rounded-2xl border border-primary/20 bg-background/80 px-4 py-3 text-sm text-muted-foreground shadow-sm">
             {activeFilterCount > 0 ? `${activeFilterCount} filter${activeFilterCount === 1 ? "" : "s"} selected` : "No filters selected"}
           </div>
         </div>
@@ -167,7 +167,7 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="text-sm font-semibold text-emerald-600 transition hover:text-emerald-700"
+                className="text-sm font-semibold text-primary transition hover:text-primary/80"
               >
                 Reset Filters
               </button>
@@ -385,9 +385,9 @@ function FilterSection({
       >
         <span className="font-semibold text-foreground">{title}</span>
         {isOpen ? (
-          <Minus className="h-4 w-4 text-emerald-600" />
+          <Minus className="h-4 w-4 text-primary" />
         ) : (
-          <Plus className="h-4 w-4 text-emerald-600" />
+          <Plus className="h-4 w-4 text-primary" />
         )}
       </button>
       {isOpen && <div className="pt-2">{children}</div>}

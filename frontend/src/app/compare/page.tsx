@@ -56,7 +56,7 @@ export default function ComparePage() {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/20 to-purple-500/20">
+            <div className="p-2.5 rounded-xl bg-primary/10">
               <GitCompareArrows className="h-6 w-6 text-primary" />
             </div>
             <div>

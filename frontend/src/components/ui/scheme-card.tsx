@@ -17,7 +17,7 @@ export function SchemeCard({ scheme, onClick }: { scheme: Scheme; onClick: () =>
             {scheme.name}
           </CardTitle>
           {scheme.matchScore && (
-            <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100 shrink-0 ml-2">
+            <Badge variant="secondary" className="ml-2 shrink-0 bg-accent text-accent-foreground hover:bg-accent">
               {scheme.matchScore}% Match
             </Badge>
           )}

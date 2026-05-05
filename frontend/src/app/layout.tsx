@@ -6,8 +6,11 @@ import { Navbar } from "@/components/layout/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GScheme Assistant | AI-Powered Government Schemes",
-  description: "Discover government schemes you are eligible for using AI.",
+  title: "QSkim | AI-Powered Government Scheme Finder",
+  description: "Find and compare government schemes you may be eligible for using AI.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

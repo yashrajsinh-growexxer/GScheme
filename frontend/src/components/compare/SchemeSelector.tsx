@@ -186,7 +186,7 @@ export function SchemeSelector({ onSelect, onRemove, selected, index }: SchemeSe
               <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
                 {selected!.state}
               </span>
-              <span className="inline-flex items-center rounded-full bg-purple-500/10 px-2 py-0.5 text-xs font-medium text-purple-600">
+              <span className="inline-flex items-center rounded-full bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground">
                 {selected!.category}
               </span>
             </div>
