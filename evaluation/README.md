@@ -96,6 +96,11 @@ python -m evaluation.run_latency_eval \
   --api-base http://127.0.0.1:8501/api
 ```
 
+Latency datasets can use product-facing endpoint names. For example,
+`"/eligibility"` is accepted and automatically mapped to the backend
+`"/discover"` API route. Reports include both `endpoint` and `api_endpoint`
+so you can see the label you requested and the route that was actually called.
+
 ## 4. Run all evaluations
 
 After all dataset files are filled:

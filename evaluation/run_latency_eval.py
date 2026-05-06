@@ -10,6 +10,11 @@ import httpx
 from evaluation.eval_utils import load_json, write_json
 from evaluation.metrics import average, percentile
 
+ENDPOINT_ALIASES = {
+    "eligibility": "discover",
+    "/eligibility": "discover",
+}
+
 
 def _post_text_stream(client: httpx.Client, url: str, payload: dict[str, Any]) -> tuple[str, float, float, int]:
     start = perf_counter()
@@ -28,6 +33,14 @@ def _post_text_stream(client: httpx.Client, url: str, payload: dict[str, Any]) -
     return "".join(chunks), first_chunk_ms, total_ms, status_code
 
 
+def _resolve_endpoint(endpoint: str) -> tuple[str, str]:
+    """Resolve product-facing endpoint names to backend API routes."""
+    original = endpoint if endpoint.startswith("/") else f"/{endpoint}"
+    normalized = endpoint.strip().lstrip("/")
+    resolved = ENDPOINT_ALIASES.get(normalized, ENDPOINT_ALIASES.get(original, normalized))
+    return original, resolved.lstrip("/")
+
+
 def run(dataset_path: str, output_path: str, api_base: str) -> dict:
     cases = load_json(dataset_path)
     rows = []
@@ -36,7 +49,7 @@ def run(dataset_path: str, output_path: str, api_base: str) -> dict:
 
     with httpx.Client(timeout=120.0) as client:
         for case in cases:
-            endpoint = case["endpoint"].lstrip("/")
+            requested_endpoint, endpoint = _resolve_endpoint(case["endpoint"])
             url = f"{api_base.rstrip('/')}/{endpoint}"
             payload = case.get("payload", {})
             streaming = case.get("streaming", False)
@@ -56,7 +69,8 @@ def run(dataset_path: str, output_path: str, api_base: str) -> dict:
             rows.append(
                 {
                     "case_id": case.get("id"),
-                    "endpoint": f"/{endpoint}",
+                    "endpoint": requested_endpoint,
+                    "api_endpoint": f"/{endpoint}",
                     "status_code": status_code,
                     "time_to_first_chunk_ms": round(first_chunk_ms, 2),
                     "total_latency_ms": round(total_ms, 2),

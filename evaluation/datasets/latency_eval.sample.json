@@ -9,6 +9,21 @@
     }
   },
   {
+    "id": "latency-eligibility-001",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 32,
+        "gender": "Female",
+        "state": "Rajasthan",
+        "caste": "OBC",
+        "profession": "Farmer",
+        "disability": false
+      }
+    }
+  },
+  {
     "id": "latency-chat-001",
     "endpoint": "/chat",
     "streaming": true,
