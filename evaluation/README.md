@@ -76,7 +76,30 @@ Faithfulness and Hallucination Rate:
 ```bash
 python -m evaluation.run_generation_eval \
   --dataset evaluation/datasets/chat_eval.json \
-  --output evaluation/reports/generation_report.json
+  --output evaluation/reports/generation_report.json \
+  --delay-seconds 30 \
+  --context-chars 2500 \
+  --answer-chars 1200 \
+  --judge-max-tokens 180
+```
+
+This evaluator uses Groq twice per case: once for the app answer and once for
+the LLM judge. To avoid TPM limits, it trims judge context, waits between cases,
+retries automatically when Groq returns a short rate-limit retry time, and saves
+partial progress after every completed case. If Groq returns a long daily-limit
+wait, the script stops cleanly and you can rerun the same command later to resume.
+
+Useful flags:
+
+```text
+--delay-seconds          Pause after each case. Increase this for large datasets.
+--context-chars          Max retrieved context sent to the judge.
+--answer-chars           Max generated answer text sent to the judge.
+--judge-max-tokens       Max tokens the judge can output.
+--max-retries            Number of rate-limit retries per model call.
+--retry-buffer-seconds   Extra wait added to Groq's suggested retry time.
+--max-wait-seconds       Stop and save progress when Groq asks for a longer wait.
+--no-resume              Ignore an existing output report and start again.
 ```
 
 End-to-end latency:

@@ -80,7 +80,7 @@
             "gender": "Male",
             "state": "Chhattisgarh",
             "caste": "General",
-            "profession": "Entrepreneur/ Self-employed",
+            "profession": "Entrepreneur / Self-Employed",
             "disability": false
         },
         "eligible_scheme_ids": [
@@ -158,7 +158,7 @@
             "disability": false
         },
         "eligible_scheme_ids": [
-            "968632b9e24e069c0",
+            "968632b9e24e069c",
             "0ad44a3924ef15de",
             "0848daee1b97e39b",
             "ec3b40654ae0808c",
@@ -214,7 +214,7 @@
             "disability": false
         },
         "eligible_scheme_ids": [
-            "ac22649fc5337ac10",
+            "ac22649fc5337ac1",
             "7385355c1cc9cae7",
             "b8e551b99c296b49",
             "4756297390a5ea68",
@@ -228,7 +228,7 @@
             "gender": "Female",
             "state": "Uttar Pradesh",
             "caste": "OBC",
-            "profession": "Entrepreneur/ Self-employed",
+            "profession": "Entrepreneur / Self-Employed",
             "disability": false
         },
         "eligible_scheme_ids": [
@@ -255,8 +255,7 @@
             "029b11ff3df69730",
             "7c252a75e1dea834",
             "0a8276c0e894c57e",
-            "23f983e4f6f2d59c",
-            "1e40c741da7337a0"
+            "23f983e4f6f2d59c"
         ]
     },
     {
@@ -274,8 +273,7 @@
             "59d9a06b0dee7061",
             "5875e1e45df193ce",
             "4a8cc3530c3a5223",
-            "029b11ff3df69730",
-            "0a8276c0e894c57e"
+            "029b11ff3df69730"
         ]
     },
     {
@@ -293,8 +291,7 @@
             "ec3b40654ae0808c",
             "6657683721533cfe",
             "c6c987f11af35e1d",
-            "2cb09290d4669ebc",
-            "d68f774015ec9f06"
+            "2cb09290d4669ebc"
         ]
     },
     {
@@ -312,8 +309,7 @@
             "ac5e60dd3e836699",
             "59d9a06b0dee7061",
             "20e00334fcb0ffdd",
-            "ccf3ce5b3ae48638",
-            "ac22649fc5337ac1"
+            "ccf3ce5b3ae48638"
         ]
     },
     {
@@ -327,12 +323,11 @@
             "disability": false
         },
         "eligible_scheme_ids": [
-            "0a8276c0e894c57e",
+            "0a8276c0e894c57d",
             "1e40c741da7337a0",
             "52ec81bd3a88899c",
             "66118117e7082bbe",
-            "bf16a9491a92a5da",
-            "a79ea8041f51af38"
+            "bf16a9491a92a5da"
         ]
     },
     {
@@ -342,17 +337,15 @@
             "gender": "Male",
             "state": "Madhya Pradesh",
             "caste": "OBC",
-            "profession": "Entrepreneur/ Self-employed",
+            "profession": "Entrepreneur / Self-Employed",
             "disability": false
         },
         "eligible_scheme_ids": [
-            "be55b68d48c57a22",
-            "d9992f0a4e622956",
-            "f00d09baafde0c43",
+            "be55b68d48c57a21",
+            "d9992f0a4e622955",
+            "f00d09baafde0c42",
             "b2505dd55c44e827",
-            "46e45d35ecac82f4",
-            "369df46e7ee148fa",
-            "c0b9daaf894efd56"
+            "46e45d35ecac82f4"
         ]
     },
     {
@@ -366,12 +359,11 @@
             "disability": true
         },
         "eligible_scheme_ids": [
-            "70cdd1ed1f0285c1",
-            "7385355c1cc9cae7",
-            "b8e551b99c296b49",
+            "70cdd1ed1f0285c2",
+            "7385355c1cc9cae6",
+            "b8e551b99c296b48",
             "6733d99d42c07975",
-            "4756297390a5ea68",
-            "72693d377177090b"
+            "4756297390a5ea68"
         ]
     }
 ]

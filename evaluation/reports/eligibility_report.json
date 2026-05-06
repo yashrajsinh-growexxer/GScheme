@@ -2,11 +2,11 @@
   "metric": "Eligibility Precision / Recall",
   "cases": 20,
   "top_k": 5,
-  "precision": 0.84,
-  "recall": 0.7483,
+  "precision": 0.93,
+  "recall": 0.8717,
   "latency": {
-    "p50_ms": 385.39,
-    "p95_ms": 734.55
+    "p50_ms": 372.98,
+    "p95_ms": 702.99
   },
   "rows": [
     {
@@ -37,7 +37,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 3062.5
+      "latency_ms": 2620.93
     },
     {
       "case_id": "eligibility-002",
@@ -67,7 +67,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 726.5
+      "latency_ms": 702.99
     },
     {
       "case_id": "eligibility-003",
@@ -96,7 +96,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 729.3
+      "latency_ms": 373.23
     },
     {
       "case_id": "eligibility-004",
@@ -125,7 +125,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 734.55
+      "latency_ms": 370.98
     },
     {
       "case_id": "eligibility-005",
@@ -134,7 +134,7 @@
         "gender": "Male",
         "state": "Chhattisgarh",
         "caste": "General",
-        "profession": "Entrepreneur/ Self-employed",
+        "profession": "Entrepreneur / Self-Employed",
         "disability": false
       },
       "expected_scheme_ids": [
@@ -146,16 +146,16 @@
         "c0b9daaf894efd56"
       ],
       "predicted_top_k": [
-        "a4296ed6f3895769",
-        "59d9a06b0dee7061",
-        "b1a98c82e0415a70",
-        "ac22649fc5337ac1",
-        "0848daee1b97e39b"
+        "be55b68d48c57a22",
+        "f00d09baafde0c43",
+        "b2505dd55c44e827",
+        "46e45d35ecac82f4",
+        "369df46e7ee148fa"
       ],
       "is_relaxed": false,
-      "precision": 0.0,
-      "recall": 0.0,
-      "latency_ms": 730.75
+      "precision": 1.0,
+      "recall": 0.8333,
+      "latency_ms": 369.1
     },
     {
       "case_id": "eligibility-006",
@@ -184,7 +184,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 385.34
+      "latency_ms": 382.49
     },
     {
       "case_id": "eligibility-007",
@@ -213,7 +213,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 384.18
+      "latency_ms": 437.02
     },
     {
       "case_id": "eligibility-008",
@@ -243,7 +243,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 384.07
+      "latency_ms": 368.53
     },
     {
       "case_id": "eligibility-009",
@@ -256,7 +256,7 @@
         "disability": false
       },
       "expected_scheme_ids": [
-        "968632b9e24e069c0",
+        "968632b9e24e069c",
         "0ad44a3924ef15de",
         "0848daee1b97e39b",
         "ec3b40654ae0808c",
@@ -271,9 +271,9 @@
         "6657683721533cfe"
       ],
       "is_relaxed": false,
-      "precision": 0.8,
-      "recall": 0.6667,
-      "latency_ms": 385.39
+      "precision": 1.0,
+      "recall": 0.8333,
+      "latency_ms": 377.01
     },
     {
       "case_id": "eligibility-010",
@@ -303,7 +303,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 460.98
+      "latency_ms": 442.72
     },
     {
       "case_id": "eligibility-011",
@@ -332,7 +332,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 384.19
+      "latency_ms": 370.41
     },
     {
       "case_id": "eligibility-012",
@@ -345,7 +345,7 @@
         "disability": false
       },
       "expected_scheme_ids": [
-        "ac22649fc5337ac10",
+        "ac22649fc5337ac1",
         "7385355c1cc9cae7",
         "b8e551b99c296b49",
         "4756297390a5ea68",
@@ -359,9 +359,9 @@
         "b9ac2e5fcf919ece"
       ],
       "is_relaxed": false,
-      "precision": 0.8,
-      "recall": 0.8,
-      "latency_ms": 383.32
+      "precision": 1.0,
+      "recall": 1.0,
+      "latency_ms": 369.64
     },
     {
       "case_id": "eligibility-013",
@@ -370,7 +370,7 @@
         "gender": "Female",
         "state": "Uttar Pradesh",
         "caste": "OBC",
-        "profession": "Entrepreneur/ Self-employed",
+        "profession": "Entrepreneur / Self-Employed",
         "disability": false
       },
       "expected_scheme_ids": [
@@ -382,16 +382,16 @@
         "f00d09baafde0c43"
       ],
       "predicted_top_k": [
-        "a4296ed6f3895769",
         "a80957bdcd9b2163",
-        "59d9a06b0dee7061",
-        "779781c17267eeba",
-        "70cdd1ed1f0285c1"
+        "811638eb8c9f0e87",
+        "52848cacb6c46df8",
+        "be55b68d48c57a22",
+        "3782b25eb007cc06"
       ],
       "is_relaxed": false,
-      "precision": 0.2,
-      "recall": 0.1667,
-      "latency_ms": 383.68
+      "precision": 1.0,
+      "recall": 0.8333,
+      "latency_ms": 372.98
     },
     {
       "case_id": "eligibility-014",
@@ -408,8 +408,7 @@
         "029b11ff3df69730",
         "7c252a75e1dea834",
         "0a8276c0e894c57e",
-        "23f983e4f6f2d59c",
-        "1e40c741da7337a0"
+        "23f983e4f6f2d59c"
       ],
       "predicted_top_k": [
         "59d9a06b0dee7061",
@@ -420,8 +419,8 @@
       ],
       "is_relaxed": false,
       "precision": 1.0,
-      "recall": 0.8333,
-      "latency_ms": 383.3
+      "recall": 1.0,
+      "latency_ms": 372.2
     },
     {
       "case_id": "eligibility-015",
@@ -438,8 +437,7 @@
         "59d9a06b0dee7061",
         "5875e1e45df193ce",
         "4a8cc3530c3a5223",
-        "029b11ff3df69730",
-        "0a8276c0e894c57e"
+        "029b11ff3df69730"
       ],
       "predicted_top_k": [
         "0b2c595658d332b9",
@@ -450,8 +448,8 @@
       ],
       "is_relaxed": false,
       "precision": 1.0,
-      "recall": 0.8333,
-      "latency_ms": 391.49
+      "recall": 1.0,
+      "latency_ms": 367.72
     },
     {
       "case_id": "eligibility-016",
@@ -468,8 +466,7 @@
         "ec3b40654ae0808c",
         "6657683721533cfe",
         "c6c987f11af35e1d",
-        "2cb09290d4669ebc",
-        "d68f774015ec9f06"
+        "2cb09290d4669ebc"
       ],
       "predicted_top_k": [
         "0848daee1b97e39b",
@@ -480,8 +477,8 @@
       ],
       "is_relaxed": false,
       "precision": 1.0,
-      "recall": 0.8333,
-      "latency_ms": 391.49
+      "recall": 1.0,
+      "latency_ms": 373.73
     },
     {
       "case_id": "eligibility-017",
@@ -498,8 +495,7 @@
         "ac5e60dd3e836699",
         "59d9a06b0dee7061",
         "20e00334fcb0ffdd",
-        "ccf3ce5b3ae48638",
-        "ac22649fc5337ac1"
+        "ccf3ce5b3ae48638"
       ],
       "predicted_top_k": [
         "a4296ed6f3895769",
@@ -510,8 +506,8 @@
       ],
       "is_relaxed": false,
       "precision": 1.0,
-      "recall": 0.8333,
-      "latency_ms": 385.29
+      "recall": 1.0,
+      "latency_ms": 372.98
     },
     {
       "case_id": "eligibility-018",
@@ -524,12 +520,11 @@
         "disability": false
       },
       "expected_scheme_ids": [
-        "0a8276c0e894c57e",
+        "0a8276c0e894c57d",
         "1e40c741da7337a0",
         "52ec81bd3a88899c",
         "66118117e7082bbe",
-        "bf16a9491a92a5da",
-        "a79ea8041f51af38"
+        "bf16a9491a92a5da"
       ],
       "predicted_top_k": [
         "0a8276c0e894c57e",
@@ -539,9 +534,9 @@
         "bf16a9491a92a5da"
       ],
       "is_relaxed": false,
-      "precision": 1.0,
-      "recall": 0.8333,
-      "latency_ms": 385.23
+      "precision": 0.8,
+      "recall": 0.8,
+      "latency_ms": 369.4
     },
     {
       "case_id": "eligibility-019",
@@ -550,29 +545,27 @@
         "gender": "Male",
         "state": "Madhya Pradesh",
         "caste": "OBC",
-        "profession": "Entrepreneur/ Self-employed",
+        "profession": "Entrepreneur / Self-Employed",
         "disability": false
       },
       "expected_scheme_ids": [
+        "be55b68d48c57a21",
+        "d9992f0a4e622955",
+        "f00d09baafde0c42",
+        "b2505dd55c44e827",
+        "46e45d35ecac82f4"
+      ],
+      "predicted_top_k": [
         "be55b68d48c57a22",
         "d9992f0a4e622956",
         "f00d09baafde0c43",
         "b2505dd55c44e827",
-        "46e45d35ecac82f4",
-        "369df46e7ee148fa",
-        "c0b9daaf894efd56"
-      ],
-      "predicted_top_k": [
-        "a4296ed6f3895769",
-        "59d9a06b0dee7061",
-        "2d6ecd6d0bf7a16b",
-        "ac22649fc5337ac1",
-        "f12889587f724a75"
+        "46e45d35ecac82f4"
       ],
       "is_relaxed": false,
-      "precision": 0.0,
-      "recall": 0.0,
-      "latency_ms": 387.4
+      "precision": 0.4,
+      "recall": 0.4,
+      "latency_ms": 375.98
     },
     {
       "case_id": "eligibility-020",
@@ -585,12 +578,11 @@
         "disability": true
       },
       "expected_scheme_ids": [
-        "70cdd1ed1f0285c1",
-        "7385355c1cc9cae7",
-        "b8e551b99c296b49",
+        "70cdd1ed1f0285c2",
+        "7385355c1cc9cae6",
+        "b8e551b99c296b48",
         "6733d99d42c07975",
-        "4756297390a5ea68",
-        "72693d377177090b"
+        "4756297390a5ea68"
       ],
       "predicted_top_k": [
         "70cdd1ed1f0285c1",
@@ -600,9 +592,9 @@
         "4756297390a5ea68"
       ],
       "is_relaxed": false,
-      "precision": 1.0,
-      "recall": 0.8333,
-      "latency_ms": 381.95
+      "precision": 0.4,
+      "recall": 0.4,
+      "latency_ms": 366.96
     }
   ]
 }
