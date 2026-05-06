@@ -1,0 +1,500 @@
+{
+  "metric": "Search Recall@5",
+  "cases": 33,
+  "recall_at_5": 0.8788,
+  "latency": {
+    "p50_ms": 236.95,
+    "p95_ms": 580.74
+  },
+  "rows": [
+    {
+      "query": "PM Kisan",
+      "expected_scheme_ids": [
+        "ff5d69b3e1192bd5",
+        "1fe37582e56b2493",
+        "a23c59271e2304bf",
+        "7abfee25e35f0dc4"
+      ],
+      "predicted_top_k": [
+        "ff5d69b3e1192bd5",
+        "1fe37582e56b2493",
+        "a23c59271e2304bf",
+        "7abfee25e35f0dc4",
+        "e87e2b674d9c2ef3"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 5808.57
+    },
+    {
+      "query": "Pradhan Mantri Mudra Yojana",
+      "expected_scheme_ids": [
+        "2d7a9911e5e67238"
+      ],
+      "predicted_top_k": [
+        "2d7a9911e5e67238",
+        "9020da23e4e6905c",
+        "495b670ac70c82b2",
+        "917b1b502c669098",
+        "6b6fee3d69cb4c47"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 260.03
+    },
+    {
+      "query": "Stand-Up India",
+      "expected_scheme_ids": [
+        "c65ccf647d44e9d3"
+      ],
+      "predicted_top_k": [
+        "c65ccf647d44e9d3",
+        "d091746ed5e45d43"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 149.8
+    },
+    {
+      "query": "Skill Loan Scheme",
+      "expected_scheme_ids": [
+        "9783a7e8e3b77387"
+      ],
+      "predicted_top_k": [
+        "9783a7e8e3b77387",
+        "fa15e48398bf27ce",
+        "42b4d9efc2a3008c",
+        "b02b1cf0c8895bae",
+        "ffdf7d8b02da47a3"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 152.09
+    },
+    {
+      "query": "Residential School For Blinds",
+      "expected_scheme_ids": [
+        "babadf97cdaed3fd"
+      ],
+      "predicted_top_k": [
+        "babadf97cdaed3fd",
+        "fccfc4a83926974a",
+        "84c5cc94828ee6b9",
+        "9e3aca28be83930d",
+        "3ae03f76daab05bd"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 236.95
+    },
+    {
+      "query": "Uttam Pashu Puraskar Yojana",
+      "expected_scheme_ids": [
+        "6502028ce72be4a4"
+      ],
+      "predicted_top_k": [
+        "6502028ce72be4a4",
+        "33981c08c8812785",
+        "14e06e986e993689",
+        "7bbf71b6dd5c57c2",
+        "181de74a57ea11f8"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 256.85
+    },
+    {
+      "query": "Gatidhara Scheme",
+      "expected_scheme_ids": [
+        "a8d12c631b58e463"
+      ],
+      "predicted_top_k": [
+        "a8d12c631b58e463",
+        "3bdf12c0f258c702",
+        "6a63d8ad256b79fa",
+        "b54e2f347761924b",
+        "df2ec9ced80e8121"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 161.3
+    },
+    {
+      "query": "Aapki Beti",
+      "expected_scheme_ids": [
+        "9a98114bf42cb078",
+        "da24b2c29e2c49ce"
+      ],
+      "predicted_top_k": [
+        "9a98114bf42cb078",
+        "da24b2c29e2c49ce",
+        "6bcfc5d41f231142",
+        "1c7df6afe7f15419",
+        "afcce990841b1baa"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 122.58
+    },
+    {
+      "query": "Scheme For Study In Abroad",
+      "expected_scheme_ids": [
+        "a148c10029d569d7"
+      ],
+      "predicted_top_k": [
+        "a148c10029d569d7",
+        "7be6566344c03f43",
+        "1daefa454b1891ea",
+        "06d7f744197766bd",
+        "288ecc08930d8d63"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 207.15
+    },
+    {
+      "query": "Rajiv Gandhi",
+      "expected_scheme_ids": [
+        "78903256daa68945",
+        "7118007204aa2157"
+      ],
+      "predicted_top_k": [
+        "7804e7b5067081b4",
+        "78903256daa68945",
+        "7118007204aa2157",
+        "b1b7aadca2a2fc42",
+        "94ba4e0de793ab6c"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 132.67
+    },
+    {
+      "query": "Allowance To Eunuchs Scheme",
+      "expected_scheme_ids": [
+        "20f11c8082b3e371"
+      ],
+      "predicted_top_k": [
+        "20f11c8082b3e371",
+        "dd10aba44aa1b8f7",
+        "07fa69377aba745a",
+        "052d60b934ff6947",
+        "f96eee8c15a7e6bf"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 305.19
+    },
+    {
+      "query": "Marriage Grant Scheme",
+      "expected_scheme_ids": [
+        "9ee962f3f590aebe"
+      ],
+      "predicted_top_k": [
+        "9ee962f3f590aebe",
+        "681fa63d5f898d92",
+        "16bd324b26a1a39f",
+        "c5c67e9e1d3e0b1c",
+        "c3e4b52effe397f1"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 184.07
+    },
+    {
+      "query": "Incentive To Girls",
+      "expected_scheme_ids": [
+        "b0fa95bf6e102f82",
+        "80d547c1a20b4d6e"
+      ],
+      "predicted_top_k": [
+        "b0fa95bf6e102f82",
+        "80d547c1a20b4d6e",
+        "0b47da14e172f269",
+        "6271b6f85acfaee7",
+        "2c3a18ab13340752"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 173.82
+    },
+    {
+      "query": "Summer Internship Scheme Of DGFT",
+      "expected_scheme_ids": [
+        "bd7186737e24c117"
+      ],
+      "predicted_top_k": [
+        "bd7186737e24c117",
+        "09e376cc91aee7c9",
+        "7bbd8cf619092637",
+        "9608db8e99f30e6b",
+        "31a8cba236c3b7be"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 295.31
+    },
+    {
+      "query": "Super 5000",
+      "expected_scheme_ids": [
+        "bb4035a2027e3676"
+      ],
+      "predicted_top_k": [
+        "bb4035a2027e3676",
+        "768eec8d629d743d",
+        "9f7bd61069f2e142",
+        "0f581328151c7caa"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 96.07
+    },
+    {
+      "query": "Samagr Samajik Suraksha Pension Yojana",
+      "expected_scheme_ids": [
+        "7b373326f73ca931",
+        "70894139b6b6543c",
+        "67a89a7ab8e82fec"
+      ],
+      "predicted_top_k": [
+        "7b373326f73ca931",
+        "70894139b6b6543c",
+        "67a89a7ab8e82fec",
+        "07168db765f6d4e8",
+        "936efbb19db025dc"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 344.52
+    },
+    {
+      "query": "Usha Kiran Yojana",
+      "expected_scheme_ids": [
+        "21b7f35e4c6a0a1e"
+      ],
+      "predicted_top_k": [
+        "21b7f35e4c6a0a1e",
+        "9abc5ee732972539",
+        "9cf5b12c0ea0be73",
+        "6eff8934fe753e7a",
+        "7a7fdafe21db3ccf"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 185.62
+    },
+    {
+      "query": "Hiv / Aids Pension Scheme",
+      "expected_scheme_ids": [
+        "6aaa20ac814fc18c"
+      ],
+      "predicted_top_k": [
+        "6aaa20ac814fc18c",
+        "27437d76d3608f2b",
+        "e9768ea79b325f0e",
+        "4120cd30ec299320",
+        "605deff859856d2b"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 193.52
+    },
+    {
+      "query": "Ashraya Adhar Scheme",
+      "expected_scheme_ids": [
+        "4917da068bb4c400"
+      ],
+      "predicted_top_k": [
+        "4917da068bb4c400",
+        "6a63d8ad256b79fa",
+        "6d3affcda3294585",
+        "ee3f5f7647c78192",
+        "476645040fd3e1eb"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 173.81
+    },
+    {
+      "query": "Mukhmantri Sehat Bima Yojana",
+      "expected_scheme_ids": [
+        "b880b82c4ca4b59d"
+      ],
+      "predicted_top_k": [
+        "b880b82c4ca4b59d",
+        "515d530fa5d0f94e",
+        "583207d9fb532ba9",
+        "9fb70cfa8a6f6390",
+        "eff2c843c99afbbf"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 262.36
+    },
+    {
+      "query": "Cancer Suraksha Scheme",
+      "expected_scheme_ids": [
+        "30c5522498e5c2c5"
+      ],
+      "predicted_top_k": [
+        "30c5522498e5c2c5",
+        "f7b6a390c0091a9c",
+        "321e7a28819ab5d2",
+        "285c177f54c2d593",
+        "62e77d8d16f19071"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 186.04
+    },
+    {
+      "query": "Green Business Scheme",
+      "expected_scheme_ids": [
+        "45e05e82f8c379a3",
+        "ab2cb761b8915390"
+      ],
+      "predicted_top_k": [
+        "45e05e82f8c379a3",
+        "ab2cb761b8915390",
+        "d68f774015ec9f06",
+        "1e66ee6cb5802a76",
+        "e34c23ab0d05e012"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 178.87
+    },
+    {
+      "query": "Technology Fellowship and Patent Promotion Scheme",
+      "expected_scheme_ids": [
+        "5e2b2dd1afe7e60a"
+      ],
+      "predicted_top_k": [
+        "5e2b2dd1afe7e60a",
+        "b99d46d57fd5e786",
+        "af89e3db7c9338a7",
+        "83244a5f36d12aa6",
+        "919ed897767447f6"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 325.38
+    },
+    {
+      "query": "Bina Mulya Samajik Suraksha Yojana",
+      "expected_scheme_ids": [
+        "5195d199afd27ca0"
+      ],
+      "predicted_top_k": [
+        "5195d199afd27ca0",
+        "7b373326f73ca931",
+        "07168db765f6d4e8",
+        "ea65a135118b8807",
+        "4225c9d3f5ad8381"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 310.87
+    },
+    {
+      "query": "Mukhyamantri Shramik Siyaan Sahayata Yojana",
+      "expected_scheme_ids": [
+        "7ccabea3f4c2925e"
+      ],
+      "predicted_top_k": [
+        "7ccabea3f4c2925e",
+        "cadf9aeeacea2841",
+        "0159515609cdeb89",
+        "60be58fe3efae2dc",
+        "f64527bf59644238"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 392.34
+    },
+    {
+      "query": "Grant of Subsidy for Procurement of Vehicle",
+      "expected_scheme_ids": [
+        "237ac0abd7054774"
+      ],
+      "predicted_top_k": [
+        "237ac0abd7054774",
+        "e5fe7633b1861369",
+        "21d014968b504112",
+        "5fcbdf76dde5a5a3",
+        "b0f70937242418ab"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 324.0
+    },
+    {
+      "query": "Balika Samrithi Yojana",
+      "expected_scheme_ids": [
+        "e99ad3354c1e3076"
+      ],
+      "predicted_top_k": [
+        "e99ad3354c1e3076",
+        "a80957bdcd9b2163",
+        "e663b5de90c1b445",
+        "737aec094d7a0de0",
+        "232df20dfc707812"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 224.09
+    },
+    {
+      "query": "Awasiya Vidyala Yojana",
+      "expected_scheme_ids": [
+        "3ad4c4c163481b01",
+        "6393e5014f049c5d"
+      ],
+      "predicted_top_k": [
+        "3ad4c4c163481b01",
+        "6393e5014f049c5d",
+        "8baea202d0523ab8",
+        "751761fa099dfe10",
+        "9fd9e69a8c30913c"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 225.17
+    },
+    {
+      "query": "Post Harvest Marketing Scheme",
+      "expected_scheme_ids": [
+        "d0a2a7ccf66b5b5d"
+      ],
+      "predicted_top_k": [
+        "d0a2a7ccf66b5b5d",
+        "7700fd20125225aa",
+        "07193d7a998fea0d",
+        "c803a3f0bca31fe8",
+        "28c590235f4792d6"
+      ],
+      "recall_at_5": 1.0,
+      "latency_ms": 242.36
+    },
+    {
+      "query": "Chief Minister Rural Path Vendor Loan Scheme",
+      "expected_scheme_ids": [
+        "6393e5014f049c5e"
+      ],
+      "predicted_top_k": [
+        "27437d76d3608f2b",
+        "29595c5fd3b6277a",
+        "7db1578d40c672e9",
+        "43ef66895d9e5cb3",
+        "e2447c34ff21b8a8"
+      ],
+      "recall_at_5": 0.0,
+      "latency_ms": 326.02
+    },
+    {
+      "query": "Electronic Manufacturing Clusters (EMC) Scheme: Greenfield Electronic Manufacturing Clusters",
+      "expected_scheme_ids": [
+        "237ac0abd7054772"
+      ],
+      "predicted_top_k": [],
+      "recall_at_5": 0.0,
+      "latency_ms": 580.74
+    },
+    {
+      "query": "Electronic Manufacturing Clusters (EMC) Scheme: Common Facility Centres/ Brownfield Electronics Manufacturing Clusters",
+      "expected_scheme_ids": [
+        "5195d199afd27ca1"
+      ],
+      "predicted_top_k": [],
+      "recall_at_5": 0.0,
+      "latency_ms": 732.11
+    },
+    {
+      "query": "Electronics Component Manufacturing Scheme",
+      "expected_scheme_ids": [
+        "d0a2a7ccf66b5b5e"
+      ],
+      "predicted_top_k": [
+        "3741ee57625065fd",
+        "e20d3fe3d3b87e75",
+        "b02c25bbbbdd6126",
+        "c36a83c387dcf086",
+        "6291034b3afb54e4"
+      ],
+      "recall_at_5": 0.0,
+      "latency_ms": 296.16
+    }
+  ]
+}
