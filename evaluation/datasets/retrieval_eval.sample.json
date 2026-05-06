@@ -1,0 +1,14 @@
+[
+  {
+    "id": "search-001",
+    "query": "PM Kisan",
+    "expected_scheme_ids": ["replace_with_scheme_id"],
+    "filters": null
+  },
+  {
+    "id": "search-002",
+    "query": "Pradhan Mantri Mudra Yojana",
+    "expected_scheme_ids": ["replace_with_scheme_id"],
+    "filters": null
+  }
+]

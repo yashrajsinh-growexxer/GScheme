@@ -1,0 +1,21 @@
+[
+  {
+    "id": "chat-001",
+    "scheme_id": "replace_with_scheme_id",
+    "question": "What are the eligibility criteria?",
+    "profile": {
+      "age": 32,
+      "gender": "Female",
+      "state": "Rajasthan",
+      "profession": "Farmer"
+    },
+    "history": []
+  },
+  {
+    "id": "chat-002",
+    "scheme_id": "replace_with_scheme_id",
+    "question": "Which documents are required?",
+    "profile": {},
+    "history": []
+  }
+]

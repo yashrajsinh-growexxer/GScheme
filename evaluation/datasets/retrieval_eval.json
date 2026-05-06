@@ -1,0 +1,270 @@
+[
+    {
+        "id": "search-001",
+        "query": "PM Kisan",
+        "expected_scheme_ids": [
+            "ff5d69b3e1192bd5", "1fe37582e56b2493", "a23c59271e2304bf", "7abfee25e35f0dc4"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-002",
+        "query": "Pradhan Mantri Mudra Yojana",
+        "expected_scheme_ids": [
+            "1fe37582e56b2493"
+        ],
+        "filters": {
+            "state": "Gujarat"
+        }
+    },
+    {
+        "id": "search-003",
+        "query": "Stand-Up India",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": {
+            "state": "Gujarat"
+        }
+    },
+    {
+        "id": "search-004",
+        "query": "Skill Loan Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-005",
+        "query": "Residential School For Blinds",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": {
+            "scheme_category": "Social Welfare & Empowerment"
+        }
+    },
+    {
+        "id": "search-006",
+        "query": "Uttam Pashu Puraskar Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": {
+            "state": "Himachal Pradesh"
+        }
+    },
+    {
+        "id": "search-007",
+        "query": "Gatidhara Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-008",
+        "query": "Aapki Beti",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-009",
+        "query": "Scheme For Study In Abroad",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-010",
+        "query": "Rajiv Gandhi",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": {
+            "state": "Haryana"
+        }
+    },
+    {
+        "id": "search-011",
+        "query": "Allowance To Eunuchs Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": {
+            "scheme_category": "Social Welfare & Empowerment"
+        }
+    },
+    {
+        "id": "search-012",
+        "query": "Marriage Grant Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-013",
+        "query": "Incentive To Girls",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-014",
+        "query": "Summer Internship Scheme Of DGFT",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-015",
+        "query": "Super 5000",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-016",
+        "query": "Samagr Samajik Suraksha Pension Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-017",
+        "query": "Usha Kiran Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-018",
+        "query": "Hiv / Aids Pension Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-019",
+        "query": "Ashraya Adhar Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-020",
+        "query": "Mukhmantri Sehat Bima Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-021",
+        "query": "Cancer Suraksha Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-022",
+        "query": "Green Business Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-023",
+        "query": "Technology Fellowship and Patent Promotion Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-024",
+        "query": "Bina Mulya Samajik Suraksha Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-025",
+        "query": "Mukhyamantri Shramik Siyaan Sahayata Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-026",
+        "query": "Grant of Subsidy for Procurement of Vehicle",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-027",
+        "query": "Balika Samrithi Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-028",
+        "query": "Awasiya Vidyala Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-029",
+        "query": "Post Harvest Marketing Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-030",
+        "query": "Divyang Shiksha Protsahan Yojana",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-031",
+        "query": "Agriculture Academic Studies Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    },
+    {
+        "id": "search-032",
+        "query": "Organic Manure Scheme",
+        "expected_scheme_ids": [
+            "replace_with_scheme_id"
+        ],
+        "filters": null
+    }
+]

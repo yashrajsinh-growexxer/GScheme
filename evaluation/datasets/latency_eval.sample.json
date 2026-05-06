@@ -1,0 +1,22 @@
+[
+  {
+    "id": "latency-search-001",
+    "endpoint": "/search",
+    "streaming": false,
+    "payload": {
+      "query": "PM Kisan",
+      "filters": null
+    }
+  },
+  {
+    "id": "latency-chat-001",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "replace_with_scheme_id",
+      "message": "What are the benefits?",
+      "history": [],
+      "profile": {}
+    }
+  }
+]
