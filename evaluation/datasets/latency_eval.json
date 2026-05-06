@@ -44,103 +44,311 @@
       "filters": null
     }
   },
-    {
-        "id": "latency-search-006",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Uttam Pashu Puraskar Yojana",
-        "filters": null
-        }
-    },
-    {
-        "id": "latency-search-007",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Gatidhara Scheme",
-        "filters": null
-        }
-    },
-    {
-        "id": "latency-search-008",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Aapki Beti",
-        "filters": null
-        }
-    },
-    {
-        "id": "latency-search-009",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Scheme For Study In Abroad",
-        "filters": null
-        }
-    },
-    {
-        "id": "latency-search-010",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Allowance To Eunuchs Scheme",
-        "filters": null
-        }
-    },
-     {
-        "id": "latency-search-011",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Marriage Grant Scheme",
-        "filters": null
-        }
-    }, {
-        "id": "latency-search-012",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Incentive To Girls",
-        "filters": null
-        }
-    }, {
-        "id": "latency-search-013",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Summer Internship Scheme Of DGFT",
-        "filters": null
-        }
-    }, {
-        "id": "latency-search-014",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "ASamagr Samajik Suraksha Pension Yojana",
-        "filters": null
-        }
-    }, {
-        "id": "latency-search-015",
-        "endpoint": "/search",
-        "streaming": false,
-        "payload": {
-        "query": "Usha Kiran Yojana",
-        "filters": null
-        }
-    },
-    {
+  {
+    "id": "latency-search-006",
+    "endpoint": "/search",
+    "streaming": false,
+    "payload": {
+      "query": "Uttam Pashu Puraskar Yojana",
+      "filters": null
+    }
+  },
+  {
+    "id": "latency-search-007",
+    "endpoint": "/search",
+    "streaming": false,
+    "payload": {
+      "query": "Gatidhara Scheme",
+      "filters": null
+    }
+  },
+  {
+    "id": "latency-search-008",
+    "endpoint": "/search",
+    "streaming": false,
+    "payload": {
+      "query": "Aapki Beti",
+      "filters": null
+    }
+  },
+  {
+    "id": "latency-search-009",
+    "endpoint": "/search",
+    "streaming": false,
+    "payload": {
+      "query": "Scheme For Study In Abroad",
+      "filters": null
+    }
+  },
+  {
+    "id": "latency-search-010",
+    "endpoint": "/search",
+    "streaming": false,
+    "payload": {
+      "query": "Allowance To Eunuchs Scheme",
+      "filters": null
+    }
+  },
+  {
     "id": "latency-chat-001",
     "endpoint": "/chat",
     "streaming": true,
     "payload": {
-      "scheme_id": "replace_with_scheme_id",
+      "scheme_id": "ff5d69b3e1192bd5",
       "message": "What are the benefits?",
       "history": [],
       "profile": {}
     }
+  },
+  {
+    "id": "latency-chat-002",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "1fe37582e56b2493",
+      "message": "What are the eligibility criteria?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-003",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "a23c59271e2304bf",
+      "message": "What is the application process?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-004",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "7abfee25e35f0dc4",
+      "message": "What are the required documents?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-005",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "2d7a9911e5e67238",
+      "message": "What are the benefits?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-006",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "c65ccf647d44e9d3",
+      "message": "What are the eligibility criteria?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-007",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "9783a7e8e3b77387",
+      "message": "What are the benefits?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-008",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "babadf97cdaed3fd",
+      "message": "What is the application process?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-009",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "6502028ce72be4a4",
+      "message": "What are the required documents?",
+      "history": [],
+      "profile": {}
+    }
+  },
+  {
+    "id": "latency-chat-010",
+    "endpoint": "/chat",
+    "streaming": true,
+    "payload": {
+      "scheme_id": "a8d12c631b58e463",
+      "message": "What are the benefits?",
+      "history": [],
+      "profile": {}
+    }
+  },
+
+  {
+    "id": "latency-eligibility-001",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 32,
+        "gender": "Female",
+        "state": "Rajasthan",
+        "caste": "OBC",
+        "profession": "Farmer",
+        "disability": false
+      }
+    }
+  },
+
+  {
+    "id": "latency-eligibility-002",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 32,
+        "gender": "Female",
+        "state": "Rajasthan",
+        "caste": "OBC",
+        "profession": "Farmer",
+        "disability": false
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-003",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 58,
+        "gender": "Female",
+        "state": "Telangana",
+        "caste": "EWS",
+        "profession": "Farmer",
+        "disability": true
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-004",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 36,
+        "gender": "Male",
+        "state": "Madhya Pradesh",
+        "caste": "OBC",
+        "profession": "Entrepreneur/ Self-employed",
+        "disability": false
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-005",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 31,
+        "gender": "Female",
+        "state": "Karnataka",
+        "caste": "General",
+        "profession": "Government Employee",
+        "disability": false
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-006",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 43,
+        "gender": "Male",
+        "state": "Bihar",
+        "caste": "SC",
+        "profession": "Other",
+        "disability": false
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-007",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 18,
+        "gender": "Female",
+        "state": "Odisha",
+        "caste": "ST",
+        "profession": "Student",
+        "disability": false
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-008",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 67,
+        "gender": "Female",
+        "state": "West Bengal",
+        "caste": "General",
+        "profession": "Unemployed",
+        "disability": false
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-009",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 38,
+        "gender": "Male",
+        "state": "Kerala",
+        "caste": "EWS",
+        "profession": "Unemployed",
+        "disability": true
+      }
+    }
+  },
+  {
+    "id": "latency-eligibility-010",
+    "endpoint": "/eligibility",
+    "streaming": false,
+    "payload": {
+      "profile": {
+        "age": 29,
+        "gender": "Female",
+        "state": "Uttar Pradesh",
+        "caste": "OBC",
+        "profession": "Entrepreneur/ Self-employed",
+        "disability": false
+      }
+    }
   }
-
-
 ]
