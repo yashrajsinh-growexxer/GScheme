@@ -5,8 +5,8 @@
   "precision": 0.93,
   "recall": 0.8717,
   "latency": {
-    "p50_ms": 372.98,
-    "p95_ms": 702.99
+    "p50_ms": 353.02,
+    "p95_ms": 678.37
   },
   "rows": [
     {
@@ -37,7 +37,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 2620.93
+      "latency_ms": 2477.02
     },
     {
       "case_id": "eligibility-002",
@@ -67,7 +67,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 702.99
+      "latency_ms": 678.37
     },
     {
       "case_id": "eligibility-003",
@@ -96,7 +96,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 373.23
+      "latency_ms": 352.72
     },
     {
       "case_id": "eligibility-004",
@@ -125,7 +125,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 370.98
+      "latency_ms": 351.65
     },
     {
       "case_id": "eligibility-005",
@@ -155,7 +155,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 369.1
+      "latency_ms": 415.01
     },
     {
       "case_id": "eligibility-006",
@@ -184,7 +184,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 382.49
+      "latency_ms": 409.65
     },
     {
       "case_id": "eligibility-007",
@@ -213,7 +213,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 437.02
+      "latency_ms": 354.05
     },
     {
       "case_id": "eligibility-008",
@@ -243,7 +243,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 368.53
+      "latency_ms": 351.08
     },
     {
       "case_id": "eligibility-009",
@@ -273,7 +273,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 377.01
+      "latency_ms": 351.85
     },
     {
       "case_id": "eligibility-010",
@@ -303,7 +303,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 442.72
+      "latency_ms": 352.95
     },
     {
       "case_id": "eligibility-011",
@@ -332,7 +332,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 370.41
+      "latency_ms": 352.89
     },
     {
       "case_id": "eligibility-012",
@@ -361,7 +361,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 369.64
+      "latency_ms": 350.98
     },
     {
       "case_id": "eligibility-013",
@@ -391,7 +391,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 0.8333,
-      "latency_ms": 372.98
+      "latency_ms": 352.66
     },
     {
       "case_id": "eligibility-014",
@@ -420,7 +420,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 372.2
+      "latency_ms": 353.02
     },
     {
       "case_id": "eligibility-015",
@@ -449,7 +449,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 367.72
+      "latency_ms": 350.8
     },
     {
       "case_id": "eligibility-016",
@@ -478,7 +478,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 373.73
+      "latency_ms": 350.24
     },
     {
       "case_id": "eligibility-017",
@@ -507,7 +507,7 @@
       "is_relaxed": false,
       "precision": 1.0,
       "recall": 1.0,
-      "latency_ms": 372.98
+      "latency_ms": 380.85
     },
     {
       "case_id": "eligibility-018",
@@ -536,7 +536,7 @@
       "is_relaxed": false,
       "precision": 0.8,
       "recall": 0.8,
-      "latency_ms": 369.4
+      "latency_ms": 361.58
     },
     {
       "case_id": "eligibility-019",
@@ -565,7 +565,7 @@
       "is_relaxed": false,
       "precision": 0.4,
       "recall": 0.4,
-      "latency_ms": 375.98
+      "latency_ms": 396.51
     },
     {
       "case_id": "eligibility-020",
@@ -594,7 +594,7 @@
       "is_relaxed": false,
       "precision": 0.4,
       "recall": 0.4,
-      "latency_ms": 366.96
+      "latency_ms": 462.2
     }
   ]
 }

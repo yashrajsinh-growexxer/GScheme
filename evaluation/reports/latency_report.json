@@ -3,14 +3,14 @@
   "cases": 30,
   "api_base": "http://127.0.0.1:8501/api",
   "total_latency": {
-    "avg_ms": 6186.66,
-    "p50_ms": 1266.03,
-    "p95_ms": 27687.68
+    "avg_ms": 782.9,
+    "p50_ms": 361.51,
+    "p95_ms": 1980.25
   },
   "time_to_first_chunk": {
-    "avg_ms": 6066.43,
-    "p50_ms": 1166.65,
-    "p95_ms": 27215.69
+    "avg_ms": 668.35,
+    "p50_ms": 361.51,
+    "p95_ms": 1535.47
   },
   "rows": [
     {
@@ -18,8 +18,8 @@
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 6412.69,
-      "total_latency_ms": 6412.69,
+      "time_to_first_chunk_ms": 196.31,
+      "total_latency_ms": 196.31,
       "response_preview": "[{\"id\":\"ff5d69b3e1192bd5\",\"name\":\"Pradhan Mantri Kisan Samman Nidhi\",\"url\":\"https://www.myscheme.gov.in/schemes/pm-kisan\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Social Welfare & Empowerment\",\"matchScore\":96},{\"id\":\"1fe37582e56b2493\",\"name\":\"Pradhan Mantri Kisan Maandhan Yojana\",\"url\":\"https:"
     },
     {
@@ -27,44 +27,44 @@
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 271.62,
-      "total_latency_ms": 271.62,
-      "response_preview": "[{\"id\":\"2d7a9911e5e67238\",\"name\":\"Pradhan Mantri Mudra Yojana\",\"url\":\"https://www.myscheme.gov.in/schemes/pmmy\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Agriculture, Rural & Environment\",\"matchScore\":100},{\"id\":\"9020da23e4e6905c\",\"name\":\"Pradhan Mantri Ujjwala Yojana\",\"url\":\"https://www.mysche"
+      "time_to_first_chunk_ms": 267.37,
+      "total_latency_ms": 267.37,
+      "response_preview": "[{\"id\":\"2d7a9911e5e67238\",\"name\":\"Pradhan Mantri Mudra Yojana\",\"url\":\"https://www.myscheme.gov.in/schemes/pmmy\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Banking, Financial Services and Insurance\",\"matchScore\":100},{\"id\":\"9020da23e4e6905c\",\"name\":\"Pradhan Mantri Ujjwala Yojana\",\"url\":\"https://w"
     },
     {
       "case_id": "latency-search-003",
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 153.24,
-      "total_latency_ms": 153.24,
-      "response_preview": "[{\"id\":\"c65ccf647d44e9d3\",\"name\":\"Stand-Up India\",\"url\":\"https://www.myscheme.gov.in/schemes/sui\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Social Welfare & Empowerment\",\"matchScore\":100},{\"id\":\"d091746ed5e45d43\",\"name\":\"Scheme for Assistance for Research & Development Activities: Assistance to"
+      "time_to_first_chunk_ms": 198.79,
+      "total_latency_ms": 198.79,
+      "response_preview": "[{\"id\":\"c65ccf647d44e9d3\",\"name\":\"Stand-Up India\",\"url\":\"https://www.myscheme.gov.in/schemes/sui\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Banking, Financial Services and Insurance\",\"matchScore\":100},{\"id\":\"d091746ed5e45d43\",\"name\":\"Scheme for Assistance for Research & Development Activities: "
     },
     {
       "case_id": "latency-search-004",
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 162.76,
-      "total_latency_ms": 162.76,
-      "response_preview": "[{\"id\":\"9783a7e8e3b77387\",\"name\":\"Skill Loan Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes/sl\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Skills & Employment\",\"matchScore\":100},{\"id\":\"fa15e48398bf27ce\",\"name\":\"Big Loan Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes/bls\",\"description\":\"\""
+      "time_to_first_chunk_ms": 197.97,
+      "total_latency_ms": 197.97,
+      "response_preview": "[{\"id\":\"9783a7e8e3b77387\",\"name\":\"Skill Loan Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes/sl\",\"description\":\"\",\"state\":\"Central\",\"category\":\"Banking, Financial Services and Insurance\",\"matchScore\":100},{\"id\":\"fa15e48398bf27ce\",\"name\":\"Big Loan Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes"
     },
     {
       "case_id": "latency-search-005",
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 232.26,
-      "total_latency_ms": 232.26,
-      "response_preview": "[{\"id\":\"babadf97cdaed3fd\",\"name\":\"Residential School For Blinds\",\"url\":\"https://www.myscheme.gov.in/schemes/rsb\",\"description\":\"\",\"state\":\"Jammu and Kashmir\",\"category\":\"Social Welfare & Empowerment\",\"matchScore\":96},{\"id\":\"ffa551825cc7a013\",\"name\":\"Allowance for 100% Blind\",\"url\":\"https://www.mysch"
+      "time_to_first_chunk_ms": 272.99,
+      "total_latency_ms": 272.99,
+      "response_preview": "[{\"id\":\"babadf97cdaed3fd\",\"name\":\"Residential School For Blinds\",\"url\":\"https://www.myscheme.gov.in/schemes/rsb\",\"description\":\"\",\"state\":\"Jammu and Kashmir\",\"category\":\"Housing & Shelter\",\"matchScore\":96},{\"id\":\"ffa551825cc7a013\",\"name\":\"Allowance for 100% Blind\",\"url\":\"https://www.myscheme.gov.in/"
     },
     {
       "case_id": "latency-search-006",
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 264.46,
-      "total_latency_ms": 264.46,
+      "time_to_first_chunk_ms": 297.92,
+      "total_latency_ms": 297.92,
       "response_preview": "[{\"id\":\"6502028ce72be4a4\",\"name\":\"Uttam Pashu Puraskar Yojana\",\"url\":\"https://www.myscheme.gov.in/schemes/uppy\",\"description\":\"\",\"state\":\"Himachal Pradesh\",\"category\":\"Agriculture, Rural & Environment\",\"matchScore\":100},{\"id\":\"33981c08c8812785\",\"name\":\"Uchch Shiksha Puraskar Yojana\",\"url\":\"https://w"
     },
     {
@@ -72,8 +72,8 @@
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 167.86,
-      "total_latency_ms": 167.86,
+      "time_to_first_chunk_ms": 152.57,
+      "total_latency_ms": 152.57,
       "response_preview": "[{\"id\":\"a8d12c631b58e463\",\"name\":\"Gatidhara Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes/gs-west-bengal\",\"description\":\"\",\"state\":\"West Bengal\",\"category\":\"Business & Entrepreneurship\",\"matchScore\":100},{\"id\":\"3bdf12c0f258c702\",\"name\":\"AASRA Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes/a"
     },
     {
@@ -81,26 +81,26 @@
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 127.72,
-      "total_latency_ms": 127.72,
-      "response_preview": "[{\"id\":\"9a98114bf42cb078\",\"name\":\"Aapki Beti Yojana\",\"url\":\"https://www.myscheme.gov.in/schemes/aby\",\"description\":\"\",\"state\":\"Rajasthan\",\"category\":\"Education & Learning\",\"matchScore\":96},{\"id\":\"da24b2c29e2c49ce\",\"name\":\"Aapki Beti Hamari Beti\",\"url\":\"https://www.myscheme.gov.in/schemes/abhb\",\"desc"
+      "time_to_first_chunk_ms": 171.2,
+      "total_latency_ms": 171.2,
+      "response_preview": "[{\"id\":\"9a98114bf42cb078\",\"name\":\"Aapki Beti Yojana\",\"url\":\"https://www.myscheme.gov.in/schemes/aby\",\"description\":\"\",\"state\":\"Rajasthan\",\"category\":\"Women and Child\",\"matchScore\":96},{\"id\":\"da24b2c29e2c49ce\",\"name\":\"Aapki Beti Hamari Beti\",\"url\":\"https://www.myscheme.gov.in/schemes/abhb\",\"descripti"
     },
     {
       "case_id": "latency-search-009",
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 227.07,
-      "total_latency_ms": 227.07,
-      "response_preview": "[{\"id\":\"a148c10029d569d7\",\"name\":\"Scheme For Study In Abroad\",\"url\":\"https://www.myscheme.gov.in/schemes/sfsa\",\"description\":\"\",\"state\":\"Rajasthan\",\"category\":\"Education & Learning\",\"matchScore\":100},{\"id\":\"7be6566344c03f43\",\"name\":\"Investment Promotion Scheme (IPS) for MSME Sector: Assistance For P"
+      "time_to_first_chunk_ms": 259.87,
+      "total_latency_ms": 259.87,
+      "response_preview": "[{\"id\":\"a148c10029d569d7\",\"name\":\"Scheme For Study In Abroad\",\"url\":\"https://www.myscheme.gov.in/schemes/sfsa\",\"description\":\"\",\"state\":\"Rajasthan\",\"category\":\"Women and Child\",\"matchScore\":100},{\"id\":\"7be6566344c03f43\",\"name\":\"Investment Promotion Scheme (IPS) for MSME Sector: Assistance For Partic"
     },
     {
       "case_id": "latency-search-010",
       "endpoint": "/search",
       "api_endpoint": "/search",
       "status_code": 200,
-      "time_to_first_chunk_ms": 242.89,
-      "total_latency_ms": 242.89,
+      "time_to_first_chunk_ms": 256.94,
+      "total_latency_ms": 256.94,
       "response_preview": "[{\"id\":\"20f11c8082b3e371\",\"name\":\"Allowance To Eunuchs Scheme\",\"url\":\"https://www.myscheme.gov.in/schemes/aes\",\"description\":\"\",\"state\":\"Haryana\",\"category\":\"Social Welfare & Empowerment\",\"matchScore\":100},{\"id\":\"dd10aba44aa1b8f7\",\"name\":\"The Andaman & Nicobar Islands Allowance to Destitute Women Sc"
     },
     {
@@ -108,98 +108,98 @@
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 4365.54,
-      "total_latency_ms": 4479.18,
-      "response_preview": "**Benefits:**\n- The scheme provides a **financial benefit of Rs. 6000 per annum per family**.\n- This amount is payable in **three equal installments of Rs 2000 each**, every four months."
+      "time_to_first_chunk_ms": 1399.12,
+      "total_latency_ms": 1579.87,
+      "response_preview": "**Benefits:**\nThe **Pradhan Mantri Kisan Samman Nidhi (PM-Kisan)** provides a financial benefit of:\n\n* **Rs. 6000 per annum per family**\n* Payable in **three equal installments of Rs. 2000 each**, every four months.\n\n*This support aims to supplement the financial needs of landholding farmers' famili"
     },
     {
       "case_id": "latency-chat-002",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1166.65,
-      "total_latency_ms": 1497.89,
-      "response_preview": "**Eligibility:**\nTo be eligible for the **Pradhan Mantri Kisan Maandhan Yojana**, you should meet the following conditions:\n* Be a **Small or Marginal Farmer**.\n* Have **cultivable landholding up to 2 hectares** as per State or Union Territory land records.\n* Be between **18 and 40 years of age** at"
+      "time_to_first_chunk_ms": 819.79,
+      "total_latency_ms": 1068.45,
+      "response_preview": "**Eligibility:**\n- The applicant should be a **Small or Marginal Farmer**.\n- The applicant should have **cultivable landholding up to 2 hectares** as per State or Union Territory land records.\n- The applicant should be between **18 and 40 years of age** at the time of entry.\n- The applicant’s name s"
     },
     {
       "case_id": "latency-chat-003",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 27215.69,
-      "total_latency_ms": 27687.68,
-      "response_preview": "**Application Process:**\nTo apply for the **Pradhan Mantri Kisan Urja Suraksha Evam Utthan Mahabhiyan Scheme**, follow these steps:\n\n1. **Registration**: Go to the official portal and click on the registration section. Fill in the registration form with all the required details.\n2. **Login**: After "
+      "time_to_first_chunk_ms": 842.12,
+      "total_latency_ms": 1336.61,
+      "response_preview": "**Application Process:**\nTo apply for the **Pradhan Mantri Kisan Urja Suraksha Evam Utthan Mahabhiyan (PM-KUSUM) Scheme**, follow these steps:\n\n### Online Application:\n\n1. **Register on the official portal**:\n   - Go to the official website and click on the **registration section**.\n   - Fill in the"
     },
     {
       "case_id": "latency-chat-004",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 13795.72,
-      "total_latency_ms": 13999.77,
-      "response_preview": "**Documents Required:**\nAs per the department's guidelines, the specific documents required for the **Pradhan Mantri Kisan Urja Suraksha Evam Utthaan Mahabhiyan Yojana (PM-KUSUM) - Uttarakhand** scheme are not explicitly listed. \n\n*It is recommended to check with the department for the exact documen"
+      "time_to_first_chunk_ms": 1519.3,
+      "total_latency_ms": 1781.72,
+      "response_preview": "**Documents Required:** \nThe required documents for the **Pradhan Mantri Kisan Urja Suraksha Evam Utthaan Mahabhiyan Yojana (PM-KUSUM) - Uttarakhand** are:\n\n* As per the department’s guidelines prescribed for this scheme.\n\n*For exact list of documents, it is recommended to check with the Block/Sub-D"
     },
     {
       "case_id": "latency-chat-005",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 17995.09,
-      "total_latency_ms": 18549.82,
-      "response_preview": "**Benefits:** \nThe **Pradhan Mantri Mudra Yojana** has been classified under four categories to signify the stage of growth / development and funding needs of the beneficiary micro unit/ entrepreneur:\n* **Shishu**: Covering loans up to **Rs. 50,000**.\n* **Kishore**: Covering loans above **Rs. 50,000"
+      "time_to_first_chunk_ms": 1535.47,
+      "total_latency_ms": 2074.57,
+      "response_preview": "**Benefits:** The Pradhan Mantri Mudra Yojana (PMMY) offers several benefits:\n\n* **Loan Amount:** \n  - **Shishu:** Up to Rs. 50,000\n  - **Kishore:** Above Rs. 50,000 and up to Rs. 5 lakhs\n  - **Tarun:** Above Rs. 5 lakhs and up to Rs. 10 lakhs\n  - **Tarun Plus:** Up to Rs. 20 lakhs for entrepreneurs"
     },
     {
       "case_id": "latency-chat-006",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 29874.64,
-      "total_latency_ms": 30352.42,
-      "response_preview": "**Eligibility:**\nTo be eligible for the **Stand-Up India** scheme, you must meet the following conditions:\n* The **finance is provided for Greenfield Enterprises**.\n* If you are a **male applicant**, you must be from the **SC/ST category**.\n* Your **age must be at least 18 years**.\n* You must **not "
+      "time_to_first_chunk_ms": 1231.38,
+      "total_latency_ms": 1640.58,
+      "response_preview": "## **Stand-Up India Eligibility Criteria**\n\nThe **Stand-Up India** scheme has specific eligibility criteria:\n\n### **Key Eligibility Conditions:**\n- **Greenfield Enterprises**: Finance is provided for setting up new, greenfield enterprises.\n- **Applicant Category**:\n  - If the applicant is **male**, "
     },
     {
       "case_id": "latency-chat-007",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 20840.52,
-      "total_latency_ms": 21386.0,
-      "response_preview": "**Benefits:**\n- The **Skill Loan Scheme** provides financial support for skill development courses aligned to **National Occupations Standards** and **Qualification Packs**.\n- The **quantum of finance** ranges from **Rs 5000 to 1,50,000**.\n- The **rate of interest** is the **base rate (MCLR) + an ad"
+      "time_to_first_chunk_ms": 1528.54,
+      "total_latency_ms": 1980.25,
+      "response_preview": "**Benefits:**\nThe **Skill Loan Scheme** offers the following benefits:\n\n* **Loan Amount:** ₹5,000 to ₹1,50,000\n* **Interest Rate:** Base rate (MCLR) + an add-on typically up to 1.5%\n* **Repayment Period:**\n  - Loans up to ₹50,000: up to 3 years\n  - Loans between ₹50,000 to ₹1 lakh: up to 5 years\n  -"
     },
     {
       "case_id": "latency-chat-008",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 15783.26,
-      "total_latency_ms": 16315.03,
-      "response_preview": "**Application Process:**\nThe application process for the **Residential School For Blinds** is *offline*. Here are the steps to follow:\n\n1. **Obtain the application form**: Visit the District Social Welfare Office and request a hard copy of the application form.\n2. **Fill in the application form**: F"
+      "time_to_first_chunk_ms": 816.42,
+      "total_latency_ms": 1344.26,
+      "response_preview": "## **Application Process for Residential School For Blinds**\n\nThe application process for the Residential School For Blinds is *offline*. Here are the steps:\n\n### **Step 1: Obtain Application Form**\n- Visit the **District Social Welfare Office**.\n- Request a hard copy of the **application form** for"
     },
     {
       "case_id": "latency-chat-009",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 13838.03,
-      "total_latency_ms": 14087.47,
-      "response_preview": "**Documents Required:**\nTo apply for the **Uttam Pashu Puraskar Yojana**, you will need to submit the following documents:\n- Identity proof (e.g. **Aadhaar Card**, **PAN Card**, **Voter ID Card**)\n- **Copy of Bank Passbook**\n- **Residence proof**\n- **BPL Certificate**\n- **Caste/Category certificate*"
+      "time_to_first_chunk_ms": 852.71,
+      "total_latency_ms": 1018.48,
+      "response_preview": "**Documents Required:**\n- **Identity proof**: Aadhaar Card, PAN Card, Voter ID Card, etc.\n- **Copy of Bank Passbook**\n- **Residence proof**\n- **BPL Certificate**\n- **Caste/Category certificate**\n\n*Note: Files should be in pdf or jpg and less than or equal to 200 KB.*"
     },
     {
       "case_id": "latency-chat-010",
       "endpoint": "/chat",
       "api_endpoint": "/chat",
       "status_code": 200,
-      "time_to_first_chunk_ms": 12749.46,
-      "total_latency_ms": 12876.04,
-      "response_preview": "**Benefits:**\n- The scheme provides a **subsidy of 30%** of the ex-showroom price of the vehicle.\n- The subsidy is **subject to a maximum of ₹1,00,000/-**.\n- This subsidy is intended to support the purchase of **any commercial vehicle**."
+      "time_to_first_chunk_ms": 1749.52,
+      "total_latency_ms": 1906.08,
+      "response_preview": "**Benefits:**\n- The scheme provides a **subsidy of 30%** of the ex-showroom price of the vehicle.\n- The maximum subsidy amount is **Rs. 1,00,000**.\n- The subsidy is provided to help beneficiaries purchase **commercial vehicles**.\n\n*This subsidy aims to support self-employment in the transport sector"
     },
     {
       "case_id": "latency-eligibility-001",
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 2320.43,
-      "total_latency_ms": 2320.43,
+      "time_to_first_chunk_ms": 1402.02,
+      "total_latency_ms": 1402.02,
       "response_preview": "{\"schemes\":[{\"id\":\"70cdd1ed1f0285c1\",\"name\":\"National Beekeeping & Honey Mission\",\"url\":\"https://www.myscheme.gov.in/schemes/nbhm\",\"description\":\"g) To promote, develop and disseminate latest and State of the Art Technologies and skill development in beekeeping industry for production of honey &...\""
     },
     {
@@ -207,8 +207,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1158.49,
-      "total_latency_ms": 1158.49,
+      "time_to_first_chunk_ms": 757.63,
+      "total_latency_ms": 757.63,
       "response_preview": "{\"schemes\":[{\"id\":\"70cdd1ed1f0285c1\",\"name\":\"National Beekeeping & Honey Mission\",\"url\":\"https://www.myscheme.gov.in/schemes/nbhm\",\"description\":\"g) To promote, develop and disseminate latest and State of the Art Technologies and skill development in beekeeping industry for production of honey &...\""
     },
     {
@@ -216,8 +216,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1266.03,
-      "total_latency_ms": 1266.03,
+      "time_to_first_chunk_ms": 691.96,
+      "total_latency_ms": 691.96,
       "response_preview": "{\"schemes\":[{\"id\":\"70cdd1ed1f0285c1\",\"name\":\"National Beekeeping & Honey Mission\",\"url\":\"https://www.myscheme.gov.in/schemes/nbhm\",\"description\":\"g) To promote, develop and disseminate latest and State of the Art Technologies and skill development in beekeeping industry for production of honey &...\""
     },
     {
@@ -225,8 +225,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1292.48,
-      "total_latency_ms": 1292.48,
+      "time_to_first_chunk_ms": 359.54,
+      "total_latency_ms": 359.54,
       "response_preview": "{\"schemes\":[{\"id\":\"a4296ed6f3895769\",\"name\":\"Swachh Bharat Mission – Urban 2.0\",\"url\":\"https://www.myscheme.gov.in/schemes/sbm-u\",\"description\":\"[Swachh Bharat Mission – Urban 2.0]\\n[Eligibility]\\n\\nAny household that does not have access to an individual household toilet (\\n80% of urban households."
     },
     {
@@ -234,8 +234,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1564.58,
-      "total_latency_ms": 1564.58,
+      "time_to_first_chunk_ms": 359.18,
+      "total_latency_ms": 359.18,
       "response_preview": "{\"schemes\":[{\"id\":\"0a8276c0e894c57e\",\"name\":\"Mahatma Gandhi National Rural Employment Guarantee Act\",\"url\":\"https://www.myscheme.gov.in/schemes/mgnrega\",\"description\":\"[Mahatma Gandhi National Rural Employment Guarantee Act]\\n[Details]\\n\\nAn employment scheme by the Ministry of Rural Development, pr"
     },
     {
@@ -243,8 +243,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 4120.46,
-      "total_latency_ms": 4120.46,
+      "time_to_first_chunk_ms": 359.63,
+      "total_latency_ms": 359.63,
       "response_preview": "{\"schemes\":[{\"id\":\"a4296ed6f3895769\",\"name\":\"Swachh Bharat Mission – Urban 2.0\",\"url\":\"https://www.myscheme.gov.in/schemes/sbm-u\",\"description\":\"[Swachh Bharat Mission – Urban 2.0]\\n[Eligibility]\\n\\nAny household that does not have access to an individual household toilet (\\n80% of urban households."
     },
     {
@@ -252,8 +252,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1091.15,
-      "total_latency_ms": 1091.15,
+      "time_to_first_chunk_ms": 361.51,
+      "total_latency_ms": 361.51,
       "response_preview": "{\"schemes\":[{\"id\":\"0848daee1b97e39b\",\"name\":\"Scheme For Award Of Financial Assistance For Education To The Wards Of Beedi/Cine/IOMC/LSDM Workers – Pre & Post-Matric\",\"url\":\"https://www.myscheme.gov.in/schemes/safaew-bcew\",\"description\":\"[Scheme For Award Of Financial Assistance For Education To The "
     },
     {
@@ -261,8 +261,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1090.76,
-      "total_latency_ms": 1090.76,
+      "time_to_first_chunk_ms": 425.35,
+      "total_latency_ms": 425.35,
       "response_preview": "{\"schemes\":[{\"id\":\"0b2c595658d332b9\",\"name\":\"Old Age Pension To Handloom Weavers Under Coop. Fold\",\"url\":\"https://www.myscheme.gov.in/schemes/olahwucf\",\"description\":\"[Old Age Pension To Handloom Weavers Under Coop. Fold]\\n[Eligibility]\\n\\nThe applicant should be a resident of West Bengal.\\nThe age "
     },
     {
@@ -270,8 +270,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1092.34,
-      "total_latency_ms": 1092.34,
+      "time_to_first_chunk_ms": 408.18,
+      "total_latency_ms": 408.18,
       "response_preview": "{\"schemes\":[{\"id\":\"59d9a06b0dee7061\",\"name\":\"National Award For Senior Citizens (vayoshreshtha Samman): Iconic Mother\",\"url\":\"https://www.myscheme.gov.in/schemes/nassvsim\",\"description\":\"[National Award For Senior Citizens (vayoshreshtha Samman): Iconic Mother]\\n[Details]\\n\\nEvery year, the Departme"
     },
     {
@@ -279,8 +279,8 @@
       "endpoint": "/eligibility",
       "api_endpoint": "/discover",
       "status_code": 200,
-      "time_to_first_chunk_ms": 1109.14,
-      "total_latency_ms": 1109.14,
+      "time_to_first_chunk_ms": 359.25,
+      "total_latency_ms": 359.25,
       "response_preview": "{\"schemes\":[{\"id\":\"a4296ed6f3895769\",\"name\":\"Swachh Bharat Mission – Urban 2.0\",\"url\":\"https://www.myscheme.gov.in/schemes/sbm-u\",\"description\":\"[Swachh Bharat Mission – Urban 2.0]\\n[Eligibility]\\n\\nAny household that does not have access to an individual household toilet (\\n80% of urban households."
     }
   ]

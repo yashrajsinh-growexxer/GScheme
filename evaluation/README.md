@@ -6,8 +6,9 @@ Implemented metrics:
 
 - `Search Recall@5`
 - `Eligibility Precision / Recall`
-- `Faithfulness`
-- `Hallucination Rate`
+- `RAG Grounding Score`
+- `Answer Correctness Score`
+- `Hallucination Risk`
 - `End-to-end latency`
 
 ## 1. Prepare the environment
@@ -28,8 +29,8 @@ GROQ_API_KEY=...
 SARVAM_API_KEY=...
 ```
 
-For retrieval, eligibility, and generation evaluation, Qdrant must be reachable.
-For faithfulness and hallucination evaluation, `GROQ_API_KEY` must be available because an LLM judge is used.
+For retrieval, eligibility, and chat evaluation, Qdrant must be reachable.
+For chat evaluation, `GROQ_API_KEY` is still needed to generate the app answer through the normal RAG pipeline. The default embedding evaluator does not use a second LLM judge call.
 For multilingual latency cases, `SARVAM_API_KEY` must be available.
 
 ## 2. Build gold datasets
@@ -71,27 +72,48 @@ python -m evaluation.run_eligibility_eval \
   --top-k 10
 ```
 
-Faithfulness and Hallucination Rate:
+Chat answer evaluation:
 
 ```bash
 python -m evaluation.run_generation_eval \
   --dataset evaluation/datasets/chat_eval.json \
   --output evaluation/reports/generation_report.json \
+  --mode embedding
+```
+
+The default `embedding` mode does not use an LLM judge. It still uses your normal
+chat pipeline to generate the answer, then computes two clearer metrics:
+
+- `rag_grounding_score`: blended semantic-unit and whole-answer similarity against retrieved chunks.
+- `answer_correctness_score`: full generated-answer similarity against your normalized `reference_answer`.
+
+Add `reference_answer` to each `chat_eval.json` case when you want correctness
+scoring. It can be a single string, a list of strings, or a dictionary of
+section names to official strings/lists. Without it, the evaluator still reports
+RAG grounding.
+
+Optional LLM judge mode is still available:
+
+```bash
+python -m evaluation.run_generation_eval \
+  --dataset evaluation/datasets/chat_eval.json \
+  --output evaluation/reports/generation_llm_report.json \
+  --mode llm \
   --delay-seconds 30 \
   --context-chars 2500 \
   --answer-chars 1200 \
   --judge-max-tokens 180
 ```
 
-This evaluator uses Groq twice per case: once for the app answer and once for
-the LLM judge. To avoid TPM limits, it trims judge context, waits between cases,
-retries automatically when Groq returns a short rate-limit retry time, and saves
-partial progress after every completed case. If Groq returns a long daily-limit
-wait, the script stops cleanly and you can rerun the same command later to resume.
-
 Useful flags:
 
 ```text
+--mode                   embedding or llm. Default: embedding.
+--grounding-threshold    Hard support cutoff shown in per-unit debug rows.
+--soft-threshold         Similarity where soft support starts counting.
+--strong-threshold       Similarity where soft support becomes full support.
+--global-weight          Weight given to whole-answer context similarity.
+--max-chunks             Max retrieved chunks used for grounding.
 --delay-seconds          Pause after each case. Increase this for large datasets.
 --context-chars          Max retrieved context sent to the judge.
 --answer-chars           Max generated answer text sent to the judge.
@@ -132,7 +154,7 @@ After all dataset files are filled:
 python -m evaluation.run_all
 ```
 
-If you want to skip the LLM judge cost:
+If you want to skip chat answer evaluation:
 
 ```bash
 python -m evaluation.run_all --skip-generation
@@ -164,20 +186,30 @@ Checks how many truly eligible schemes were retrieved.
 Recall = relevant_recommended / total_gold_eligible
 ```
 
-`Faithfulness`
+`RAG Grounding Score`
 
-Uses an LLM judge to compare the generated answer against retrieved scheme context.
+Splits the generated answer into semantic answer units rather than raw sentences, so markdown headings, numbered lists, and short fragments are merged into more meaningful blocks. It then computes local unit-to-chunk support and blends it with whole-answer-to-context similarity.
 
 ```text
-Faithfulness = faithful_answers / total_answers
+RAG Grounding Score =
+  (1 - global_weight) * average_soft_unit_support
+  + global_weight * whole_answer_context_support
 ```
 
-`Hallucination Rate`
+`Answer Correctness Score`
 
-Uses the same judge result. If unsupported claims are found, that answer is counted as hallucinated.
+Compares the full generated answer with the official `reference_answer` using embedding cosine similarity. The evaluator accepts a string, a list of strings, or a dictionary of section names to official strings/lists, then flattens it into one normalized reference text before scoring.
 
 ```text
-Hallucination Rate = answers_with_unsupported_claims / total_answers
+Answer Correctness Score = cosine(generated_answer_embedding, reference_answer_embedding)
+```
+
+`Hallucination Risk`
+
+Uses the improved RAG grounding result as a non-LLM unsupported-risk estimate.
+
+```text
+Hallucination Risk = 1 - RAG Grounding Score
 ```
 
 `End-to-end latency`
@@ -201,6 +233,7 @@ Each report contains:
 - latency percentiles
 - per-case rows
 - predictions and expected IDs
-- judge output for generation evaluation
+- sentence-level grounding details for chat evaluation
+- generated answer and reference-answer similarity for chat evaluation
 
 Use the per-case rows to debug failures, not only the final average.

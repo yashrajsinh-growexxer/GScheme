@@ -9,12 +9,18 @@
       "state": "Rajasthan",
       "profession": "Farmer"
     },
-    "history": []
+    "history": [],
+    "reference_answer": "Replace this with the official answer from the scheme page. Include the exact eligibility conditions that should be present in a correct answer."
   },
   {
     "id": "chat-002",
     "scheme_id": "replace_with_scheme_id",
     "question": "Which documents are required?",
+    "reference_answer": [
+      "Replace this with official document requirement 1.",
+      "Replace this with official document requirement 2.",
+      "Replace this with official document requirement 3."
+    ],
     "profile": {},
     "history": []
   }

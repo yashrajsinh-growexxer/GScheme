@@ -21,6 +21,7 @@ def main() -> None:
         "eligibility": run_eligibility_eval.run(
             "evaluation/datasets/eligibility_eval.json",
             "evaluation/reports/eligibility_report.json",
+            5
         ),
         "latency": run_latency_eval.run(
             "evaluation/datasets/latency_eval.json",
@@ -44,8 +45,9 @@ def main() -> None:
     if "generation" in reports:
         summary.update(
             {
-                "faithfulness": reports["generation"]["faithfulness"],
-                "hallucination_rate": reports["generation"]["hallucination_rate"],
+                "rag_grounding_score": reports["generation"]["rag_grounding_score"],
+                "hallucination_risk": reports["generation"]["hallucination_risk"],
+                "answer_correctness_score": reports["generation"]["answer_correctness_score"],
             }
         )
 

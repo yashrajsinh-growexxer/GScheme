@@ -11,7 +11,8 @@
             "profession": "Farmer",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": "Anyone can apply for the scheme"
     },
     {
         "id": "chat-002",
@@ -25,7 +26,18 @@
             "profession": "Student",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "The applicant must belong to the Educationally Backward Class (S.E.B.C.).",
+            "The applicant's family annual income must be less than ₹10,00,000/-.",
+            "The applicant must have secured a minimum of 60% or more marks in 12th standard.",
+            "The applicant must have secured a minimum of 50% marks if they belong to Notified Tribes/De-notified Tribes (NT/DNT), More Backward, or Extremely Backward categories.",
+            "The applicant must be pursuing higher education abroad.",
+            "The applicant must be pursuing a Diploma, Graduate, Post Graduate, Post Graduate Diploma, Doctor of Philosophy (Ph.D.), or higher-level courses in any field.",
+            "The course must be for a minimum duration of 1 (one) academic year or more, or at least two semesters.",
+            "The applicant must apply before traveling abroad or within six months of arriving abroad.",
+            "The applicant must submit one solvent guarantor."
+        ]
     },
     {
         "id": "chat-003",
@@ -39,7 +51,12 @@
             "profession": "Farmer",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Eligible Entity:",
+            "State Livestock Agencies,",
+            "Animal Husbandry Department, State Government"
+        ]
     },
     {
         "id": "chat-004",
@@ -53,7 +70,30 @@
             "profession": "Unemployed",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "For the Nominee",
+            "The applicant should be a woman.",
+            "The applicant should be of the age of sixty years or above.",
+            "The applicant should have brought up their children in the face of great odds and supported them In being high achievers.",
+            "The applicant should have demonstrated unwavering devotion and inculcation of good values and ethics In children In highly testing circumstances.",
+            "The children should have made remarkable achievements in society because of the dedication, vision and hard work of the applicant.",
+            "The applicant should have fought for the protection, promotion and empowerment of a girl child.",
+            "The contribution of the applicant applicant should have commanded wide recognition from society.",
+            "For the Nominating Agencies/individuals",
+            "The Ministries or Departments of the Government of India and their autonomous organizations.",
+            "The State Governments or Union Territory Administrations.",
+            "Past recipients of Padma Awards, VayoshresthaSamman and other National Awards in both individual and institutional categories.",
+            "Members of the National Council of Senior Citizens (NCSrC).",
+            "Renowned Apex Chambers like the Federation of Indian Chambers of Commerce and Industry (FICCI), Confederation of Indian Industry (CII), Associated Chamber of Commerce and Industry (ASSOCHAM), National Association of Software and Service Companies, PHD Chamber of Commerce and Industry etc.",
+            "Any other category of persons or institutions authorized by the Ministry from time to time.",
+            "Note 1:",
+            "The awards are open to all Indian Institutions, Organizations and Individuals without any distinction or discrimination on grounds of religion, race, sex, caste or creed.",
+            "Note 2:",
+            "It would be necessary that the nominee is recommended in writing by someone authorized to recommend the nominations.",
+            "Note 3:",
+            "The Self-nominations for the Awards shall not be considered."
+        ]
     },
     {
         "id": "chat-005",
@@ -67,7 +107,17 @@
             "profession": "Entrepreneur/ Self-employed",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "offline": [
+                "Loan applications are submitted by the applicants to the district offices of SCAs of NSKFDC of RRBs and Nationalised Banks.",
+                "These applications are then sent to the head offices where the project proposal is appraised by SCA/RRBs/Nationalised Banks and the projects are sent back to NSKFDC along with recommendations.",
+                "The Project Appraisal Committee of NSKFDC then appraises the proposals and after finding them in order places it in front of their board of directors for their approval.",
+                "Once the board of directors approves the project, the letter of sanction is issued by SCAs/ RRBs/Nationalised Banks.",
+                "Once all the terms and conditions have been accepted, the necessary documents and funds are then released to the concerned beneficiaries.",
+                "NSKFDC released the funds with the receipt of demand being made from the SCAs/ RRBs/Nationalised Banks after taking into consideration all the parameters of release as per the Lending Policies & Guidelines (LPG) of NSKFDC"
+            ]
+        }
     },
     {
         "id": "chat-006",
@@ -81,7 +131,39 @@
             "profession": "Unemployed",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "online": [
+                "Registration",
+                "Step 1:",
+                "The agencies or persons, authorized to nominate and recommend eligible institutions or individuals, should visit the",
+                "National Awards Portal",
+                ". On the top right of the homepage, click \"",
+                "Register",
+                "\".",
+                "Step 2:",
+                "You will be directed to the Registration Page. Fill in all the mandatory fields (marked with a Red Asterisk).",
+                "Step 3:",
+                "Check the \"Declaration\" checkboxes provided at the bottom of the page. Fill in the Captcha Code, and click \"Submit\".You will receive the Login Credentials on your Registered Mobile Number.",
+                "Application",
+                "Visit the",
+                "Login",
+                "Login using credentials. From the list of awards, select \"Vayoshreshtha Samman - National Awards for Senior Citizens\", then click \"Nominate / Apply Now\".",
+                "On the next page, fill in all the mandatory fields in the online application form, and then click \"Submit\".",
+                "Selection of Awardees",
+                "1. A Screening Committee shall be constituted in the Ministry of Social Justice and Empowerment to scrutinize and shortlist the nominations, under Additional Secretary/ Joint Secretary.",
+                "2. The final Selection of the Awardees shall be made by the Selection Committee chaired by the Minister of Social Justice and Empowerment.",
+                "Calendar of Activities",
+                "Issue of Letter Inviting Nominations by the Ministry: 1st November",
+                "Last Date of Receipt of Nominations: 31st January",
+                "Shortlisting of Nominations by the Screening Committee: 28th February",
+                "Final selection by the Jury: 30th April",
+                "Approval by the Minister: 31st May",
+                "Vetting by IB: 15th August",
+                "Announcement of the Awards: 1st September",
+                "Presentation of the Awards: 1st October"
+            ]
+        }
     },
     {
         "id": "chat-007",
@@ -95,11 +177,48 @@
             "profession": "Farmer",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "online": [
+                "Step 1:",
+                "Visit the",
+                "Official Website",
+                "of \"National Livestock Mission\" and click \"",
+                "Apply Here",
+                "\".",
+                "Step 2:",
+                "The following methods of Logging In will be displayed:",
+                "Login as Entrepreneur",
+                "Login as Government / Other Agencies",
+                "Login as Research & Innovation",
+                "Login to the website using your preferred method.",
+                "Step 3:",
+                "On the next page, verify your Mobile Number via OTP. You will be taken to the Online Application Form.",
+                "Step 4:",
+                "In the form, fill in all the mandatory fields and upload all the mandatory documents in the specified format and size.",
+                "Step 5:",
+                "Agree to the \"Declaration & Authorization\" by ticking the checkbox. Provide the Date & Place, and finally click \"Submit\".",
+                "Post-Application Processes",
+                "Screening of application by State Implementing Agency (SIA)",
+                "SIA will scrutinize the submitted application and will recommend the application of the entrepreneurs/ eligible entities to avail balance financing for the project through scheduled banks or financial institutions like National Cooperative Development Corporation (NCDC) etc.",
+                "Loan sanction by Lender",
+                "After the recommendation of the project by SIA, the same will be considered by the bank or financial institutions for financing. Lender will pick the application along with all the documents from the portal and will approve the loan after examining the project/ documents submitted by applicant and completing their internal diligent process. After sanctioning the loan, Lender will upload sanction letter on the portal.",
+                "Recommendation from State Level Executive Committee (SLEC)",
+                "Once the bank or financial institution sanction the project, SIA shall place the same in SLEC for recommending the application to the Central Government (Department of Animal Husbandry & Dairying).",
+                "Approval of subsidy by DAHD",
+                "DAHD will approve the subsidy and will mark the approval of the same on portal.",
+                "Disbursement and release of subsidy",
+                "After compliance of terms and conditions mentioned in the sanction letter, lender will disburse the loan amount to the beneficiary. fund the subsidy amount for the approved projects through Small Industries Development Bank of India (SIDBI) to the lending Bank or financial institutions as the case may be to release the subsidy to Beneficiaries.",
+                "Track Application Status",
+                "You can check your application status from the \"TRACK STATUS\" tab available in the upper right corner of the portal",
+                "Help and Support",
+                "If you encounter any issues or have questions, visit the \""
+            ]
+        }
     },
     {
         "id": "chat-008",
-        "scheme_id": "59d9a06b0dee7061",
+        "scheme_id": "babadf97cdaed3fd",
         "question": "What is the application process?",
         "profile": {
             "age": 45,
@@ -109,11 +228,29 @@
             "profession": "Unemployed",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "offline": [
+                "Step 1:",
+                "The guardian or the social worker of the eligible boys and girls should visit the District Social Welfare Office, and request a hard copy of the format of the application form for the scheme from the concerned authority.",
+                "Step 2:",
+                "In the application form, fill in all the mandatory fields, paste the passport-sized photograph (signed across), and attach all the (self-attested) mandatory documents.",
+                "Step 3:",
+                "Submit the duly filled and signed application form along with the documents to the",
+                "District Social Welfare Officer",
+                ".",
+                "Step 4:",
+                "Acquire the receipt/acknowledgment of the successful submission of the application form from the District Social Welfare Office.",
+                "Post-Application Processes:",
+                "On receipt of the application duly completed by the applicant, the DSWO authorizes the Superintendent of the Residential School for the Blinds to admit the beneficiary to the institution (subject to the availability of vacancy).",
+                "Check Application Status:",
+                "The District Social Welfare Officer (DSWO) can be contacted regarding the application status of the scheme."
+            ]
+        }
     },
     {
         "id": "chat-009",
-        "scheme_id": "968632b9e24e069c0",
+        "scheme_id": "968632b9e24e069c",
         "question": "What are the benefits?",
         "profile": {
             "age": 19,
@@ -123,7 +260,24 @@
             "profession": "Student",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Financial Assistance",
+            "A maximum Foreign Study Loan of ₹15,00,000/- is provided for higher education abroad.",
+            "The loan is offered at a simple annual interest rate of 4%.",
+            "The loan covers costs such as air tickets, registration fees, tuition fees, education fees, hostel fees, books, and other expenses associated with the first year of the course abroad.",
+            "Disbursement Conditions",
+            "The full loan amount of ₹15,00,000/- will be disbursed to the student in a single installment.",
+            "The money will be deposited into the student's bank account after the submission of the original registered mortgage deed.",
+            "Post-Selection Obligations",
+            "After the sanction order is received, the student's parent or guardian must obtain the prescribed mortgage deed form from the District Office.",
+            "The property presented by the student's parent/guardian or the guarantor must be registered as a mortgage in favor of the government.",
+            "The loan repayment must begin one year after the completion of the student's study.",
+            "The loan must be repaid in monthly or quarterly installments.",
+            "The principal loan amount must be fully repaid within a maximum period of 10 years.",
+            "The interest amount must be fully repaid within a maximum period of 2 years.",
+            "The student must ensure all required documentation is completed within the prescribed time limit."
+        ]
     },
     {
         "id": "chat-010",
@@ -137,7 +291,26 @@
             "profession": "Government Employee",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "The applicant receives guaranteed employment within 15 days from the date of application.",
+            "Work is to be provided within a radius of 5 kilometers of the applicant’s residence if possible, and in any case within the Block. If the applicant lives more than 5 km away from the worksite, he/she will be entitled to a travel and subsistence allowance (10% of the minimum wage).",
+            "Wages are paid within a week, or fifteen days at most. Men and Women are paid equally.",
+            "Shade, drinking water, and first-aid are provided at every worksite.",
+            "Exclusive measures for the promotion of the participation of the disabled persons:",
+            "Identification of suitable works",
+            "Mobilization of disabled persons by focussing on awareness and special provisions",
+            "Specifically identified works for disabled persons in the case of large GPs",
+            "Preference to appoint as mates and as workers for providing drinking water, to manage crèches, etc., at the worksites",
+            "Adoption of tools and equipment/facilities at workplaces",
+            "Treating persons with disabilities with respect",
+            "Special drive to ensure 100 days of employment to such households",
+            "Provide a special job card of a distinct color",
+            "Specific attention and provisions for Senior Citizens:",
+            "Exclusive senior citizen groups may be formed and special works which require lesser physical effort are identified and allotted to these groups.",
+            "Specific attention and provisions for Internally Displaced Persons:",
+            "A special job card to be provided will be valid till these families are displaced and will lose its validity as soon as they return to their original place of residence."
+        ]
     },
     {
         "id": "chat-011",
@@ -151,11 +324,35 @@
             "profession": "Student",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "M.Tech. Fellowship:",
+            "A monthly stipend of ₹12,400/- is provided for a duration of 20 to 24 months, depending on specific institute norms.",
+            "M.Sc. (Renewable Energy) Fellowship:",
+            "Students receive a monthly stipend of ₹4,000/- for a maximum duration of 24 months.",
+            "Junior Research Fellow (JRF):",
+            "Provides a monthly fellowship of ₹31,000/- plus House Rent Allowance (HRA) as per Central Government norms, along with an annual contingency grant of ₹20,000/- for a period of 2 years.",
+            "Senior Research Fellow (SRF):",
+            "Provides a monthly fellowship of ₹35,000/- plus HRA and Contingency as per Central Government norms for a duration of 3 years.",
+            "Post-Doctoral Fellow/Research Associate (PDF/RA):",
+            "Offers a tiered monthly fellowship of ₹47,000/- (Level I), ₹49,000/- (Level II), and ₹54,000/- (Level III) plus HRA and Contingency as per Central Government norms for a period of 3 years.",
+            "Total Intake Capacity:",
+            "The scheme supports an annual intake of 75 new fellows, aiming for a total of 375 fellowships over the five-year programme period (2021-2026).",
+            "Integrated PhD Path: J",
+            "RF awardees can transition into SRF roles for a combined doctoral research tenure not exceeding 5 years (2 years JRF + 3 years SRF).",
+            "Direct PhD Path:",
+            "The scheme allows a direct route for candidates to enter at the SRF level for a PhD program not exceeding 3 years.",
+            "Post-Doctoral Research:",
+            "Specialised support for 3-year advanced research projects at the Research Associate/PDF level.",
+            "Flexible Allocation:",
+            "The number of fellowships in each category (M.Tech, M.Sc, JRF, SRF, RA) is interchangeable based on the quality of research proposals and industry demand.",
+            "Monthly Disbursement:",
+            "All fellowships are disbursed on a monthly basis directly into the beneficiary's bank account via DBT mode upon receipt of attendance/continuation reports from host institutions."
+        ]
     },
     {
         "id": "chat-012",
-        "scheme_id": "ac22649fc5337ac10",
+        "scheme_id": "ac22649fc5337ac1",
         "question": "What are the benefits?",
         "profile": {
             "age": 52,
@@ -165,7 +362,21 @@
             "profession": "Farmer",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Assistance will be provided to establish semen processing lab at the government pig farm to produce high quality liquid boar semen for artificial insemination.",
+            "One-time grants-in-aid of up to ₹1,50,00,000/- (₹1.5 crore) are provided as the Central share to the concerned state for the construction of semen laboratories and maintaining a breeding boar unit.",
+            "₹30,00,000 (₹30 lakh) is provided as a one-time recurring expenditure for the procurement of consumables, medicines, chemicals, and other necessary materials for the initial processing of semen.",
+            "Funding Pattern:",
+            "For all states except the North Eastern Region (NER) and Himalayan states, the funding pattern is 60:40 (Central: State).",
+            "For NER and Himalayan states, the funding pattern is 90:10 (Central: State).",
+            "Mode of Disbursement:",
+            "The funds are provided as a one-time grant to the concerned state government through its Animal Husbandry Department.",
+            "Frequency of Disbursement:",
+            "One-time disbursement.",
+            "Validity:",
+            "The financial assistance is granted for the establishment of the laboratory and the first-time procurement of necessary materials."
+        ]
     },
     {
         "id": "chat-013",
@@ -179,7 +390,17 @@
             "profession": "Entrepreneur/ Self-employed",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Address Proof",
+            "Identity Proof",
+            "SHG membership ID",
+            "Caste certificate (if applicable)",
+            "Income Certificate from a competent authority",
+            "Aadhaar Card",
+            "Bank Account details",
+            "Recent Passport Size Photographs"
+        ]
     },
     {
         "id": "chat-014",
@@ -193,7 +414,18 @@
             "profession": "Unemployed",
             "disability": true
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Aadhaar Card",
+            "Photograph",
+            "Bio-Data",
+            "Proof of Age",
+            "Proof of Address",
+            "Proof of Educational Qualification (Passing Certificate, Marksheet)",
+            "Proof of Professional Experience",
+            "Details of work done in the last three years in the field",
+            "Details of Awards and Honours Received"
+        ]
     },
     {
         "id": "chat-015",
@@ -207,7 +439,14 @@
             "profession": "Unemployed",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Proof of Identification.",
+            "Proof of Age.",
+            "Proof of being a member of a handloom cooperative society.",
+            "Bank Account Details.",
+            "Any other details as required."
+        ]
     },
     {
         "id": "chat-016",
@@ -221,118 +460,274 @@
             "profession": "Student",
             "disability": false
         },
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Photo",
+            "Identity card of the worker (Form B Register Number in case of Mine workers).",
+            "Front page of Bank Pass Book or Cancelled Cheque (which should contain details of the account holder/beneficiary).",
+            "Passing Certificate/Mark Sheet of previous Academic Year",
+            "Income Certificate issued by the Revenue Authority"
+        ]
     },
     {
         "id": "chat-017",
         "scheme_id": "2d7a9911e5e67238",
         "question": "What are the eligibility criteria?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Eligible borrowers",
+            "Individuals",
+            "Proprietary concern.",
+            "Partnership Firm.",
+            "Private Ltd. Company.",
+            "Public Company.",
+            "Any other legal forms.",
+            "Note 01:",
+            "The applicant should not be a defaulter to any bank or financial institution and should have a satisfactory credit track record.",
+            "Note 02:",
+            "The individual borrowers may be required to possess the necessary skills/experience/ knowledge to undertake the proposed activity.",
+            "Note 03:",
+            "The need for educational qualification, if any, is assessed based on the nature of the proposed activity and its requirement."
+        ]
     },
     {
         "id": "chat-018",
         "scheme_id": "c65ccf647d44e9d3",
         "question": "What are the eligibility criteria?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Finance is provided for Greenfield Enterprises.",
+            "If the applicant is a male, he must be from SC / ST category.",
+            "The age of the applicant must be at least 18 years.",
+            "The applicant must not be in default to any bank/financial institution."
+        ]
     },
     {
         "id": "chat-019",
         "scheme_id": "9783a7e8e3b77387",
         "question": "What are the eligibility criteria?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "A student who has secured admission in a course run by Industrial Training Institutes (ITIs), Polytechnics or in a school recognized by Central or State education Boards or in a college affiliated to a recognized university, training partners affiliated to National Skill Development Corporation (NSDC) / Sector Skill Councils, State Skill Mission, State Skill Corporation"
+        ]
     },
     {
         "id": "chat-020",
         "scheme_id": "babadf97cdaed3fd",
         "question": "What are the eligibility criteria?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "The applicant should be a citizen of India.",
+            "The applicant should be a domicile / permanent resident of the state of Jammu & Kashmir.",
+            "The applicant should be a Person with Disability (PwD) (total/partial absence of sight).",
+            "The age of the applicant should be between 6 to 21 years."
+        ]
     },
     {
         "id": "chat-021",
         "scheme_id": "6502028ce72be4a4",
         "question": "What is the application process?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "online": [
+                "Step 01:",
+                "Visit the official website of the concerned department of the Government of Himachal Pradesh. (",
+                "https://hpahdbt.hp.gov.in/Home/Index",
+                ")",
+                "Step 02:",
+                "Look for the scheme for “Uttam Pashu Puraskar Yojana”.",
+                "Step 03:",
+                "Read the guidelines and eligibility criteria of the scheme carefully. Further, agree with the terms & conditions and click on ‘Proceed’.",
+                "Step 04:",
+                "Fill out the application form for the scheme, which is available online at (",
+                "https://hpahdbt.hp.gov.in/Home/BeneficiariesRegistration",
+                "Step 05:",
+                "Attach all the necessary documents as required for the scheme, such as proof of BPL status, land documents, and bank account details.",
+                "Step 06:",
+                "For submitting the application form, click on ‘Submit’.",
+                "Step 07:",
+                "Check the status & follow up with the concerned department to track the status of the application.",
+                "Note 01:",
+                "It is important for the beneficiary to keep a copy of the application form and documents submitted for future reference.",
+                "Note 02:",
+                "Beneficiaries should ensure that they comply with the guidelines and regulations of the scheme to ensure that they are eligible for the benefits of the scheme."
+            ]
+        }
     },
     {
         "id": "chat-022",
         "scheme_id": "a8d12c631b58e463",
         "question": "What is the application process?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "offline": [
+                "Registration Process in Employment Bank:",
+                "Step 01:",
+                "The applicant should be registered in the Employment Bank of the Labour Department.",
+                "Step 02:",
+                "For registration, the applicants need to visit the official website of the Employment Bank:",
+                "https://employmentbankwb.gov.in/index.php",
+                "Step 03:",
+                "Click on “New Enrolment Job Seeker” & accept the terms & conditions and then continue.",
+                "Step 04:",
+                "Fill in all the mandatory details and click on the ‘submit’ button.",
+                "Application Process:",
+                "Applicant should get his application with all requisite documents processed by the dealer of his choice.",
+                "Select a financier for the loan required for purchasing the vehicle.",
+                "The vehicle is to be registered within one month of receipt of the offer letter for permit and subsidy under the scheme.",
+                "Note:",
+                "Vehicle dealers are authorized facilitators for the “Gatidhara Scheme”."
+            ]
+        }
     },
     {
         "id": "chat-023",
         "scheme_id": "9a98114bf42cb078",
         "question": "What is the application process?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "online": [
+                "To avail of the benefits of the scheme, the parents/guardians need to contact their respective government school.",
+                "Data Entry on Shala Darpan Portal:",
+                "School authorities log in through the",
+                "Shala Darpan School Login",
+                ".",
+                "Navigate to the \"Student\" tab and fill required details in Form-9.",
+                "Category Selection for Eligible Girls:",
+                "Under the “Mandatory Student Information for Beneficiary Schemes” section, select class-wise eligible girls under “BPL” and “Orphan/Single Parent” categories.",
+                "Beneficiary Approval:",
+                "Visit the Beneficiary Scheme Portal through School Login.",
+                "Select the appropriate scheme and approve and lock the displayed list of eligible girls.",
+                "Verification by District Education Officer (DEO):",
+                "Locked data is reflected on the DEO (primary/secondary) office login.",
+                "DEO completes final verification using OTP-based approval.",
+                "Jan Aadhaar Verification:",
+                "Before submission, ensure that the girl’s Jan Aadhaar is verified on the Shala Darpan Portal, as funds are transferred via DBT."
+            ]
+        }
     },
     {
         "id": "chat-024",
         "scheme_id": "a148c10029d569d7",
         "question": "What is the application process?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": {
+            "offline": [
+                "Applicants have to visit the",
+                "web portal",
+                ".",
+                "Download the",
+                "application form",
+                "from page no. 12.",
+                "Fill out the form in the prescribed manner.",
+                "Submit the application to District Education Officer."
+            ]
+        }
     },
     {
         "id": "chat-025",
         "scheme_id": "78903256daa68945",
         "question": "What are the benefits?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Scholarship Amount:",
+            "₹ 750/- per annum for middle-class students (Class VI to VIII).",
+            "₹ 1,000/- per annum for High and Senior Secondary students (Class IX to XII)."
+        ]
     },
     {
         "id": "chat-026",
         "scheme_id": "20f11c8082b3e371",
         "question": "What are the benefits?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "1. The financial assistance of ₹2750/- will be given by the state government to eunuchs who are living in various parts of the State.",
+            "Note:",
+            "If a Eunuch attains the age of 60 years his case will be transferred to Old Age Allowance Scheme."
+        ]
     },
     {
         "id": "chat-027",
         "scheme_id": "9ee962f3f590aebe",
         "question": "What are the benefits?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "The assistance of ₹20,000/- is provided per marriage."
+        ]
     },
     {
         "id": "chat-028",
         "scheme_id": "b0fa95bf6e102f82",
         "question": "What are the benefits?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "₹15,000/- per annum: To the girl students studying in senior secondary by taking agriculture subjects in 11th and 12th classes",
+            "₹25,000/- per annum: To girl students studying in Agricultural graduate education like Horticulture, Dairy, Agricultural Engineering, Food Processing and Shri Karan Narendra Business Management College, Jobner in 4/5 years course",
+            "₹25,000/- per annum: To the girl students studying in Post Graduate Agriculture (M.Sc. Agriculture) in the 2-year course.",
+            "₹40,000/- per annum: To the girl students studying for a maximum of 3 years PhD."
+        ]
     },
     {
         "id": "chat-029",
         "scheme_id": "bd7186737e24c117",
         "question": "What are the required documents??",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "At the time of Joining the Internship-",
+            "Permission Letter from the Supervisor / Head of Department, in case he/she is interested to join an internship during his/her coursework.",
+            "At the time of Completion of the Internship -",
+            "Report/Paper (to be submitted to the Head of the concerned Division)."
+        ]
     },
     {
         "id": "chat-030",
         "scheme_id": "bb4035a2027e3676",
         "question": "What are the required documents?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Aadhar card.",
+            "Permanent residence certificate.",
+            "Passport-size photo.",
+            "10th/12th class mark sheet."
+        ]
     },
     {
         "id": "chat-031",
         "scheme_id": "7b373326f73ca931",
         "question": "What are the required documents?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Two photos.",
+            "BPL Card or destitute/poor certificate.",
+            "Age proof certificate.",
+            "Disability certificate.",
+            "Welfare / Abandonment Certificate."
+        ]
     },
     {
         "id": "chat-032",
         "scheme_id": "21b7f35e4c6a0a1e",
         "question": "What are the required documents?",
         "profile": {},
-        "history": []
+        "history": [],
+        "reference_answer": [
+            "Passport-size photograph.",
+            "Aadhaar card."
+        ]
     }
 ]

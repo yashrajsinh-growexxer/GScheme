@@ -1,0 +1,13 @@
+{
+  "summary": {
+    "search_recall_at_5": 0.8788,
+    "eligibility_precision": 0.93,
+    "eligibility_recall": 0.8717,
+    "latency_p50_ms": 361.51
+  },
+  "reports": {
+    "retrieval": "evaluation/reports/retrieval_report.json",
+    "eligibility": "evaluation/reports/eligibility_report.json",
+    "latency": "evaluation/reports/latency_report.json"
+  }
+}
