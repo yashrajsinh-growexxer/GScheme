@@ -12,16 +12,9 @@ export function SchemeCard({ scheme, onClick }: { scheme: Scheme; onClick: () =>
       onClick={onClick}
     >
       <CardHeader className="pb-3">
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-xl group-hover:text-primary transition-colors">
-            {scheme.name}
-          </CardTitle>
-          {scheme.matchScore && (
-            <Badge variant="secondary" className="ml-2 shrink-0 bg-accent text-accent-foreground hover:bg-accent">
-              {scheme.matchScore}% Match
-            </Badge>
-          )}
-        </div>
+        <CardTitle className="text-xl group-hover:text-primary transition-colors">
+          {scheme.name}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between mt-2">

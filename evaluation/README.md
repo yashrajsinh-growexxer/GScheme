@@ -11,6 +11,30 @@ Implemented metrics:
 - `Hallucination Risk`
 - `End-to-end latency`
 
+## Current Evaluation Results
+
+The following benchmark was run on the current QSkim system using the datasets
+under `evaluation/datasets/` and reports under `evaluation/reports/`.
+
+| Metric | Cases | Result | Latency |
+| --- | ---: | --- | --- |
+| Search Recall@5 | 33 | `0.8788` | p50 `230.95 ms`, p95 `595.02 ms` |
+| Eligibility Precision / Recall | 20 | precision `0.93`, recall `0.8717` | p50 `353.02 ms`, p95 `678.37 ms` |
+| Chat Answer Evaluation | 32 | grounding `0.8491`, correctness `0.837`, hallucination risk `0.1509` | answer p50 `3302.89 ms`, answer p95 `5178.68 ms` |
+| End-to-end API Latency | 30 | avg `782.9 ms` | total p50 `361.51 ms`, total p95 `1980.25 ms`; first chunk p50 `361.51 ms`, p95 `1535.47 ms` |
+
+Summary:
+
+- Search performance is strong: `Recall@5 = 0.8788` means the expected scheme appears in the top 5 results for about 88% of search cases.
+- Eligibility recommendation quality is high: `precision = 0.93` shows that most recommended schemes are relevant, while `recall = 0.8717` shows the system retrieves most of the expected eligible schemes.
+- Chat quality is solid: `rag_grounding_score = 0.8491` indicates answers are usually well supported by retrieved chunks, and `answer_correctness_score = 0.837` shows generated answers are close to the official reference answers.
+- `hallucination_risk = 0.1509` is a non-LLM estimate from grounding gaps. It does not mean 15% of answers are definitely hallucinated; it means about 15% of answer content had weaker retrieved-context support under the embedding-based scoring method.
+- Latency is usable for search and eligibility flows, with sub-second p50 values. Chat is slower because it includes retrieval plus LLM generation, with p50 answer latency around `3.3 s`.
+
+Interpretation:
+
+The system is performing well overall. Search and eligibility metrics suggest the retrieval and filtering pipeline is reliable, while the chat metrics show that generated answers remain mostly grounded and close to official references. The main improvement opportunities are in the remaining search misses, recall gaps for eligibility, and reducing chat response latency.
+
 ## 1. Prepare the environment
 
 From the project root:

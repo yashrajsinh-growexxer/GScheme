@@ -199,7 +199,6 @@
       "profile": {}
     }
   },
-
   {
     "id": "latency-eligibility-001",
     "endpoint": "/eligibility",
@@ -215,7 +214,6 @@
       }
     }
   },
-
   {
     "id": "latency-eligibility-002",
     "endpoint": "/eligibility",
